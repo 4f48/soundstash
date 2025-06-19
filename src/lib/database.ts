@@ -1,4 +1,4 @@
 import * as authSchema from "@/lib/schema/auth.schema";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/neon-http";
 
-export const db = drizzle("file:soundstash.db", { schema: authSchema });
+export const db = drizzle(import.meta.env.DATABASE_URL, { schema: authSchema });
