@@ -9,13 +9,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/client";
+import { LoaderCircle } from "lucide-react";
 import { lazy, useState, type JSX } from "react";
-
-const LoaderCircle = lazy(() =>
-	import("lucide-react").then((module) => ({
-		default: module.LoaderCircle,
-	}))
-);
 
 export default function Account({
 	user,
