@@ -7,3 +7,5 @@ onlyBuiltDependencies:
   - prisma
   - sharp
   - workerd
+packages:
+  - .
