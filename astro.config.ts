@@ -6,10 +6,8 @@ import { defineConfig, fontProviders } from "astro/config";
 export default defineConfig({
 	adapter: cloudflare({
 		imageService: "cloudflare",
-		platformProxy: {
-			enabled: true,
-		},
 	}),
+	site: "https://soundstash.pirger.eu",
 	experimental: {
 		fonts: [
 			{
@@ -21,6 +19,7 @@ export default defineConfig({
 		],
 	},
 	integrations: [react()],
+	output: "server",
 	vite: {
 		plugins: [tailwindcss()],
 		resolve: {
