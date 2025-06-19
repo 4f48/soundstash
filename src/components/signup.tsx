@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -30,6 +30,7 @@ const formSchema = z.object({
 });
 
 export default function Signup(): JSX.Element {
+	const [loading, setLoading] = useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -39,13 +40,18 @@ export default function Signup(): JSX.Element {
 		},
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		const { error } = await authClient.signUp.email({
-			name: values.name,
-			email: values.email,
-			password: values.password,
-		});
-		error && console.error(error);
-		!error && window.location.assign("/auth/signin");
+		setLoading(true);
+		authClient.signUp
+			.email({
+				name: values.name,
+				email: values.email,
+				password: values.password,
+			})
+			.then(({ error }) => {
+				setLoading(false);
+				error && console.error(error);
+				!error && window.location.assign("/auth/signin");
+			});
 	}
 	return (
 		<Card className="w-full max-w-sm self-center my-auto">
@@ -62,7 +68,7 @@ export default function Signup(): JSX.Element {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+					<form className="flex flex-col gap-8" onSubmit={form.handleSubmit(onSubmit)}>
 						<FormField
 							control={form.control}
 							name="name"
@@ -102,18 +108,12 @@ export default function Signup(): JSX.Element {
 								</FormItem>
 							)}
 						/>
+						<Button type="submit" className="w-full">
+							Sign up
+						</Button>
 					</form>
 				</Form>
 			</CardContent>
-			<CardFooter>
-				<Button
-					type="submit"
-					onClick={form.handleSubmit(onSubmit)}
-					className="w-full"
-				>
-					Sign up
-				</Button>
-			</CardFooter>
 		</Card>
 	);
 }
