@@ -11,7 +11,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 		ctx.locals.user = authenticated.user;
 		ctx.locals.session = authenticated.session;
 		if (ctx.url.pathname.startsWith("/auth/")) return ctx.redirect("/");
-		if (ctx.url.pathname === "/") return ctx.rewrite("/home")
+		if (ctx.url.pathname === "/") return ctx.rewrite("/home");
 	} else {
 		ctx.locals.user = null;
 		ctx.locals.session = null;

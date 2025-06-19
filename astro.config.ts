@@ -21,6 +21,11 @@ export default defineConfig({
 	integrations: [react()],
 	output: "server",
 	vite: {
+		build: {
+			rollupOptions: {
+				maxParallelFileOps: 200,
+			},
+		},
 		plugins: [tailwindcss()],
 		resolve: {
 			alias: import.meta.env.PROD
