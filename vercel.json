@@ -1,13 +1,13 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/repr/static/:path(.*)",
-      "destination": "https://eu-assets.i.posthog.com/static/:path*"
-    },
-    {
-      "source": "/repr/:path(.*)",
-      "destination": "https://eu.i.posthog.com/:path*"
-    }
-  ]
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"rewrites": [
+		{
+			"source": "/repr/static/:path(.*)",
+			"destination": "https://eu-assets.i.posthog.com/static/:path*"
+		},
+		{
+			"source": "/repr/:path(.*)",
+			"destination": "https://eu.i.posthog.com/:path*"
+		}
+	]
 }

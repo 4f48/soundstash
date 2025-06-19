@@ -68,7 +68,10 @@ export default function Signup(): JSX.Element {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="flex flex-col gap-8" onSubmit={form.handleSubmit(onSubmit)}>
+					<form
+						className="flex flex-col gap-8"
+						onSubmit={form.handleSubmit(onSubmit)}
+					>
 						<FormField
 							control={form.control}
 							name="name"

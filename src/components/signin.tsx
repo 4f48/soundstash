@@ -29,7 +29,7 @@ const formSchema = z.object({
 });
 
 export default function Signup(): JSX.Element {
-  const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -38,15 +38,17 @@ export default function Signup(): JSX.Element {
 		},
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-	setLoading(true)
-		authClient.signIn.email({
-			email: values.email,
-			password: values.password,
-		}).then(({ error }) => {
-			setLoading(false);
-			error && console.error(error);
-			!error && window.location.assign("/");
-		});
+		setLoading(true);
+		authClient.signIn
+			.email({
+				email: values.email,
+				password: values.password,
+			})
+			.then(({ error }) => {
+				setLoading(false);
+				error && console.error(error);
+				!error && window.location.assign("/");
+			});
 	}
 	return (
 		<Card className="w-full max-w-sm self-center my-auto">
@@ -63,7 +65,10 @@ export default function Signup(): JSX.Element {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="flex flex-col gap-8" onSubmit={form.handleSubmit(onSubmit)}>
+					<form
+						className="flex flex-col gap-8"
+						onSubmit={form.handleSubmit(onSubmit)}
+					>
 						<FormField
 							control={form.control}
 							name="email"
@@ -98,10 +103,7 @@ export default function Signup(): JSX.Element {
 								</FormItem>
 							)}
 						/>
-						<Button
-							type="submit"
-							className="w-full"
-						>
+						<Button type="submit" className="w-full">
 							Sign in
 						</Button>
 					</form>
