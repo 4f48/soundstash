@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/relay-ln7K/static/:path(.*)",
+      "destination": "https://eu-assets.i.posthog.com/static/:path*"
+    },
+    {
+      "source": "/relay-ln7K/:path(.*)",
+      "destination": "https://eu.i.posthog.com/:path*"
+    }
+  ]
+}
