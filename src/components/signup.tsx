@@ -38,12 +38,14 @@ export default function Signup(): JSX.Element {
 			password: "",
 		},
 	});
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		authClient.signUp.email({
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { error } = await authClient.signUp.email({
 			name: values.name,
 			email: values.email,
 			password: values.password,
 		});
+		error && console.error(error);
+		!error && window.location.assign("/auth/signin");
 	}
 	return (
 		<Card className="w-full max-w-sm self-center my-auto">
