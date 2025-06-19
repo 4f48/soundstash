@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"astro": "astro",
-		"better-auth": "cli",
+		"auth-schema": "cli generate --output src/lib/schema/auth.schema.ts --config src/lib/auth/provider.ts -y",
 		"build": "wrangler types && astro build",
 		"dev": "wrangler types && astro dev",
 		"drizzle": "drizzle-kit",
