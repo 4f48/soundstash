@@ -1,10 +1,11 @@
+import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
 	out: "./drizzle",
 	schema: "./src/lib/schema",
-	dialect: "sqlite",
+	dialect: "postgresql",
 	dbCredentials: {
-		url: "file:soundstash.db",
+		url: process.env.DATABASE_URL!,
 	},
 });

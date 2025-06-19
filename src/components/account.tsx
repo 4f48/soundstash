@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/client";
 import { LoaderCircle } from "lucide-react";
-import { lazy, useState, type JSX } from "react";
+import { useState, type JSX } from "react";
 
 export default function Account({
 	user,
