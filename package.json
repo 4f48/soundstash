@@ -12,8 +12,8 @@
 		"preview": "astro preview"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.0",
 		"@astrojs/react": "^4.3.0",
+		"@astrojs/vercel": "^8.2.0",
 		"@hookform/resolvers": "^5.1.1",
 		"@libsql/client": "^0.15.9",
 		"@radix-ui/react-label": "^2.1.7",
