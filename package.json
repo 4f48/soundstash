@@ -5,11 +5,11 @@
 	"scripts": {
 		"astro": "astro",
 		"auth-schema": "cli generate --output src/lib/schema/auth.schema.ts --config src/lib/auth/provider.ts -y",
-		"build": "wrangler types && astro build",
-		"dev": "wrangler types && astro dev",
+		"build": "astro build",
+		"dev": "astro dev",
 		"drizzle": "drizzle-kit",
 		"fmt": "NODE_OPTIONS=\"--experimental-strip-types\" prettier --write .",
-		"preview": "wrangler types && astro preview"
+		"preview": "astro preview"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.0",
@@ -27,7 +27,7 @@
 		"clsx": "^2.1.1",
 		"dotenv": "^16.5.0",
 		"drizzle-orm": "^0.44.2",
-		"lucide-react": "^0.518.0",
+		"lucide-react": "^0.469.0",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-hook-form": "^7.58.1",
