@@ -36,14 +36,15 @@ export default function Signup(): JSX.Element {
 			password: "",
 		},
 	});
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		authClient.signIn.email({
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const result = await authClient.signIn.email({
 			email: values.email,
 			password: values.password,
 		});
+		if (!result.error) window.location.assign("/");
 	}
 	return (
-		<Card className="w-full max-w-sm self-center mx-auto">
+		<Card className="w-full max-w-sm self-center my-auto">
 			<CardHeader>
 				<CardTitle>Login to your account</CardTitle>
 				<CardDescription>
@@ -57,7 +58,7 @@ export default function Signup(): JSX.Element {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-8">
+					<form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
 						<FormField
 							control={form.control}
 							name="email"

@@ -46,7 +46,7 @@ export default function Signup(): JSX.Element {
 		});
 	}
 	return (
-		<Card className="w-full max-w-sm self-center mx-auto">
+		<Card className="w-full max-w-sm self-center my-auto">
 			<CardHeader>
 				<CardTitle>Create your account</CardTitle>
 				<CardDescription>
@@ -60,7 +60,7 @@ export default function Signup(): JSX.Element {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-8">
+					<form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
 						<FormField
 							control={form.control}
 							name="name"
