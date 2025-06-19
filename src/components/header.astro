@@ -1,17 +1,35 @@
 ---
 import { Button } from "@/components/ui/button";
+
+const session = Astro.locals.session;
 ---
 
 <header
 	class="bg-background sticky top-0 z-50 flex w-full items-center px-6 py-1"
 >
-	<h1 class="text-lg font-extrabold">SoundStash</h1>
+	<a href="/"><h1 class="text-lg font-extrabold">SoundStash</h1></a>
 	<div class="flex flex-1 items-center justify-end">
-		<a href="/auth/signup">
-			<Button size="sm" variant="ghost">Sign up</Button>
-		</a>
-		<a href="/auth/signin">
-			<Button size="sm" variant="ghost">Sign in</Button>
-		</a>
+		{
+			session ? (
+				<a href="/account">
+					<Button size="sm" variant="ghost">
+						Account
+					</Button>
+				</a>
+			) : (
+				<>
+					<a href="/auth/signup">
+						<Button size="sm" variant="ghost">
+							Sign up
+						</Button>
+					</a>
+					<a href="/auth/signin">
+						<Button size="sm" variant="ghost">
+							Sign in
+						</Button>
+					</a>
+				</>
+			)
+		}
 	</div>
 </header>
