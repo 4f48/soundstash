@@ -2,11 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/relay-ln7K/static/:path(.*)",
+      "source": "/repr/static/:path(.*)",
       "destination": "https://eu-assets.i.posthog.com/static/:path*"
     },
     {
-      "source": "/relay-ln7K/:path(.*)",
+      "source": "/repr/:path(.*)",
       "destination": "https://eu.i.posthog.com/:path*"
     }
   ]
