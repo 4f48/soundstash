@@ -26,3 +26,6 @@ pnpm-debug.log*
 # cloudflare files
 .wrangler
 worker-configuration.d.ts
+
+# testing db
+soundstash.db
