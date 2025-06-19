@@ -40,7 +40,9 @@ export default function Account({
 					</h1>
 					<p>name: {user?.name}</p>
 					<p>email: {user?.email}</p>
-					{user?.emailVerified && <p>email verified: {user?.emailVerified}</p>}
+					{user?.emailVerified && (
+						<p>email verified: {user?.emailVerified ? "Yes" : "No"}</p>
+					)}
 				</section>
 				<section className="flex flex-col items-start gap-2">
 					<h1 className="scroll-m-20 border-b pb-2 w-full text-xl font-semibold tracking-tight first:mt-0">

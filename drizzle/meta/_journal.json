@@ -1,13 +1,13 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1750365209376,
-      "tag": "0000_special_goliath",
-      "breakpoints": true
-    }
-  ]
+	"version": "7",
+	"dialect": "postgresql",
+	"entries": [
+		{
+			"idx": 0,
+			"version": "7",
+			"when": 1750365209376,
+			"tag": "0000_special_goliath",
+			"breakpoints": true
+		}
+	]
 }
