@@ -17,6 +17,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import Upload from "@/components/upload";
 import {
 	type Column,
 	type ColumnDef,
@@ -28,28 +29,48 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import { Upload, HardDrive, ArrowUpDown } from "lucide-react";
+import byteSize from "byte-size";
+import { HardDrive, ArrowUpDown } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function Account({
-	tracks,
+	initialTracks,
 }: {
-	tracks: App.Track[];
+	initialTracks: App.Track[];
 }): JSX.Element {
+	const [tracks, setTracks] = useState<App.Track[]>(initialTracks);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [sorting, setSorting] = useState<SortingState>([]);
+
+	const fetchTracks = async () => {
+		try {
+			const response = await fetch("/api/tracks");
+			if (response.ok) {
+				const updatedTracks = await response.json();
+				setTracks(updatedTracks);
+			}
+		} catch (error) {
+			console.error("Failed to fetch tracks:", error);
+		}
+	};
+
+	const usedBytes = tracks.reduce((total, track) => total + track.size, 0);
 	const columns: ColumnDef<App.Track>[] = [
 		{
 			accessorKey: "title",
 			header: ({ column }) => <Header column={column} title="Title" />,
 		},
 		{
-			accessorKey: "author",
-			header: ({ column }) => <Header column={column} title="Author" />,
+			accessorKey: "artist",
+			header: ({ column }) => <Header column={column} title="Artist" />,
 		},
 		{
 			accessorKey: "size",
-			header: ({ column }) => <Header column={column} title="Size (KB)" />,
+			header: ({ column }) => <Header column={column} title="Size" />,
+			cell: ({ row }) =>
+				byteSize(row.getValue("size"), {
+					precision: 2,
+				}).toString(),
 		},
 	];
 	const table = useReactTable({
@@ -75,11 +96,8 @@ export default function Account({
 					Add or remove songs from your library and manage storage.
 				</CardDescription>
 				<CardAction className="space-x-2">
-					<Button>
-						<Upload />
-						Upload
-					</Button>
-					<Button variant="outline">
+					<Upload onUploadSuccess={fetchTracks} />
+					<Button variant="outline" disabled>
 						<HardDrive />
 						Get storage
 					</Button>
@@ -95,6 +113,12 @@ export default function Account({
 						placeholder="Filter by title..."
 						value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
 					/>
+					<p className="flex flex-1 text-sm text-muted-foreground justify-end items-center">
+						{byteSize(usedBytes, {
+							precision: 2,
+						}).toString()}{" "}
+						of 100 MB used
+					</p>
 				</div>
 				<Table>
 					<TableHeader>

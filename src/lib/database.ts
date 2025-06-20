@@ -1,4 +1,4 @@
-import * as authSchema from "@/lib/schema/auth.schema";
+import * as schema from "@/lib/schema";
 import { drizzle } from "drizzle-orm/neon-http";
 
-export const db = drizzle(import.meta.env.DATABASE_URL, { schema: authSchema });
+export const db = drizzle(import.meta.env.DATABASE_URL, { schema });

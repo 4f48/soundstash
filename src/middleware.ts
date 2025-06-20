@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth/provider";
 import { defineMiddleware } from "astro/middleware";
 
-const PROTECTED_ROUTES = ["/library", "/account"];
+const PROTECTED_ROUTES = ["/library", "/account", "/api/upload"];
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
 	const authenticated = await auth.api.getSession({
