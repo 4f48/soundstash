@@ -5,7 +5,6 @@ import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
 	adapter: vercel(),
-	site: "https://soundstash.pirger.eu",
 	experimental: {
 		fonts: [
 			{
@@ -18,6 +17,11 @@ export default defineConfig({
 	},
 	integrations: [react()],
 	output: "server",
+	prefetch: {
+		defaultStrategy: "viewport",
+		prefetchAll: true,
+	},
+	site: "https://soundstash.pirger.eu",
 	vite: {
 		build: {
 			rollupOptions: {

@@ -5,4 +5,10 @@ declare namespace App {
 		user: import("better-auth").User | null;
 		session: import("better-auth").Session | null;
 	}
+	interface Track {
+		id: string;
+		title: string;
+		author: string;
+		size: number;
+	}
 }

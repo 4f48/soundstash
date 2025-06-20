@@ -1,8 +1,29 @@
 ---
+import LibraryComponent from "@/components/library";
 import Layout from "@/layouts/header.astro";
+
+const tracks: App.Track[] = [
+	{
+		id: "0",
+		author: "Rammstein",
+		title: "Zeit",
+		size: 2,
+	},
+	{
+		id: "1",
+		author: "Radiohead",
+		title: "Creep",
+		size: 1,
+	},
+	{
+		id: "2",
+		author: "Franz Ferdinand",
+		title: "Take me out",
+		size: 3,
+	},
+];
 ---
 
 <Layout>
-	<h1>Library</h1>
-	Your music library
+	<LibraryComponent tracks={tracks} client:load />
 </Layout>
