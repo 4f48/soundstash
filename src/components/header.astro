@@ -7,7 +7,29 @@ const session = Astro.locals.session;
 <header
 	class="bg-background sticky top-0 z-50 flex w-full items-center px-6 py-1"
 >
-	<a href="/"><h1 class="text-lg font-extrabold">SoundStash</h1></a>
+	<div class="flex items-center">
+		<a href="/"
+			><Button className="text-lg font-extrabold" variant="ghost"
+				>SoundStash</Button
+			></a
+		>
+		{
+			session && (
+				<>
+					<a href="/">
+						<Button size="sm" variant="ghost">
+							Player
+						</Button>
+					</a>
+					<a href="/library">
+						<Button size="sm" variant="ghost">
+							Library
+						</Button>
+					</a>
+				</>
+			)
+		}
+	</div>
 	<div class="flex flex-1 items-center justify-end">
 		{
 			session ? (
