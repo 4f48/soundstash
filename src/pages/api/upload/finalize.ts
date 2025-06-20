@@ -12,18 +12,19 @@ export const POST: APIRoute = async (ctx) => {
 		const metadata: App.Track = requestBody;
 		console.log("Parsed metadata:", metadata);
 
-		if (!ctx.locals.user?.id) {
-			console.error("No user found in context");
+		const userId = ctx.request.headers.get("X-User-ID");
+		if (!userId) {
+			console.error("No user ID found in headers");
 			return new Response("Unauthorized", { status: 401 });
 		}
 
-		console.log("Inserting track for user:", ctx.locals.user.id);
+		console.log("Inserting track for user:", userId);
 
 		const result = await db.insert(track).values({
 			artist: metadata.artist,
 			blob: metadata.blob!,
 			id: metadata.id,
-			owner: ctx.locals.user.id,
+			owner: userId,
 			size: metadata.size,
 			title: metadata.title,
 		});
