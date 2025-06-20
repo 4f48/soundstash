@@ -25,7 +25,7 @@ export const POST: APIRoute = async (ctx) => {
 					const metadata: App.Track = JSON.parse(tokenPayload);
 					await db.insert(track).values({
 						artist: metadata.artist,
-						blob: metadata.blob!,
+						blob: blob.url,
 						id: metadata.id,
 						owner: metadata.owner!,
 						size: metadata.size,
