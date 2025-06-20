@@ -12,13 +12,15 @@ export const POST: APIRoute = async (ctx) => {
 			body,
 			request: ctx.request,
 			token: import.meta.env.BLOB_READ_WRITE_TOKEN,
-			onBeforeGenerateToken: async (pathname, payload) => {
+			onBeforeGenerateToken: async (pathname, clientPayload) => {
+        console.debug(clientPayload);
 				return {
 					allowedContentTypes: ["audio/mpeg", "audio/flac"],
-					tokenPayload: payload,
+					tokenPayload: clientPayload,
 				};
 			},
 			onUploadCompleted: async ({ blob, tokenPayload }) => {
+        console.debug(tokenPayload);
 				const metadata: App.Track = JSON.parse(tokenPayload!);
 				await db.insert(track).values({
 					artist: metadata.artist,
