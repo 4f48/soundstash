@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -111,7 +112,8 @@ export default function Signup(): JSX.Element {
 								</FormItem>
 							)}
 						/>
-						<Button type="submit" className="w-full">
+						<Button type="submit" disabled={loading} className="w-full">
+							{loading && <LoaderCircle className="animate-spin" />}
 							Sign up
 						</Button>
 					</form>
