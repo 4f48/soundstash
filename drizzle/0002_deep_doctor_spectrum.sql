@@ -1,0 +1,1 @@
+ALTER TABLE "track" ADD CONSTRAINT "track_owner_user_id_fk" FOREIGN KEY ("owner") REFERENCES "public"."user"("id") ON DELETE no action ON UPDATE no action;

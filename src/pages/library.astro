@@ -1,29 +1,15 @@
 ---
 import LibraryComponent from "@/components/library";
 import Layout from "@/layouts/header.astro";
+import { db } from "@/lib/database";
+import { track } from "@/lib/schema";
+import { eq } from "drizzle-orm";
 
-const tracks: App.Track[] = [
-	{
-		id: "0",
-		author: "Rammstein",
-		title: "Zeit",
-		size: 2,
-	},
-	{
-		id: "1",
-		author: "Radiohead",
-		title: "Creep",
-		size: 1,
-	},
-	{
-		id: "2",
-		author: "Franz Ferdinand",
-		title: "Take me out",
-		size: 3,
-	},
-];
+const tracks = await db.query.track.findMany({
+	where: eq(track.owner, Astro.locals.user?.id!),
+});
 ---
 
 <Layout>
-	<LibraryComponent tracks={tracks} client:load />
+	<LibraryComponent initialTracks={tracks} client:load />
 </Layout>

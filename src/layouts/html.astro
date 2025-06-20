@@ -2,6 +2,7 @@
 import PostHog from "@/components/posthog.astro";
 import "@/styles/global.css";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <html class="min-h-screen w-screen" lang="en">
@@ -20,6 +21,7 @@ import { Font } from "astro:assets";
 		<title>SoundStash</title>
 
 		<Font cssVariable="--font-inter" preload />
+		<ClientRouter />
 
 		<PostHog />
 	</head>
