@@ -26,7 +26,7 @@ export const POST: APIRoute = async (ctx) => {
 					metadata.blob = blob.url;
 
 					console.log("Calling finalize endpoint with metadata:", metadata);
-					const response = await fetch(import.meta.env.SITE + "/api/upload/finalize", {
+					const response = await fetch("https://soundstash.pirger.eu/api/upload/finalize", {
 						body: JSON.stringify(metadata),
 						headers: {
 							"Content-Type": "application/json",
