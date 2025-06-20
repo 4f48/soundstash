@@ -3,15 +3,46 @@ import { track } from "@/lib/schema";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async (ctx) => {
-	const metadata: App.Track = JSON.parse(await ctx.request.json());
-	console.debug(JSON.stringify(metadata));
-	await db.insert(track).values({
-		artist: metadata.artist,
-		blob: metadata.blob!,
-		id: metadata.id,
-		owner: ctx.locals.user?.id!,
-		size: metadata.size,
-		title: metadata.title,
-	});
-	return new Response(null);
+	try {
+		console.log("Finalize endpoint called");
+
+		const requestBody = await ctx.request.json();
+		console.log("Request body received:", requestBody);
+
+		const metadata: App.Track = requestBody;
+		console.log("Parsed metadata:", metadata);
+
+		if (!ctx.locals.user?.id) {
+			console.error("No user found in context");
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		console.log("Inserting track for user:", ctx.locals.user.id);
+
+		const result = await db.insert(track).values({
+			artist: metadata.artist,
+			blob: metadata.blob!,
+			id: metadata.id,
+			owner: ctx.locals.user.id,
+			size: metadata.size,
+			title: metadata.title,
+		});
+
+		console.log("Track inserted successfully:", result);
+		return new Response(JSON.stringify({ success: true }), {
+			headers: { "Content-Type": "application/json" }
+		});
+	} catch (error) {
+		console.error("Error in finalize endpoint:", error);
+		if (error instanceof Error) {
+			console.error("Error message:", error.message);
+			console.error("Error stack:", error.stack);
+		}
+		return new Response(JSON.stringify({
+			error: error instanceof Error ? error.message : "Unknown error"
+		}), {
+			status: 500,
+			headers: { "Content-Type": "application/json" }
+		});
+	}
 };
