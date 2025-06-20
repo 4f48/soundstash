@@ -13,24 +13,28 @@ export const POST: APIRoute = async (ctx) => {
 			request: ctx.request,
 			token: import.meta.env.BLOB_READ_WRITE_TOKEN,
 			onBeforeGenerateToken: async (pathname, clientPayload) => {
-        console.debug(clientPayload);
+				console.debug(clientPayload);
 				return {
 					allowedContentTypes: ["audio/mpeg", "audio/flac"],
 					tokenPayload: clientPayload,
 				};
 			},
 			onUploadCompleted: async ({ blob, tokenPayload }) => {
-				const metadata: App.Track = JSON.parse(tokenPayload!);
-        const user = ctx.locals.user;
-        if (!user) throw Error("user is not defined");
-				await db.insert(track).values({
-					artist: metadata.artist,
-					blob: blob.url,
-					id: metadata.id,
-					owner: user.id,
-					size: metadata.size,
-					title: metadata.title,
-				});
+				try {
+					const metadata: App.Track = JSON.parse(tokenPayload!);
+					const user = ctx.locals.user;
+					if (!user) throw Error("user is not defined");
+					await db.insert(track).values({
+						artist: metadata.artist,
+						blob: blob.url,
+						id: metadata.id,
+						owner: user.id,
+						size: metadata.size,
+						title: metadata.title,
+					});
+				} catch (e) {
+					if (e instanceof Error) console.error(e.message);
+				}
 			},
 		});
 		return new Response(JSON.stringify(result), {
