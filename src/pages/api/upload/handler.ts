@@ -32,7 +32,7 @@ export const POST: APIRoute = async (ctx) => {
 						method: "POST",
 					});
 				} catch (e) {
-					if (e instanceof Error) console.error(e.message);
+					if (e instanceof Error) console.error(JSON.stringify(e.message));
 				}
 			},
 		});
