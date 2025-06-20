@@ -16,6 +16,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upload } from "@vercel/blob/client";
 import { UploadIcon, LoaderCircle } from "lucide-react";
@@ -23,7 +24,6 @@ import { parseBlob } from "music-metadata";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { authClient } from "@/lib/auth/client";
 
 export default function Upload({
 	onUploadSuccess,
@@ -60,7 +60,7 @@ export default function Upload({
 					access: "public",
 					clientPayload: JSON.stringify(metadata),
 					contentType: track.type,
-					handleUploadUrl: "/api/upload/handler",
+					handleUploadUrl: "/api/upload",
 				});
 			}
 		} catch (e) {
