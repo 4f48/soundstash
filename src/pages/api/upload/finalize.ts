@@ -4,7 +4,7 @@ import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async (ctx) => {
 	const metadata: App.Track = JSON.parse(await ctx.request.json());
-	console.debug(metadata);
+	console.debug(JSON.stringify(metadata));
 	const user = ctx.locals.user;
 	if (!user) throw Error("user is not defined");
 	await db.insert(track).values({
