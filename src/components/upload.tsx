@@ -49,18 +49,18 @@ export default function Upload({
 					skipCovers: true,
 				});
 				const id = crypto.randomUUID();
-				const metadata: App.Track & { userId: string } = {
+				const metadata: App.Track = {
 					artist: common.artist!,
 					id,
+					owner: session.user.id,
 					size: track.size,
 					title: common.title!,
-					userId: session.user.id,
 				};
 				await upload(id, track, {
 					access: "public",
 					clientPayload: JSON.stringify(metadata),
 					contentType: track.type,
-					handleUploadUrl: "/api/upload",
+					handleUploadUrl: import.meta.env.SITE + "/api/upload",
 				});
 			}
 		} catch (e) {

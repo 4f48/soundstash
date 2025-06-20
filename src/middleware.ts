@@ -4,7 +4,6 @@ import { defineMiddleware } from "astro/middleware";
 const PROTECTED_ROUTES = [
 	"/library",
 	"/account",
-	"/api/upload",
 	"/api/tracks",
 	"/home",
 ];
