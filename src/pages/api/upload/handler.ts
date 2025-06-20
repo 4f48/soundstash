@@ -20,19 +20,30 @@ export const POST: APIRoute = async (ctx) => {
 			},
 			onUploadCompleted: async ({ blob, tokenPayload }) => {
 				try {
+					console.log("Upload completed, processing...");
 					if (!tokenPayload) throw Error("payload is not defined");
 					const metadata: App.Track = JSON.parse(tokenPayload);
 					metadata.blob = blob.url;
 
-					fetch(import.meta.env.SITE + "/api/upload/finalize", {
-						body: JSON.stringify(tokenPayload),
+					console.log("Calling finalize endpoint with metadata:", metadata);
+					const response = await fetch(import.meta.env.SITE + "/api/upload/finalize", {
+						body: JSON.stringify(metadata),
 						headers: {
 							"Content-Type": "application/json",
 						},
 						method: "POST",
 					});
+
+					if (!response.ok) {
+						console.error("Finalize request failed:", response.status, response.statusText);
+						const errorText = await response.text();
+						console.error("Error details:", errorText);
+					} else {
+						console.log("Finalize request completed successfully");
+					}
 				} catch (e) {
-					if (e instanceof Error) console.error(JSON.stringify(e.message));
+					console.error("Error in onUploadCompleted:", e);
+					if (e instanceof Error) console.error("Error message:", e.message);
 				}
 			},
 		});
