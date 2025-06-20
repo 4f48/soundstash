@@ -27,7 +27,7 @@ export const POST: APIRoute = async (ctx) => {
 						artist: metadata.artist,
 						blob: metadata.blob!,
 						id: metadata.id,
-						owner: ctx.locals.user?.id!,
+						owner: metadata.owner!,
 						size: metadata.size,
 						title: metadata.title,
 					});
