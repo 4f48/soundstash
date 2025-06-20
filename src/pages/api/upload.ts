@@ -1,41 +1,47 @@
 import { db } from "@/lib/database";
-import { track as trackTable } from "@/lib/schema/tracks.schema";
-import { put } from "@vercel/blob";
+import { track } from "@/lib/schema";
+import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import type { APIRoute } from "astro";
-import { parseBlob } from "music-metadata";
-
-const SUPPORTED_FILE_TYPES = ["audio/mpeg", "audio/flac"];
+import type { IndexBuilderOn } from "drizzle-orm/singlestore-core";
+import { parseBlob, type ICommonTagsResult } from "music-metadata";
 
 export const POST: APIRoute = async (ctx) => {
-	const formData = await ctx.request.formData();
-	const tracks = formData.getAll("track") as File[];
-	if (tracks.length < 1)
-		return new Response(null, {
-			status: 500,
+	const body = (await ctx.request.json()) as HandleUploadBody;
+	try {
+		const result = await handleUpload({
+			body,
+			request: ctx.request,
+			token: import.meta.env.BLOB_READ_WRITE_TOKEN,
+			onBeforeGenerateToken: async (pathname, payload) => {
+				return {
+					allowedContentTypes: ["audio/mpeg", "audio/flac"],
+					tokenPayload: payload,
+				};
+			},
+			onUploadCompleted: async ({ blob, tokenPayload }) => {
+				const metadata: App.Track = JSON.parse(tokenPayload!);
+				await db.insert(track).values({
+					artist: metadata.artist,
+					blob: blob.url,
+					id: metadata.id,
+					owner: ctx.locals.user?.id!,
+					size: metadata.size,
+					title: metadata.title,
+				});
+			},
 		});
-	for (let i = 0; i < tracks.length; i++) {
-		if (SUPPORTED_FILE_TYPES.includes(tracks[i].type)) {
-			const uuid = crypto.randomUUID();
-			const track = tracks[i];
-			const { url } = await put(`tracks/${uuid}`, track, {
-				access: "public",
-				multipart: true,
-				token: import.meta.env.BLOB_READ_WRITE_TOKEN,
+		return new Response(JSON.stringify(result), {
+			headers: { "Content-Type": "application/json" },
+		});
+	} catch (e) {
+		if (e instanceof Error)
+			return new Response(e.message, {
+				status: 400,
+				headers: { "Content-Type": "application/json" },
 			});
-			const metadata = await parseBlob(track, {
-				skipCovers: true,
+		else
+			return new Response(null, {
+				status: 500,
 			});
-			await db.insert(trackTable).values({
-				artist: metadata.common.artist!,
-				blob: url,
-				id: uuid,
-				owner: ctx.locals.user?.id!,
-				size: track.size,
-				title: metadata.common.title!,
-			});
-		}
 	}
-	return new Response(null, {
-		status: 200,
-	});
 };
