@@ -23,6 +23,7 @@ import { parseBlob } from "music-metadata";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { authClient } from "@/lib/auth/client";
 
 export default function Upload({
 	onUploadSuccess,
@@ -32,11 +33,12 @@ export default function Upload({
 	const [loading, setLoading] = useState(false);
 	const [tracks, setTracks] = useState<FileList | undefined>(undefined);
 	const [open, setOpen] = useState(false);
+	const { data: session } = authClient.useSession();
 	async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 		setLoading(true);
 		event.preventDefault();
 
-		if (!tracks) return;
+		if (!tracks || !session?.user?.id) return;
 
 		const formData = new FormData();
 
@@ -47,11 +49,12 @@ export default function Upload({
 					skipCovers: true,
 				});
 				const id = crypto.randomUUID();
-				const metadata: App.Track = {
+				const metadata: App.Track & { userId: string } = {
 					artist: common.artist!,
 					id,
 					size: track.size,
 					title: common.title!,
+					userId: session.user.id,
 				};
 				await upload(id, track, {
 					access: "public",
