@@ -58,7 +58,6 @@ export default function Upload({
 					clientPayload: JSON.stringify(metadata),
 					contentType: track.type,
 					handleUploadUrl: "/api/upload/handler",
-					multipart: true,
 				});
 			}
 		} catch (e) {
