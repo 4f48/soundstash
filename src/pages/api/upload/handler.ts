@@ -24,7 +24,7 @@ export const POST: APIRoute = async (ctx) => {
 					const metadata: App.Track = JSON.parse(tokenPayload);
 					metadata.blob = blob.url;
 
-					fetch("/api/upload/finalize", {
+					fetch(import.meta.env.SITE + "/api/upload/finalize", {
 						body: tokenPayload,
 						headers: {
 							"Content-Type": "application/json",
