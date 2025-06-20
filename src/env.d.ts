@@ -7,10 +7,10 @@ declare namespace App {
 	}
 	interface Track {
 		id: string;
-		owner: string;
+		owner?: string;
 		title: string;
 		artist: string;
-		blob: string;
+		blob?: string;
 		size: number;
 	}
 }

@@ -17,7 +17,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { upload } from "@vercel/blob/client";
 import { UploadIcon, LoaderCircle } from "lucide-react";
+import { parseBlob } from "music-metadata";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,17 +39,33 @@ export default function Upload({
 		if (!tracks) return;
 
 		const formData = new FormData();
-		for (let i = 0; i < tracks?.length!; i++) {
-			formData.append("track", tracks[i], tracks[i].name);
-		}
-		const result = await fetch("/api/upload", {
-			body: formData,
-			method: "POST",
-		});
 
-		setLoading(false);
-
-		if (result.ok) {
+		try {
+			for (let i = 0; i < tracks?.length!; i++) {
+				const track = tracks[i];
+				const { common } = await parseBlob(track, {
+					skipCovers: true,
+				});
+				const id = crypto.randomUUID();
+				const metadata: App.Track = {
+					artist: common.artist!,
+					id,
+					size: track.size,
+					title: common.title!,
+				};
+				await upload(id, track, {
+					access: "public",
+					clientPayload: JSON.stringify(metadata),
+					contentType: track.type,
+					handleUploadUrl: "/api/upload",
+					multipart: true,
+				});
+			}
+		} catch (e) {
+			if (e instanceof Error) console.error(e.message);
+			return 1;
+		} finally {
+			setLoading(false);
 			setOpen(false);
 			onUploadSuccess?.();
 		}
