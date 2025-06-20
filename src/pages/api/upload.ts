@@ -22,6 +22,8 @@ export const POST: APIRoute = async (ctx) => {
 			onUploadCompleted: async ({ blob, tokenPayload }) => {
 				try {
 					const metadata: App.Track = JSON.parse(tokenPayload!);
+          console.debug(metadata);
+          console.debug(tokenPayload);
 					const user = ctx.locals.user;
 					if (!user) throw Error("user is not defined");
 					await db.insert(track).values({
