@@ -56,11 +56,15 @@ export default function Upload({
 					size: track.size,
 					title: common.title!,
 				};
+				const token = localStorage.getItem("bearer_token");
 				await upload(id, track, {
 					access: "public",
 					clientPayload: JSON.stringify(metadata),
 					contentType: track.type,
 					handleUploadUrl: import.meta.env.SITE + "/api/upload",
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
 				});
 			}
 		} catch (e) {

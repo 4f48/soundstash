@@ -1,3 +1,6 @@
+packages:
+  - .
+
 onlyBuiltDependencies:
   - "@prisma/client"
   - "@prisma/engines"
@@ -7,5 +10,7 @@ onlyBuiltDependencies:
   - prisma
   - sharp
   - workerd
-packages:
-  - .
+
+overrides:
+  path-to-regexp@>=4.0.0 <6.3.0: ">=6.3.0"
+  esbuild@<=0.24.2: ">=0.25.0"
