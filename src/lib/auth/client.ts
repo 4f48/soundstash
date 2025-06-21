@@ -8,13 +8,13 @@ export const authClient = createAuthClient({
 	fetchOptions: {
 		onSuccess: (ctx) => {
 			const authToken = ctx.response.headers.get("set-auth-token");
-      console.debug(authToken);
+			console.debug(authToken);
 			if (authToken) localStorage.setItem("bearer_token", authToken);
 		},
 		auth: {
-		  type: "Bearer",
-			token: () => localStorage.getItem("bearer_token") || ""
-		}
+			type: "Bearer",
+			token: () => localStorage.getItem("bearer_token") || "",
+		},
 	},
-	plugins: [bearer()]
+	plugins: [bearer()],
 });

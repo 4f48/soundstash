@@ -57,8 +57,8 @@ export default function Upload({
 					title: common.title!,
 				};
 				const token = localStorage.getItem("bearer_token");
-				if (!token) throw new Error("token is null")
-        console.debug(token);
+				if (!token) throw new Error("token is null");
+				console.debug(token);
 				await upload(id, track, {
 					access: "public",
 					clientPayload: JSON.stringify(metadata),
