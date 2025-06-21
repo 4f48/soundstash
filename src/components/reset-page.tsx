@@ -45,10 +45,9 @@ export default function ResetPage({ token }: { token: string }): JSX.Element {
 				token,
 			},
 			{
-        onSuccess: () => {
-          setLoading(false),
-          setTimeout(() => navigate("/auth/signin"), 1000);
-        },
+				onSuccess: () => {
+					setLoading(false), setTimeout(() => navigate("/auth/signin"), 1000);
+				},
 				onError: ({ error }) => {
 					console.error(error);
 					setLoading(false);
@@ -74,7 +73,11 @@ export default function ResetPage({ token }: { token: string }): JSX.Element {
 								<FormItem>
 									<FormLabel>New password</FormLabel>
 									<FormControl>
-										<Input placeholder="Something you'll remember" type="password" {...field} />
+										<Input
+											placeholder="Something you'll remember"
+											type="password"
+											{...field}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>

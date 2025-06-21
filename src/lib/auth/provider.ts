@@ -15,7 +15,7 @@ export const auth = betterAuth({
 				from: "SoundStash <noreply.soundstash@pirger.eu>",
 				to: user.email,
 				subject: "Password reset",
-				text: `Dear ${user.name},\. We have received a request to reset your password for your account at SoundStash. Click the following link to change your password: ${url}.\nIf you did not request your password to be reset, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
+				text: `Dear ${user.name},\ We have received a request to reset your password for your account at SoundStash. Click the following link to change your password: ${url}.\nIf you did not request your password to be reset, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
 			});
 			if (error) console.error(error);
 		},

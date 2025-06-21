@@ -18,7 +18,24 @@ export default function Account({
 }: {
 	user: App.Locals["user"];
 }): JSX.Element {
+	const [changePasswordLoading, setChangePasswordLoading] = useState(false);
 	const [signoutLoading, setSignoutLoading] = useState(false);
+	function requestChange() {
+		setChangePasswordLoading(true);
+		authClient.requestPasswordReset(
+			{
+				email: user?.email!,
+				redirectTo: "/auth/reset",
+			},
+			{
+				onSuccess: () => setChangePasswordLoading(false),
+				onError: ({ error }) => {
+					console.error(error);
+					setChangePasswordLoading(false);
+				},
+			}
+		);
+	}
 	function signOut() {
 		setSignoutLoading(true);
 		authClient.signOut();
@@ -49,14 +66,24 @@ export default function Account({
 					<h1 className="scroll-m-20 border-b pb-2 w-full text-xl font-semibold tracking-tight first:mt-0">
 						Account Actions
 					</h1>
-					<Button
-						variant="destructive"
-						disabled={signoutLoading}
-						onClick={() => signOut()}
-					>
-						{signoutLoading && <LoaderCircle className="animate-spin" />}
-						Sign out
-					</Button>
+					<div className="flex gap-2">
+						<Button
+							variant="outline"
+							disabled={changePasswordLoading}
+							onClick={() => requestChange()}
+						>
+							{changePasswordLoading && <LoaderCircle className="animate-spin" />}
+							Change password
+						</Button>
+						<Button
+							variant="destructive"
+							disabled={signoutLoading}
+							onClick={() => signOut()}
+						>
+							{signoutLoading && <LoaderCircle className="animate-spin" />}
+							Sign out
+						</Button>
+					</div>
 				</section>
 			</CardContent>
 		</Card>
