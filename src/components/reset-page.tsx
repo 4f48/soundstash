@@ -1,4 +1,3 @@
-import ResetDialog from "@/components/reset-dialog";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -27,77 +26,55 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-	email: z.string().email().nonempty(),
 	password: z.string().nonempty(),
 });
 
-export default function Signup(): JSX.Element {
+export default function ResetPage({ token }: { token: string }): JSX.Element {
 	const [loading, setLoading] = useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			email: "",
 			password: "",
 		},
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setLoading(true);
-		authClient.signIn
-			.email({
-				email: values.email,
-				password: values.password,
-			})
-			.then(({ error }) => {
-				setLoading(false);
-				error && console.error(error);
-				!error && navigate("/");
-			});
+		authClient.resetPassword(
+			{
+				newPassword: values.password,
+				token,
+			},
+			{
+        onSuccess: () => {
+          setLoading(false),
+          setTimeout(() => navigate("/auth/signin"), 1000);
+        },
+				onError: ({ error }) => {
+					console.error(error);
+					setLoading(false);
+				},
+			}
+		);
 	}
 	return (
 		<Card className="w-full max-w-sm self-center my-auto">
 			<CardHeader>
-				<CardTitle>Login to your account</CardTitle>
+				<CardTitle>Forgot your password?</CardTitle>
 				<CardDescription>
-					Enter your email below to login to your account.
+					Enter your email below to reset your password.
 				</CardDescription>
-				<CardAction>
-					<a href="/auth/signup">
-						<Button variant="link">Sign up</Button>
-					</a>
-				</CardAction>
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form
-						className="flex flex-col gap-8"
-						onSubmit={form.handleSubmit(onSubmit)}
-					>
-						<FormField
-							control={form.control}
-							name="email"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Email</FormLabel>
-									<FormControl>
-										<Input placeholder="you@example.com" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
 						<FormField
 							control={form.control}
 							name="password"
 							render={({ field }) => (
 								<FormItem>
-									<div className="flex items-center">
-										<FormLabel>Password</FormLabel>
-										<span className="ml-auto inline-block">
-											<ResetDialog />
-										</span>
-									</div>
+									<FormLabel>New password</FormLabel>
 									<FormControl>
-										<Input type="password" {...field} />
+										<Input placeholder="Something you'll remember" type="password" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -105,7 +82,7 @@ export default function Signup(): JSX.Element {
 						/>
 						<Button type="submit" disabled={loading} className="w-full">
 							{loading && <LoaderCircle className="animate-spin" />}
-							Sign in
+							Save
 						</Button>
 					</form>
 				</Form>
