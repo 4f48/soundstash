@@ -13,4 +13,7 @@ declare namespace App {
 		blob?: string;
 		size: number;
 	}
+	interface DeleteTrackRequest {
+		id: string;
+	}
 }

@@ -8,6 +8,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
 	Table,
@@ -30,7 +38,15 @@ import {
 	getFilteredRowModel,
 } from "@tanstack/react-table";
 import byteSize from "byte-size";
-import { HardDrive, ArrowUpDown } from "lucide-react";
+import {
+	HardDrive,
+	ArrowUpDown,
+	MoreHorizontal,
+	Delete,
+	ClipboardCopy,
+	Trash,
+	Trash2,
+} from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function Account({
@@ -71,6 +87,47 @@ export default function Account({
 				byteSize(row.getValue("size"), {
 					precision: 2,
 				}).toString(),
+		},
+		{
+			id: "actions",
+			cell: ({ row }) => {
+				const track = row.original;
+				return (
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" size="icon">
+								<span className="sr-only">Open actions menu</span>
+								<MoreHorizontal />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem
+								onClick={() => navigator.clipboard.writeText(track.id)}
+							>
+								<ClipboardCopy />
+								Copy track ID
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() => {
+									const body: App.DeleteTrackRequest = {
+										id: track.id,
+									};
+									fetch("/api/delete", {
+										body: JSON.stringify(body),
+										headers: {
+											"Content-Type": "application/json",
+										},
+										method: "DELETE",
+									}).then(() => fetchTracks());
+								}}
+							>
+								<Trash2 />
+								Delete
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				);
+			},
 		},
 	];
 	const table = useReactTable({
