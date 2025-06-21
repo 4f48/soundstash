@@ -16,7 +16,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 		ctx.locals.user = null;
 		ctx.locals.session = null;
 		if (PROTECTED_ROUTES.includes(ctx.url.pathname))
-			return ctx.redirect("/auth/signin");
+			return ctx.redirect("/auth/signin", 303);
 	}
 
 	return next();
