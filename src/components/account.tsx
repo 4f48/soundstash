@@ -9,6 +9,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/client";
+import { navigate } from "astro:transitions/client";
 import { LoaderCircle } from "lucide-react";
 import { useState, type JSX } from "react";
 
@@ -21,7 +22,7 @@ export default function Account({
 	function signOut() {
 		setSignoutLoading(true);
 		authClient.signOut();
-		setTimeout(() => window.location.assign("/"), 1000);
+		setTimeout(() => navigate("/"), 1000);
 	}
 	return (
 		<Card className="mx-3">

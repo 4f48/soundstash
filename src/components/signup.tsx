@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { navigate } from "astro:transitions/client";
 import { LoaderCircle } from "lucide-react";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
@@ -51,7 +52,7 @@ export default function Signup(): JSX.Element {
 			.then(({ error }) => {
 				setLoading(false);
 				error && console.error(error);
-				!error && window.location.assign("/auth/signin");
+				!error && navigate("/auth/signin");
 			});
 	}
 	return (
