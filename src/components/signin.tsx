@@ -41,19 +41,10 @@ export default function Signup(): JSX.Element {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setLoading(true);
 		authClient.signIn
-			.email(
-				{
-					email: values.email,
-					password: values.password,
-				},
-				{
-					onSuccess: (ctx) => {
-						const authToken = ctx.response.headers.get("set-auth-token");
-						console.debug(authToken);
-						if (authToken) localStorage.setItem("bearer_token", authToken);
-					},
-				}
-			)
+			.email({
+				email: values.email,
+				password: values.password,
+			})
 			.then(({ error }) => {
 				setLoading(false);
 				error && console.error(error);
