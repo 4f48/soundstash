@@ -1,3 +1,4 @@
+import { bearer } from "better-auth/plugins";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
@@ -7,6 +8,7 @@ export const authClient = createAuthClient({
 	fetchOptions: {
 		onSuccess: (ctx) => {
 			const authToken = ctx.response.headers.get("set-auth-token");
+      console.debug(authToken);
 			if (authToken) localStorage.setItem("bearer_token", authToken);
 		},
 		auth: {
@@ -14,4 +16,5 @@ export const authClient = createAuthClient({
 			token: () => localStorage.getItem("bearer_token") || ""
 		}
 	},
+	plugins: [bearer()]
 });
