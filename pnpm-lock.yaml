@@ -44,18 +44,6 @@ importers:
       "@tanstack/react-table":
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      "@types/byte-size":
-        specifier: ^8.1.2
-        version: 8.1.2
-      "@types/howler":
-        specifier: ^2.2.12
-        version: 2.2.12
-      "@types/react":
-        specifier: ^19.1.8
-        version: 19.1.8
-      "@types/react-dom":
-        specifier: ^19.1.6
-        version: 19.1.6(@types/react@19.1.8)
       "@vercel/blob":
         specifier: ^1.1.1
         version: 1.1.1
@@ -80,9 +68,6 @@ importers:
       drizzle-orm:
         specifier: ^0.44.2
         version: 0.44.2(@cloudflare/workers-types@4.20250619.0)(@libsql/client@0.15.9)(@neondatabase/serverless@1.0.1)(@prisma/client@5.22.0(prisma@5.22.0))(@types/better-sqlite3@7.6.13)(@types/pg@8.15.4)(better-sqlite3@11.10.0)(kysely@0.28.2)(prisma@5.22.0)
-      howler:
-        specifier: ^2.2.4
-        version: 2.2.4
       lucide-react:
         specifier: ^0.518.0
         version: 0.518.0(react@19.1.0)
@@ -104,6 +89,9 @@ importers:
       react-hook-form:
         specifier: ^7.58.1
         version: 7.58.1(react@19.1.0)
+      react-howler:
+        specifier: ^5.2.0
+        version: 5.2.0
       resend:
         specifier: ^4.6.0
         version: 4.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -126,9 +114,21 @@ importers:
       "@trivago/prettier-plugin-sort-imports":
         specifier: ^5.2.2
         version: 5.2.2(prettier@3.5.3)
+      "@types/byte-size":
+        specifier: ^8.1.2
+        version: 8.1.2
       "@types/node":
         specifier: ^24.0.3
         version: 24.0.3
+      "@types/react":
+        specifier: ^19.1.8
+        version: 19.1.8
+      "@types/react-dom":
+        specifier: ^19.1.6
+        version: 19.1.6(@types/react@19.1.8)
+      "@types/react-howler":
+        specifier: ^5.2.3
+        version: 5.2.3
       drizzle-kit:
         specifier: ^0.31.1
         version: 0.31.1
@@ -2548,6 +2548,12 @@ packages:
     peerDependencies:
       "@types/react": ^19.0.0
 
+  "@types/react-howler@5.2.3":
+    resolution:
+      {
+        integrity: sha512-0XJ+vHLgobVcc8G8f3jlnfIv3FVnUvEuxOyq3TwW9qNBeko7EhHDc9QYtY7mUTcrT86mPTAVCKWitY+TyzHWZw==,
+      }
+
   "@types/react@19.1.8":
     resolution:
       {
@@ -4298,6 +4304,13 @@ packages:
         integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==,
       }
 
+  loose-envify@1.4.0:
+    resolution:
+      {
+        integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==,
+      }
+    hasBin: true
+
   lru-cache@10.4.3:
     resolution:
       {
@@ -4853,6 +4866,13 @@ packages:
     engines: { node: ^14.16.0 || >=16.10.0 }
     hasBin: true
 
+  object-assign@4.1.1:
+    resolution:
+      {
+        integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==,
+      }
+    engines: { node: ">=0.10.0" }
+
   ofetch@1.4.1:
     resolution:
       {
@@ -5196,6 +5216,12 @@ packages:
       }
     engines: { node: ">= 6" }
 
+  prop-types@15.8.1:
+    resolution:
+      {
+        integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==,
+      }
+
   property-information@6.5.0:
     resolution:
       {
@@ -5269,6 +5295,18 @@ packages:
     engines: { node: ">=18.0.0" }
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
+
+  react-howler@5.2.0:
+    resolution:
+      {
+        integrity: sha512-oDK+zML0MHf3nVNM4lMxh+re87NDa7fHowea2WK8197yqnMiZfPVHoMXtfb/PtuoOsWLO06vmEAtovwTRWpTFg==,
+      }
+
+  react-is@16.13.1:
+    resolution:
+      {
+        integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
+      }
 
   react-promise-suspense@0.3.4:
     resolution:
@@ -7939,6 +7977,11 @@ snapshots:
     dependencies:
       "@types/react": 19.1.8
 
+  "@types/react-howler@5.2.3":
+    dependencies:
+      "@types/howler": 2.2.12
+      "@types/react": 19.1.8
+
   "@types/react@19.1.8":
     dependencies:
       csstype: 3.1.3
@@ -8987,6 +9030,10 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+
   lru-cache@10.4.3: {}
 
   lru-cache@5.1.1:
@@ -9461,6 +9508,8 @@ snapshots:
       tinyexec: 0.3.2
       ufo: 1.6.1
 
+  object-assign@4.1.1: {}
+
   ofetch@1.4.1:
     dependencies:
       destr: 2.0.5
@@ -9630,6 +9679,12 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
+  prop-types@15.8.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+
   property-information@6.5.0: {}
 
   property-information@7.1.0: {}
@@ -9670,6 +9725,13 @@ snapshots:
   react-hook-form@7.58.1(react@19.1.0):
     dependencies:
       react: 19.1.0
+
+  react-howler@5.2.0:
+    dependencies:
+      howler: 2.2.4
+      prop-types: 15.8.1
+
+  react-is@16.13.1: {}
 
   react-promise-suspense@0.3.4:
     dependencies:

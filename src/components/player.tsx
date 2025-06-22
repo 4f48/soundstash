@@ -1,43 +1,109 @@
-import { Label } from "./ui/label";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { $playlist } from "@/lib/stores";
+import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { useStore } from "@nanostores/react";
-import { Howl, Howler } from "howler";
-import { useEffect, useState, type JSX } from "react";
+import { Music2, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { useEffect, useMemo, useState, type JSX } from "react";
+import ReactHowler from "react-howler";
 
 export default function Player(): JSX.Element {
-	const [input, setInput] = useState("");
+	const current = useStore($currentTrack);
+	const playing = useStore($playing);
 	const playlist = useStore($playlist);
-	useEffect(() => console.debug(playlist), [playlist]);
-	const player = new Howl({
-		src: playlist,
-		html5: true,
+	const [title, setTitle] = useState("");
+	function previous() {
+		if (current > 0) {
+			$playing.set(false);
+			$currentTrack.set(current - 1);
+			$playing.set(true);
+		}
+	}
+	function next() {
+		if (current < playlist.length - 1) {
+			$playing.set(false);
+			$currentTrack.set(current + 1);
+			$playing.set(true);
+		}
+	}
+	function handleEnd() {
+		if (current < playlist.length - 1) {
+			$currentTrack.set(current + 1);
+		} else {
+			$playing.set(false);
+		}
+	}
+	useEffect(() => {
+		if (!playlist[current]) return;
+		const request: App.GetMetadataRequest = {
+			blob: playlist[current],
+		};
+		fetch("/api/metadata", {
+			body: JSON.stringify(request),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			method: "POST",
+		}).then(async (result) => {
+			setTitle(await result.text());
+		});
 	});
 	return (
-		<div className="border absolute bottom-2 w-[calc(100vw-16px)] left-2 p-2 flex flex-col gap-3 border-border bg-card text-card-foreground rounded-xl shadow-sm">
-			<form
-				className="flex gap-2"
-				onSubmit={() => {
-					if (playlist.length == 1 && playlist[0] == "") playlist[0] = input;
-					else playlist.push(input);
-				}}
-			>
-				<Input
-					onChange={(event) => {
-						event.preventDefault();
-						setInput(event.target.value);
-					}}
-					placeholder="https://..."
-					value={input}
-					className="border w-full"
+		<>
+			{playlist[current] && (
+				<ReactHowler
+					src={playlist[current]}
+					playing={playing}
+					onEnd={() => handleEnd()}
+					html5={true}
 				/>
-				<Button>Add</Button>
-			</form>
-			<div className="flex gap-2 *:flex-1">
-				<Button onClick={() => player.play()}>Play</Button>
-				<Button onClick={() => player.pause()}>Pause</Button>
+			)}
+			<div className="border absolute bottom-2 h-[58px] w-[calc(100vw-16px)] items-center grid grid-rows-1 grid-cols-3 justify-center left-2 p-2 gap-3 border-border bg-card text-card-foreground rounded-xl shadow-sm">
+				<div>
+					{playlist[current] && (
+						<p className="flex items-center gap-2">
+							<span className="bg-muted rounded-sm flex items-center justify-center p-2">
+								<Music2 className="text-muted-foreground" />
+							</span>
+							{title}
+						</p>
+					)}
+				</div>
+				<div className="flex items-center justify-center gap-2">
+					<Button
+						size="icon"
+						variant="ghost"
+						onClick={() => previous()}
+						disabled={current == 0}
+					>
+						<SkipBack className="fill-primary" />
+					</Button>
+					{playing ? (
+						<Button
+							size="icon"
+							variant="ghost"
+							onClick={() => $playing.set(false)}
+						>
+							<Pause className="fill-primary" />
+						</Button>
+					) : (
+						<Button
+							size="icon"
+							variant="ghost"
+							onClick={() => $playing.set(true)}
+							disabled={!playlist[current]}
+						>
+							<Play className="fill-primary" />
+						</Button>
+					)}
+					<Button
+						size="icon"
+						variant="ghost"
+						onClick={() => next()}
+						disabled={current == playlist.length - 1 || !playlist[current]}
+					>
+						<SkipForward className="fill-primary" />
+					</Button>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

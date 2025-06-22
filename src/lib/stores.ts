@@ -1,4 +1,5 @@
 import { atom } from "nanostores";
 
-export const $playing = atom("");
-export const $playlist = atom<string[]>([""]);
+export const $currentTrack = atom(0);
+export const $playing = atom(false);
+export const $playlist = atom<string[]>([]);

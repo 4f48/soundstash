@@ -16,4 +16,7 @@ declare namespace App {
 	interface DeleteTrackRequest {
 		id: string;
 	}
+	interface GetMetadataRequest {
+		blob: string;
+	}
 }
