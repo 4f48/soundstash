@@ -4,7 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
-	adapter: vercel(),
+	adapter: vercel({
+		edgeMiddleware: true,
+	}),
 	experimental: {
 		fonts: [
 			{
