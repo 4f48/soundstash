@@ -4,6 +4,11 @@ const user = Astro.locals.user;
 ---
 
 <Layout>
-	<h1>Astro</h1>
-	<a href="library">Library</a>
+	<section class="mx-2 [&_p]:leading-7 [&_p]:[&:not(:first-child)]:mt-6">
+		<p>
+			This is SoundStash, the music streaming platform where you own your music.
+			Get started by <a href="/auth/signup" class="underline">signing up</a>.
+		</p>
+		<p>Everyone gets 100 MB storage for free!</p>
+	</section>
 </Layout>

@@ -2,7 +2,7 @@ import { db } from "@/lib/database";
 import { track } from "@/lib/schema";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import type { APIRoute } from "astro";
-import { sum } from "drizzle-orm";
+import { eq, sum } from "drizzle-orm";
 import type { IndexBuilderOn } from "drizzle-orm/singlestore-core";
 import { parseBlob, type ICommonTagsResult } from "music-metadata";
 
@@ -17,7 +17,8 @@ export const POST: APIRoute = async (ctx) => {
 				const metadata: App.Track = JSON.parse(clientPayload!);
 				const result = await db
 					.select({ storage: sum(track.size) })
-					.from(track);
+					.from(track)
+					.where(eq(track.owner, metadata.owner!));
 				console.debug(result);
 				return {
 					allowedContentTypes: ["audio/mpeg", "audio/flac"],
