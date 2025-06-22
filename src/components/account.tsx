@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/client";
 import { navigate } from "astro:transitions/client";
-import { LoaderCircle } from "lucide-react";
+import { Check, LoaderCircle, Mail } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function Account({
@@ -20,6 +20,12 @@ export default function Account({
 }): JSX.Element {
 	const [changePasswordLoading, setChangePasswordLoading] = useState(false);
 	const [signoutLoading, setSignoutLoading] = useState(false);
+	const [verifyButton, setVerifyButton] = useState<JSX.Element>(
+		<>
+			<Mail /> Verify email
+		</>
+	);
+	const [verifyLoading, setVerifyLoading] = useState(false);
 	function requestChange() {
 		setChangePasswordLoading(true);
 		authClient.requestPasswordReset(
@@ -58,15 +64,54 @@ export default function Account({
 					</h1>
 					<p>name: {user?.name}</p>
 					<p>email: {user?.email}</p>
-					{user?.emailVerified && (
-						<p>email verified: {user?.emailVerified ? "Yes" : "No"}</p>
-					)}
+					<p>email verified: {user?.emailVerified ? "Yes" : "No"}</p>
 				</section>
 				<section className="flex flex-col items-start gap-2">
 					<h1 className="scroll-m-20 border-b pb-2 w-full text-xl font-semibold tracking-tight first:mt-0">
 						Account Actions
 					</h1>
 					<div className="flex gap-2">
+						{!user?.emailVerified && (
+							<Button
+								disabled={verifyLoading}
+								onClick={() => {
+									setVerifyLoading(true);
+									setVerifyButton(
+										<>
+											<LoaderCircle className="animate-spin" /> Verify email
+										</>
+									);
+									authClient.sendVerificationEmail(
+										{
+											email: user?.email!,
+											callbackURL: "/account",
+										},
+										{
+											onSuccess: () => {
+												setVerifyLoading(false);
+												setVerifyButton(
+													<>
+														<Check />
+														Sent email
+													</>
+												);
+												setTimeout(
+													() =>
+														setVerifyButton(
+															<>
+																<Mail /> Verify email
+															</>
+														),
+													5000
+												);
+											},
+										}
+									);
+								}}
+							>
+								{verifyButton}
+							</Button>
+						)}
 						<Button
 							variant="outline"
 							disabled={changePasswordLoading}

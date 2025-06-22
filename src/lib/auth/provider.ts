@@ -28,7 +28,7 @@ export const auth = betterAuth({
 				from: "SoundStash <noreply.soundstash@pirger.eu>",
 				to: user.email,
 				subject: "Email verification",
-				text: `Dear ${user.name},\nYour email has been used to register a new account on SoundStash. Verify your email by clicking the following link: ${url}.\nIf you did not register the account, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
+				text: `Dear ${user.name},\nYour email has been used to register a new account on SoundStash. Verify your email by clicking the following link: ${url}.\nThis link expires in 1 hour. If your verification link expired, you can request a new one in the account tab.\nIf you did not register the account, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
 			});
 			if (error) console.error(error);
 		},
