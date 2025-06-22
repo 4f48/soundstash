@@ -2,11 +2,12 @@ import { auth } from "@/lib/auth/provider";
 import { defineMiddleware } from "astro/middleware";
 
 const PROTECTED_ROUTES = [
+  "/account",
+  "/api/delete",
+  "/api/metadata",
+  "/api/tracks",
+  "/home",
 	"/library",
-	"/account",
-	"/api/tracks",
-	"/home",
-	"/api/metadata",
 ];
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
