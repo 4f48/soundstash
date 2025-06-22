@@ -11,9 +11,16 @@ export default defineConfig({
 		fonts: [
 			{
 				cssVariable: "--font-inter",
-				featureSettings: "'liga' 1, 'calt' 1",
 				name: "Inter",
-				provider: fontProviders.bunny(),
+				provider: "local",
+				variants: [
+					{
+						featureSettings: "'liga' 1, 'calt' 1",
+						src: ["./src/assets/fonts/InterVariable.woff2"],
+						style: "normal",
+						weight: "100 900",
+					},
+				],
 			},
 		],
 	},
