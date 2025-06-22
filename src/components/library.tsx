@@ -25,6 +25,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Upload from "@/components/upload";
 import {
 	type Column,
@@ -147,17 +152,28 @@ export default function Account({
 		<Card className="mx-3">
 			<CardHeader>
 				<CardTitle className="scroll-m-20 text-3xl font-extrabold tracking-tight text-balance">
-					Your music library
+					Manage storage
 				</CardTitle>
 				<CardDescription>
-					Add or remove songs from your library and manage storage.
+					Add or remove songs from your library and manage storage. Go to{" "}
+					<a className="underline" href="/">
+						player
+					</a>{" "}
+					to listen to your songs.
 				</CardDescription>
 				<CardAction className="space-x-2">
 					<Upload onUploadSuccess={fetchTracks} />
-					<Button variant="outline" disabled>
-						<HardDrive />
-						Get storage
-					</Button>
+					<Tooltip>
+						<TooltipTrigger asChild className="disabled:pointer-events-auto">
+							<Button variant="outline" disabled>
+								<HardDrive />
+								Get storage
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>
+							You'll be able to get more storage in the future.
+						</TooltipContent>
+					</Tooltip>
 				</CardAction>
 			</CardHeader>
 			<CardContent>
