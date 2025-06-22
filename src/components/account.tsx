@@ -72,7 +72,9 @@ export default function Account({
 							disabled={changePasswordLoading}
 							onClick={() => requestChange()}
 						>
-							{changePasswordLoading && <LoaderCircle className="animate-spin" />}
+							{changePasswordLoading && (
+								<LoaderCircle className="animate-spin" />
+							)}
 							Change password
 						</Button>
 						<Button

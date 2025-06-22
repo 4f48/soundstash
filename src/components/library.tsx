@@ -102,10 +102,10 @@ export default function Account({
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
 							<DropdownMenuItem
-								onClick={() => navigator.clipboard.writeText(track.id)}
+								onClick={() => navigator.clipboard.writeText(track.blob!)}
 							>
 								<ClipboardCopy />
-								Copy track ID
+								Copy link
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onClick={() => {

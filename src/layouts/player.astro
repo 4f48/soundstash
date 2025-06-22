@@ -1,0 +1,9 @@
+---
+import PlayerCard from "@/components/player";
+import Layout from "@/layouts/header.astro";
+---
+
+<Layout>
+	<slot />
+	<PlayerCard client:load />
+</Layout>
