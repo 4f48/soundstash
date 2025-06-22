@@ -15,6 +15,7 @@
 		"@astrojs/react": "^4.3.0",
 		"@astrojs/vercel": "^8.2.0",
 		"@hookform/resolvers": "^5.1.1",
+		"@nanostores/react": "^1.0.0",
 		"@neondatabase/serverless": "^1.0.1",
 		"@radix-ui/react-dialog": "^1.1.14",
 		"@radix-ui/react-dropdown-menu": "^2.1.15",
@@ -23,18 +24,21 @@
 		"@tailwindcss/vite": "^4.1.10",
 		"@tanstack/react-table": "^8.21.3",
 		"@types/byte-size": "^8.1.2",
+		"@types/howler": "^2.2.12",
 		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
 		"@vercel/blob": "^1.1.1",
 		"astro": "^5.10.0",
-		"better-auth": "^1.2.9",
+		"better-auth": "^1.2.10",
 		"byte-size": "^9.0.1",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"dotenv": "^16.5.0",
 		"drizzle-orm": "^0.44.2",
+		"howler": "^2.2.4",
 		"lucide-react": "^0.518.0",
 		"music-metadata": "^11.3.0",
+		"nanostores": "^1.0.1",
 		"next-themes": "^0.4.6",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
@@ -46,7 +50,7 @@
 		"zod": "^3.25.67"
 	},
 	"devDependencies": {
-		"@better-auth/cli": "^1.2.9",
+		"@better-auth/cli": "^1.2.10",
 		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
 		"@types/node": "^24.0.3",
 		"drizzle-kit": "^0.31.1",
@@ -56,6 +60,6 @@
 		"prettier-plugin-tailwindcss": "^0.6.13",
 		"tsx": "^4.20.3",
 		"tw-animate-css": "^1.3.4",
-		"wrangler": "^4.20.4"
+		"wrangler": "^4.20.5"
 	}
 }
