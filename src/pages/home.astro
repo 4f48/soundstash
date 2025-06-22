@@ -1,7 +1,15 @@
 ---
+import AllTracks from "@/components/all-tracks";
 import Layout from "@/layouts/player.astro";
+import { db } from "@/lib/database";
+import { track } from "@/lib/schema";
+import { eq } from "drizzle-orm";
+
+const tracks = await db.query.track.findMany({
+	where: eq(track.owner, Astro.locals.user?.id!),
+});
 ---
 
 <Layout>
-	<h1>Home</h1>
+	<AllTracks tracks={tracks} client:load />
 </Layout>
