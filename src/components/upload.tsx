@@ -45,31 +45,56 @@ export default function Upload({
 		try {
 			for (let i = 0; i < tracks?.length!; i++) {
 				const track = tracks[i];
+
+				const urlRequest: App.GetPresignedUploadUrlRequest = {
+					contentLength: track.size,
+					contentType: track.type,
+				};
+				const urlResult = await fetch("/api/upload/authorize", {
+					body: JSON.stringify(urlRequest),
+					headers: {
+						"Content-Type": "application/json",
+					},
+					method: "POST",
+				});
+				const urlResponse =
+					(await urlResult.json()) as App.GetPresignedUploadUrlResponse;
+
+				const uploadResponse = await fetch(urlResponse.url, {
+					body: track,
+					headers: {
+						"Content-Length": track.size.toString(),
+						"Content-Type": track.type,
+					},
+					method: "PUT",
+				});
+
 				const { common } = await parseBlob(track, {
 					skipCovers: true,
 				});
-				const id = crypto.randomUUID();
-				const metadata: App.Track = {
+				const finalizeRequest: App.FinalizeUploadRequest = {
 					artist: common.artist!,
-					id,
-					owner: session.user.id,
+					key: urlResponse.key,
 					size: track.size,
 					title: common.title!,
 				};
-				await upload(id, track, {
-					access: "public",
-					clientPayload: JSON.stringify(metadata),
-					contentType: track.type,
-					handleUploadUrl: import.meta.env.SITE + "/api/upload",
-				});
+				if (uploadResponse.ok)
+					await fetch("/api/upload/finalize", {
+						body: JSON.stringify(finalizeRequest),
+						headers: {
+							"Content-Type": "application/json",
+						},
+						method: "POST",
+					});
 			}
 		} catch (e) {
+			setLoading(false);
 			if (e instanceof Error) console.error(e.message);
 			return 1;
 		} finally {
+			onUploadSuccess?.();
 			setLoading(false);
 			setOpen(false);
-			onUploadSuccess?.();
 		}
 	}
 	return (
