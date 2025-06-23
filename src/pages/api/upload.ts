@@ -19,7 +19,6 @@ export const POST: APIRoute = async (ctx) => {
 					.select({ storage: sum(track.size) })
 					.from(track)
 					.where(eq(track.owner, metadata.owner!));
-				console.debug(result);
 				return {
 					allowedContentTypes: ["audio/mpeg", "audio/flac"],
 					maximumSizeInBytes: 1e8 - Number(result[0].storage),
@@ -27,7 +26,6 @@ export const POST: APIRoute = async (ctx) => {
 				};
 			},
 			onUploadCompleted: async ({ blob, tokenPayload }) => {
-				console.log("blob upload completed", blob, tokenPayload);
 				try {
 					if (!tokenPayload) throw new Error("token payload is not defined");
 					const metadata: App.Track = JSON.parse(tokenPayload);
@@ -45,21 +43,16 @@ export const POST: APIRoute = async (ctx) => {
 			},
 		});
 
-		console.log("HandleUpload completed, result:", result);
 		return new Response(JSON.stringify(result), {
 			headers: { "Content-Type": "application/json" },
 		});
 	} catch (e) {
-		console.error("💥 Error in handler POST function:", e);
 		if (e instanceof Error) {
-			console.error("💥 Handler error message:", e.message);
-			console.error("💥 Handler error stack:", e.stack);
 			return new Response(e.message, {
 				status: 400,
 				headers: { "Content-Type": "application/json" },
 			});
 		} else {
-			console.error("💥 Unknown error in handler");
 			return new Response(null, {
 				status: 500,
 			});
