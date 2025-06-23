@@ -46,7 +46,7 @@ export default function ResetPage({ token }: { token: string }): JSX.Element {
 			},
 			{
 				onSuccess: () => {
-					setLoading(false), setTimeout(() => navigate("/auth/signin"), 1000);
+					(setLoading(false), setTimeout(() => navigate("/auth/signin"), 1000));
 				},
 				onError: ({ error }) => {
 					console.error(error);

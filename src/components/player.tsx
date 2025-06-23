@@ -3,13 +3,15 @@ import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { useStore } from "@nanostores/react";
 import { Music2, Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { useEffect, useMemo, useState, type JSX } from "react";
-import ReactHowler from "react-howler";
+import ReactHowler, { type HowlCallback } from "react-howler";
 
 export default function Player(): JSX.Element {
 	const current = useStore($currentTrack);
 	const playing = useStore($playing);
 	const playlist = useStore($playlist);
 	const [title, setTitle] = useState("");
+	const [url, setUrl] = useState<string | undefined>();
+	const currentKey = playlist[current];
 	function previous() {
 		if (current > 0) {
 			$playing.set(false);
@@ -24,9 +26,10 @@ export default function Player(): JSX.Element {
 			$playing.set(true);
 		}
 	}
-	function handleEnd() {
+	const handleEnd: HowlCallback = () => {
 		if (current < playlist.length - 1) {
 			$currentTrack.set(current + 1);
+			$playing.set(true);
 		} else {
 			$playing.set(false);
 		}
@@ -46,13 +49,20 @@ export default function Player(): JSX.Element {
 			setTitle(await result.text());
 		});
 	});
+	useEffect(() => {
+		if (!currentKey) return;
+		(async () => {
+			const response = await fetch(`/api/download?key=${currentKey}`);
+			setUrl(await response.text());
+		})();
+	}, [currentKey]);
 	return (
 		<>
-			{playlist[current] && (
+			{url && (
 				<ReactHowler
-					src={playlist[current]}
+					src={url}
 					playing={playing}
-					onEnd={() => handleEnd()}
+					onEnd={handleEnd}
 					html5={true}
 				/>
 			)}

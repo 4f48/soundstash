@@ -19,4 +19,18 @@ declare namespace App {
 	interface GetMetadataRequest {
 		blob: string;
 	}
+	interface GetPresignedUploadUrlRequest {
+		contentLength: number;
+		contentType: string;
+	}
+	interface GetPresignedUploadUrlResponse {
+		key: string;
+		url: string;
+	}
+	interface FinalizeUploadRequest {
+		artist: string;
+		key: string;
+		size: number;
+		title: string;
+	}
 }

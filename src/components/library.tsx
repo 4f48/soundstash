@@ -114,14 +114,7 @@ export default function Account({
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								onClick={() => {
-									const body: App.DeleteTrackRequest = {
-										id: track.id,
-									};
-									fetch("/api/delete", {
-										body: JSON.stringify(body),
-										headers: {
-											"Content-Type": "application/json",
-										},
+									fetch(`/api/delete?key=${track.blob}`, {
 										method: "DELETE",
 									}).then(() => fetchTracks());
 								}}
