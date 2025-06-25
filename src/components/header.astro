@@ -1,6 +1,6 @@
 ---
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const session = Astro.locals.session;
 ---
@@ -10,7 +10,9 @@ const session = Astro.locals.session;
 >
 	<div class="flex items-center">
 		<a href="/"
-			><Button className="text-lg flex items-center font-extrabold" variant="ghost"
+			><Button
+				className="flex items-center text-lg font-extrabold"
+				variant="ghost"
 				>SoundStash <Badge className="bg-yellow-500">Alpha</Badge></Button
 			></a
 		>

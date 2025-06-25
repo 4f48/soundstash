@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { useStore } from "@nanostores/react";
 import { Music2, Pause, Play, SkipBack, SkipForward } from "lucide-react";
-import { useEffect, useMemo, useState, type JSX } from "react";
+import { useCallback, useEffect, useMemo, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
 
 export default function Player(): JSX.Element {
@@ -26,14 +26,17 @@ export default function Player(): JSX.Element {
 			$playing.set(true);
 		}
 	}
-	const handleEnd: HowlCallback = () => {
-		if (current < playlist.length - 1) {
-			$currentTrack.set(current + 1);
+	const handleEnd = useCallback<HowlCallback>(() => {
+		const latestCurrent = $currentTrack.get();
+		const latestPlaylist = $playlist.get();
+
+		if (latestCurrent < latestPlaylist.length - 1) {
+			$currentTrack.set(latestCurrent + 1);
 			$playing.set(true);
 		} else {
 			$playing.set(false);
 		}
-	}
+	}, []);
 	useEffect(() => {
 		if (!playlist[current]) return;
 		const request: App.GetMetadataRequest = {
