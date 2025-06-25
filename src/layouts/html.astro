@@ -1,11 +1,13 @@
 ---
 import PostHog from "@/components/posthog.astro";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/global.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import "node_modules/sonner/dist/styles.css";
 ---
 
-<html class="min-h-screen w-screen" lang="en">
+<html class="min-h-screen w-screen" lang="en" transition:animate="none">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -27,5 +29,12 @@ import { ClientRouter } from "astro:transitions";
 	</head>
 	<body class="relative flex min-h-screen w-screen flex-col gap-3 antialiased">
 		<slot />
+		<Toaster
+			closeButton
+			richColors
+			swipeDirections={["right", "bottom"]}
+			client:load
+			transition:persist
+		/>
 	</body>
 </html>

@@ -5,6 +5,11 @@ import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async (ctx) => {
+	const user = ctx.locals.user;
+	if (!user)
+		return new Response(null, {
+			status: 401,
+		});
 	const request = (await ctx.request.json()) as App.FinalizeUploadRequest;
 
 	await client
@@ -24,7 +29,7 @@ export const POST: APIRoute = async (ctx) => {
 					artist: request.artist,
 					blob: request.key,
 					id: request.key.split("/")[1],
-					owner: ctx.locals.user?.id!,
+					owner: user.id,
 					size: request.size,
 					title: request.title,
 				})

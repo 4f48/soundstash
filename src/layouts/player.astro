@@ -5,5 +5,5 @@ import Layout from "@/layouts/header.astro";
 
 <Layout>
 	<slot />
-	<PlayerCard client:only transition:persist />
+	<PlayerCard client:only="react" transition:persist />
 </Layout>

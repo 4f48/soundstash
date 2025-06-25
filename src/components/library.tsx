@@ -4,7 +4,6 @@ import {
 	CardAction,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -12,8 +11,6 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -47,9 +44,7 @@ import {
 	HardDrive,
 	ArrowUpDown,
 	MoreHorizontal,
-	Delete,
 	ClipboardCopy,
-	Trash,
 	Trash2,
 } from "lucide-react";
 import { useState, type JSX } from "react";

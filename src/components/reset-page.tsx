@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import {
 	Card,
-	CardAction,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -46,7 +44,8 @@ export default function ResetPage({ token }: { token: string }): JSX.Element {
 			},
 			{
 				onSuccess: () => {
-					(setLoading(false), setTimeout(() => navigate("/auth/signin"), 1000));
+					setLoading(false);
+					setTimeout(() => navigate("/auth/signin"), 1000);
 				},
 				onError: ({ error }) => {
 					console.error(error);

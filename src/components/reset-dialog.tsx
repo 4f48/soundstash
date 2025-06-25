@@ -18,9 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { upload } from "@vercel/blob/client";
-import { UploadIcon, LoaderCircle } from "lucide-react";
-import { parseBlob } from "music-metadata";
+import { LoaderCircle } from "lucide-react";
 import { useState, type JSX } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,11 +27,7 @@ const formSchema = z.object({
 	email: z.string().email().nonempty(),
 });
 
-export default function ResetDialog({
-	onUploadSuccess,
-}: {
-	onUploadSuccess?: () => void;
-}): JSX.Element {
+export default function ResetDialog(): JSX.Element {
 	const [loading, setLoading] = useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
