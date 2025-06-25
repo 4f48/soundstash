@@ -14,7 +14,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { $playing, $playlist } from "@/lib/stores";
+import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
@@ -43,6 +43,7 @@ export default function AllTracks({
 						variant="ghost"
 						onClick={() => {
 							$playing.set(false);
+							$currentTrack.set(0);
 							$playlist.set([track.blob!]);
 							$playing.set(true);
 						}}
