@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { useStore } from "@nanostores/react";
 import { Music2, Pause, Play, SkipBack, SkipForward } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState, type JSX } from "react";
+import { useCallback, useEffect, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
 
 export default function Player(): JSX.Element {

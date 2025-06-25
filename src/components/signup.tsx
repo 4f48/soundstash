@@ -4,7 +4,6 @@ import {
 	CardAction,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -19,10 +18,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { navigate } from "astro:transitions/client";
 import { LoaderCircle } from "lucide-react";
-import { useState, type JSX } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -31,8 +30,8 @@ const formSchema = z.object({
 	password: z.string().nonempty(),
 });
 
-export default function Signup(): JSX.Element {
-	const [loading, setLoading] = useState(false);
+export default function Signup(): React.JSX.Element {
+	const [loading, setLoading] = React.useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -43,17 +42,22 @@ export default function Signup(): JSX.Element {
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setLoading(true);
-		authClient.signUp
-			.email({
+		await authClient.signUp.email(
+			{
 				name: values.name,
 				email: values.email,
 				password: values.password,
-			})
-			.then(({ error }) => {
-				setLoading(false);
-				error && console.error(error);
-				!error && navigate("/auth/signin");
-			});
+			},
+			{
+				onResponse: () => setLoading(false),
+				onSuccess: () => {
+					toast.success("Successfully signed up.");
+				},
+				onError: ({ error }) => {
+					toast.error(`Failed to sign up: ${error.message}`);
+				},
+			}
+		);
 	}
 	return (
 		<Card className="w-full max-w-sm self-center my-auto">

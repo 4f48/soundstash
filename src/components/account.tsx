@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import {
 	Card,
-	CardAction,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -18,6 +16,8 @@ export default function Account({
 }: {
 	user: App.Locals["user"];
 }): JSX.Element {
+	if (!user) throw new Error("user is not defined");
+
 	const [changePasswordLoading, setChangePasswordLoading] = useState(false);
 	const [signoutLoading, setSignoutLoading] = useState(false);
 	const [verifyButton, setVerifyButton] = useState<JSX.Element>(
@@ -27,10 +27,11 @@ export default function Account({
 	);
 	const [verifyLoading, setVerifyLoading] = useState(false);
 	function requestChange() {
+		if (!user) throw new Error("user is not defined");
 		setChangePasswordLoading(true);
 		authClient.requestPasswordReset(
 			{
-				email: user?.email!,
+				email: user.email,
 				redirectTo: "/auth/reset",
 			},
 			{
@@ -83,7 +84,7 @@ export default function Account({
 									);
 									authClient.sendVerificationEmail(
 										{
-											email: user?.email!,
+											email: user.email,
 											callbackURL: "/account",
 										},
 										{

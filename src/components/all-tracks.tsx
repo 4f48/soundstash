@@ -3,8 +3,6 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -18,27 +16,14 @@ import {
 } from "@/components/ui/table";
 import { $playing, $playlist } from "@/lib/stores";
 import {
-	type Column,
 	type ColumnDef,
 	type ColumnFiltersState,
-	type SortingState,
 	flexRender,
 	getCoreRowModel,
-	getSortedRowModel,
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import {
-	HardDrive,
-	ArrowUpDown,
-	MoreHorizontal,
-	Delete,
-	ClipboardCopy,
-	Trash,
-	Trash2,
-	Play,
-	ListPlus,
-} from "lucide-react";
+import { MoreHorizontal, Play, ListPlus } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function AllTracks({

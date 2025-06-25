@@ -10,12 +10,12 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 		autoSignIn: false,
-		sendResetPassword: async ({ user, url, token }, request) => {
+		sendResetPassword: async ({ user, url }) => {
 			const { error } = await resend.emails.send({
 				from: "SoundStash <noreply.soundstash@pirger.eu>",
 				to: user.email,
 				subject: "Password reset",
-				text: `Dear ${user.name},\ We have received a request to reset your password for your account at SoundStash. Click the following link to change your password: ${url}.\nIf you did not request your password to be reset, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
+				text: `Dear ${user.name},\n We have received a request to reset your password for your account at SoundStash. Click the following link to change your password: ${url}.\nIf you did not request your password to be reset, ignore this email.\n\nBest regards,\nOliver from SoundStash`,
 			});
 			if (error) console.error(error);
 		},
@@ -23,7 +23,7 @@ export const auth = betterAuth({
 	emailVerification: {
 		sendOnSignUp: true,
 		autoSignInAfterVerification: true,
-		sendVerificationEmail: async ({ user, url, token }, request) => {
+		sendVerificationEmail: async ({ user, url }) => {
 			const { error } = await resend.emails.send({
 				from: "SoundStash <noreply.soundstash@pirger.eu>",
 				to: user.email,

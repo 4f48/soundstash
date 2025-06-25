@@ -7,32 +7,20 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { upload } from "@vercel/blob/client";
 import { UploadIcon, LoaderCircle } from "lucide-react";
 import { parseBlob } from "music-metadata";
-import { useState, type JSX } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import React from "react";
 
 export default function Upload({
 	onUploadSuccess,
 }: {
 	onUploadSuccess?: () => void;
-}): JSX.Element {
-	const [loading, setLoading] = useState(false);
-	const [tracks, setTracks] = useState<FileList | undefined>(undefined);
-	const [open, setOpen] = useState(false);
+}): React.JSX.Element {
+	const [loading, setLoading] = React.useState(false);
+	const [tracks, setTracks] = React.useState<FileList | undefined>(undefined);
+	const [open, setOpen] = React.useState(false);
 	const { data: session } = authClient.useSession();
 	async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
 		setLoading(true);
@@ -40,10 +28,8 @@ export default function Upload({
 
 		if (!tracks || !session?.user?.id) return;
 
-		const formData = new FormData();
-
 		try {
-			for (let i = 0; i < tracks?.length!; i++) {
+			for (let i = 0; i < tracks.length; i++) {
 				const track = tracks[i];
 
 				const urlRequest: App.GetPresignedUploadUrlRequest = {
