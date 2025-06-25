@@ -71,7 +71,7 @@ export default function Player(): JSX.Element {
 		}).then(async (result) => {
 			setTitle(await result.text());
 		});
-	});
+	}, [playlist[current]]);
 	useEffect(() => {
 		if (!currentKey) return;
 		(async () => {
