@@ -4,6 +4,7 @@ declare namespace App {
 		session: import("better-auth").Session | null;
 	}
 	interface Track {
+		album?: string;
 		id: string;
 		owner?: string;
 		title: string;
@@ -26,6 +27,7 @@ declare namespace App {
 		url: string;
 	}
 	interface FinalizeUploadRequest {
+		album?: string;
 		artist: string;
 		key: string;
 		size: number;

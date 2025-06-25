@@ -58,6 +58,14 @@ export default function AllTracks({
 			header: "Title",
 		},
 		{
+			accessorKey: "album",
+			header: "Album",
+			cell: ({ row }) => {
+				const track = row.original;
+				return track.album ? track.album : "-";
+			},
+		},
+		{
 			id: "actions",
 			cell: ({ row }) => {
 				const track = row.original;

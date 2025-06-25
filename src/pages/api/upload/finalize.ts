@@ -26,6 +26,7 @@ export const POST: APIRoute = async (ctx) => {
 			await db
 				.insert(track)
 				.values({
+					album: request.album,
 					artist: request.artist,
 					blob: request.key,
 					id: request.key.split("/")[1],

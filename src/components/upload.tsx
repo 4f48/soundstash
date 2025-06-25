@@ -59,6 +59,7 @@ export default function Upload({
 					skipCovers: true,
 				});
 				const finalizeRequest: App.FinalizeUploadRequest = {
+					album: common.album,
 					artist: common.artist!,
 					key: urlResponse.key,
 					size: track.size,

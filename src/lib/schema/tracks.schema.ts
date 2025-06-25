@@ -8,6 +8,7 @@ export const track = pgTable("track", {
 		.references(() => user.id, { onDelete: "no action" }),
 	title: text("title").notNull(),
 	artist: text("artist").notNull(),
+	album: text("album"),
 	blob: text("blob").notNull().unique(),
 	size: integer("size").notNull(),
 });
