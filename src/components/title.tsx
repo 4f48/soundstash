@@ -25,7 +25,7 @@ export default function Title({
 				onError={() => setOk(false)}
 			/>
 			<div className="flex flex-col">
-				<span>{title}</span>
+				<span className="truncate">{title}</span>
 				<span className="text-sm text-muted-foreground">{artist}</span>
 			</div>
 		</div>
