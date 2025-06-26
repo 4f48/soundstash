@@ -1,0 +1,1 @@
+ALTER TABLE "track" ALTER COLUMN "length" DROP DEFAULT;

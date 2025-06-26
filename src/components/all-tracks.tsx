@@ -1,3 +1,4 @@
+import Title from "@/components/title";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -14,7 +15,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import type { track } from "@/lib/schema/tracks.schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
+import { formatTime } from "@/lib/utils";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
@@ -23,39 +26,51 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Play, ListPlus } from "lucide-react";
+import { MoreHorizontal, Play, ListPlus, Clock } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function AllTracks({
 	tracks,
 }: {
-	tracks: App.Track[];
+	tracks: (typeof track.$inferSelect)[];
 }): JSX.Element {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const columns: ColumnDef<App.Track>[] = [
+	const columns: ColumnDef<typeof track.$inferSelect>[] = [
 		{
 			id: "play",
+			header: "#",
+			size: 1,
 			cell: ({ row }) => {
 				const track = row.original;
 				return (
-					<Button
-						size="icon"
-						variant="ghost"
-						onClick={() => {
-							$playing.set(false);
-							$currentTrack.set(0);
-							$playlist.set([track.blob!]);
-							$playing.set(true);
-						}}
-					>
-						<Play />
-					</Button>
+					<>
+						<Button
+							size="icon"
+							variant="ghost"
+							onClick={() => {
+								$playing.set(false);
+								$currentTrack.set(0);
+								$playlist.set([track]);
+								$playing.set(true);
+							}}
+						>
+							<span className="group-hover:hidden block">{row.index + 1}</span>
+							<Play className="group-hover:flex m-0 hidden" />
+						</Button>
+					</>
 				);
 			},
 		},
 		{
 			accessorKey: "title",
 			header: "Title",
+			size: 400,
+			cell: ({ row }) => {
+				const track = row.original;
+				return (
+					<Title artist={track.artist} id={track.id} title={track.title} />
+				);
+			},
 		},
 		{
 			accessorKey: "album",
@@ -63,6 +78,14 @@ export default function AllTracks({
 			cell: ({ row }) => {
 				const track = row.original;
 				return track.album ? track.album : "-";
+			},
+		},
+		{
+			accessorKey: "length",
+			header: () => <Clock className="size-4" />,
+			cell: ({ row }) => {
+				const track = row.original;
+				return formatTime(track.length);
 			},
 		},
 		{
@@ -81,7 +104,7 @@ export default function AllTracks({
 							<DropdownMenuItem
 								onClick={() => {
 									const current = $playlist.get();
-									$playlist.set([...current, track.blob!]);
+									$playlist.set([...current, track]);
 								}}
 							>
 								<ListPlus />
@@ -119,7 +142,10 @@ export default function AllTracks({
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map((header) => {
 								return (
-									<TableHead key={header.id}>
+									<TableHead
+										key={header.id}
+										style={{ width: header.column.columnDef.size }}
+									>
 										{header.isPlaceholder
 											? null
 											: flexRender(
@@ -140,7 +166,7 @@ export default function AllTracks({
 								data-state={row.getIsSelected() && "selected"}
 							>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell key={cell.id}>
+									<TableCell key={cell.id} width={cell.column.columnDef.size}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}

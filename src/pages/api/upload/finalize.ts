@@ -16,11 +16,13 @@ export const POST: APIRoute = async (ctx) => {
 		.send(
 			new HeadObjectCommand({
 				Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
-				Key: request.key,
+				Key: `tracks/${request.id}`,
 			})
 		)
 		.catch((e) => {
-			throw new Error(`file does not exist in bucket: ${e}`);
+			return new Response(`file does not exist in bucket: ${e}`, {
+				status: 400,
+			});
 		})
 		.then(async () => {
 			await db
@@ -28,14 +30,18 @@ export const POST: APIRoute = async (ctx) => {
 				.values({
 					album: request.album,
 					artist: request.artist,
-					blob: request.key,
-					id: request.key.split("/")[1],
+					blob: `tracks/${request.id}`,
+					id: request.id,
 					owner: user.id,
 					size: request.size,
 					title: request.title,
+					length: Math.floor(request.length),
 				})
 				.catch((e) => {
-					throw new Error(`failed to insert track into db: ${e}`);
+					console.error(e);
+					return new Response("failed to insert track into db", {
+						status: 500,
+					});
 				});
 		});
 

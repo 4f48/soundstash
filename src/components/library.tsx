@@ -1,3 +1,4 @@
+import Title from "@/components/title";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -28,6 +29,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Upload from "@/components/upload";
+import type { track } from "@/lib/schema/tracks.schema";
 import {
 	type Column,
 	type ColumnDef,
@@ -40,21 +42,15 @@ import {
 	getFilteredRowModel,
 } from "@tanstack/react-table";
 import byteSize from "byte-size";
-import {
-	HardDrive,
-	ArrowUpDown,
-	MoreHorizontal,
-	ClipboardCopy,
-	Trash2,
-} from "lucide-react";
+import { HardDrive, ArrowUpDown, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function Account({
 	initialTracks,
 }: {
-	initialTracks: App.Track[];
+	initialTracks: (typeof track.$inferSelect)[];
 }): JSX.Element {
-	const [tracks, setTracks] = useState<App.Track[]>(initialTracks);
+	const [tracks, setTracks] = useState<typeof initialTracks>(initialTracks);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -71,14 +67,20 @@ export default function Account({
 	};
 
 	const usedBytes = tracks.reduce((total, track) => total + track.size, 0);
-	const columns: ColumnDef<App.Track>[] = [
+	const columns: ColumnDef<typeof track.$inferSelect>[] = [
 		{
 			accessorKey: "title",
 			header: ({ column }) => <Header column={column} title="Title" />,
+			cell: ({ row }) => {
+				const track = row.original;
+				return (
+					<Title artist={track.artist} id={track.id} title={track.title} />
+				);
+			},
 		},
 		{
-			accessorKey: "artist",
-			header: ({ column }) => <Header column={column} title="Artist" />,
+			accessorKey: "album",
+			header: ({ column }) => <Header column={column} title="Album" />,
 		},
 		{
 			accessorKey: "size",
@@ -102,14 +104,8 @@ export default function Account({
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
 							<DropdownMenuItem
-								onClick={() => navigator.clipboard.writeText(track.blob!)}
-							>
-								<ClipboardCopy />
-								Copy link
-							</DropdownMenuItem>
-							<DropdownMenuItem
 								onClick={() => {
-									fetch(`/api/delete?key=${track.blob}`, {
+									fetch(`/api/delete?id=${track.id}`, {
 										method: "DELETE",
 									}).then(() => fetchTracks());
 								}}
@@ -238,7 +234,7 @@ function Header({
 	column,
 	title,
 }: {
-	column: Column<App.Track, unknown>;
+	column: Column<typeof track.$inferSelect, unknown>;
 	title: string;
 }): JSX.Element {
 	return (

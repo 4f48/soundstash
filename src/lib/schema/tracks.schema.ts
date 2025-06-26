@@ -10,5 +10,6 @@ export const track = pgTable("track", {
 	artist: text("artist").notNull(),
 	album: text("album"),
 	blob: text("blob").notNull().unique(),
+	length: integer("length").notNull(),
 	size: integer("size").notNull(),
 });

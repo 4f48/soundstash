@@ -32,9 +32,13 @@ export default function Upload({
 			for (let i = 0; i < tracks.length; i++) {
 				const track = tracks[i];
 
+				const { common, format } = await parseBlob(track);
+				const cover = common.picture;
 				const urlRequest: App.GetPresignedUploadUrlRequest = {
-					contentLength: track.size,
-					contentType: track.type,
+					coverLength: cover ? cover[0].data.length : undefined,
+					coverType: cover ? cover[0].format : undefined,
+					trackLength: track.size,
+					trackType: track.type,
 				};
 				const urlResult = await fetch("/api/upload/authorize", {
 					body: JSON.stringify(urlRequest),
@@ -46,26 +50,38 @@ export default function Upload({
 				const urlResponse =
 					(await urlResult.json()) as App.GetPresignedUploadUrlResponse;
 
-				const uploadResponse = await fetch(urlResponse.url, {
+				const uploadTrackResponse = await fetch(urlResponse.trackUrl, {
 					body: track,
 					headers: {
-						"Content-Length": track.size.toString(),
-						"Content-Type": track.type,
+						"Content-Length": urlRequest.trackLength.toString(),
+						"Content-Type": urlRequest.trackType,
 					},
 					method: "PUT",
 				});
+				if (
+					cover &&
+					urlResponse.coverUrl &&
+					urlRequest.coverLength &&
+					urlRequest.coverType
+				)
+					await fetch(urlResponse.coverUrl, {
+						body: cover[0].data,
+						headers: {
+							"Content-Length": urlRequest.coverLength.toString(),
+							"Content-Type": urlRequest.coverType,
+						},
+						method: "PUT",
+					});
 
-				const { common } = await parseBlob(track, {
-					skipCovers: true,
-				});
 				const finalizeRequest: App.FinalizeUploadRequest = {
 					album: common.album,
 					artist: common.artist!,
-					key: urlResponse.key,
+					id: urlResponse.uuid,
+					length: format.duration!,
 					size: track.size,
 					title: common.title!,
 				};
-				if (uploadResponse.ok)
+				if (uploadTrackResponse.ok)
 					await fetch("/api/upload/finalize", {
 						body: JSON.stringify(finalizeRequest),
 						headers: {

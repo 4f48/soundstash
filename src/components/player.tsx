@@ -1,9 +1,10 @@
+import Title from "@/components/title";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
-import { Music2, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
 
@@ -11,7 +12,6 @@ export default function Player(): JSX.Element {
 	const current = useStore($currentTrack);
 	const playing = useStore($playing);
 	const playlist = useStore($playlist);
-	const [title, setTitle] = useState("");
 	const [url, setUrl] = useState<string | undefined>();
 	const currentKey = playlist[current];
 	const playerRef = useRef<ReactHowler>(null);
@@ -58,24 +58,9 @@ export default function Player(): JSX.Element {
 		}
 	}, []);
 	useEffect(() => {
-		if (!playlist[current]) return;
-		const request: App.GetMetadataRequest = {
-			blob: playlist[current],
-		};
-		fetch("/api/metadata", {
-			body: JSON.stringify(request),
-			headers: {
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-		}).then(async (result) => {
-			setTitle(await result.text());
-		});
-	}, [playlist[current]]);
-	useEffect(() => {
 		if (!currentKey) return;
 		(async () => {
-			const response = await fetch(`/api/download?key=${currentKey}`);
+			const response = await fetch(`/api/download?key=${currentKey.blob}`);
 			setUrl(await response.text());
 		})();
 	}, [currentKey]);
@@ -93,14 +78,13 @@ export default function Player(): JSX.Element {
 				/>
 			)}
 			<div className="border absolute bottom-2 h-[58px] w-[calc(100vw-16px)] items-center grid grid-rows-1 grid-cols-3 justify-center left-2 p-2 gap-3 border-border bg-card text-card-foreground rounded-xl shadow-sm">
-				<div>
+				<div className="flex items-center gap-2">
 					{playlist[current] && (
-						<p className="flex items-center gap-2">
-							<span className="bg-muted rounded-sm flex items-center justify-center p-2">
-								<Music2 className="text-muted-foreground" />
-							</span>
-							{title}
-						</p>
+						<Title
+							artist={currentKey.artist}
+							id={currentKey.id}
+							title={currentKey.title}
+						/>
 					)}
 				</div>
 				<div>
@@ -140,7 +124,7 @@ export default function Player(): JSX.Element {
 							<SkipForward className="fill-primary" />
 						</Button>
 					</div>
-					<div className="flex items-center gap-2">
+					<div className="flex items-center gap-3">
 						<span className="text-sm text-muted-foreground">
 							{formatTime(position)}
 						</span>
@@ -150,12 +134,15 @@ export default function Player(): JSX.Element {
 							onPointerDown={() => (seeking.current = true)}
 							onPointerUp={() => (seeking.current = false)}
 							onValueChange={(e) => setPosition(e[0])}
+							onPlay={() => $playing.set(true)}
+							onPause={() => $playing.set(false)}
 							min={0}
 							step={0.01}
 							max={duration}
 							onValueCommit={(e) => {
 								if (!playerRef.current) return;
 								const howler = playerRef.current.howler;
+								seeking.current = false;
 								howler.seek(e[0]);
 								setPosition(e[0]);
 							}}
