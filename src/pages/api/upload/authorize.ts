@@ -19,26 +19,42 @@ export const POST: APIRoute = async (ctx) => {
 		.select({ storage: sum(track.size) })
 		.from(track)
 		.where(eq(track.owner, user.id));
-	if (Number(result[0].storage) + request.contentLength >= 1e8)
+	if (Number(result[0].storage) + request.trackLength >= 1e8)
 		return new Response("not enough storage", {
 			status: 507,
 		});
 
-	const key = `tracks/${crypto.randomUUID()}`;
-	const command = new PutObjectCommand({
+	const uuid = crypto.randomUUID();
+
+	const trackCommand = new PutObjectCommand({
 		Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
-		ContentLength: request.contentLength,
-		ContentType: request.contentType,
-		Key: key,
+		ContentLength: request.trackLength,
+		ContentType: request.trackType,
+		Key: `tracks/${uuid}`,
 	});
-	const url = await getSignedUrl(client, command, {
+	const trackUrl = await getSignedUrl(client, trackCommand, {
 		expiresIn: 900,
 		signableHeaders: new Set(["content-length"]),
 	});
 
+	let coverUrl: string | undefined;
+	if (request.coverLength && request.coverType) {
+		const coverCommand = new PutObjectCommand({
+			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			ContentLength: request.coverLength,
+			ContentType: request.coverType,
+			Key: `covers/${uuid}`,
+		});
+		coverUrl = await getSignedUrl(client, coverCommand, {
+			expiresIn: 900,
+			signableHeaders: new Set(["content-length"]),
+		});
+	}
+
 	const response: App.GetPresignedUploadUrlResponse = {
-		key,
-		url,
+		uuid,
+		trackUrl,
+		coverUrl,
 	};
 	return new Response(JSON.stringify(response), {
 		headers: {

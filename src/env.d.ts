@@ -3,15 +3,6 @@ declare namespace App {
 		user: import("better-auth").User | null;
 		session: import("better-auth").Session | null;
 	}
-	interface Track {
-		album?: string;
-		id: string;
-		owner?: string;
-		title: string;
-		artist: string;
-		blob?: string;
-		size: number;
-	}
 	interface DeleteTrackRequest {
 		id: string;
 	}
@@ -19,18 +10,22 @@ declare namespace App {
 		blob: string;
 	}
 	interface GetPresignedUploadUrlRequest {
-		contentLength: number;
-		contentType: string;
+		coverLength?: number;
+		coverType?: string;
+		trackLength: number;
+		trackType: string;
 	}
 	interface GetPresignedUploadUrlResponse {
-		key: string;
-		url: string;
+		uuid: string;
+		trackUrl: string;
+		coverUrl?: string;
 	}
 	interface FinalizeUploadRequest {
 		album?: string;
 		artist: string;
-		key: string;
+		id: string;
 		size: number;
 		title: string;
+		length: number;
 	}
 }

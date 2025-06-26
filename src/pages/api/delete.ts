@@ -6,16 +6,22 @@ import type { APIRoute } from "astro";
 import { eq } from "drizzle-orm";
 
 export const DELETE: APIRoute = async (ctx) => {
-	const key = ctx.url.searchParams.get("key");
-	if (!key) return new Response("no key param", { status: 400 });
+	const id = ctx.url.searchParams.get("id");
+	if (!id) return new Response("no key param", { status: 400 });
 
 	await client.send(
 		new DeleteObjectCommand({
 			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
-			Key: key,
+			Key: `tracks/${id}`,
 		})
 	);
-	await db.delete(track).where(eq(track.blob, key));
+	await client.send(
+		new DeleteObjectCommand({
+			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Key: `covers/${id}`,
+		})
+	);
+	await db.delete(track).where(eq(track.id, id));
 
 	return new Response(null);
 };
