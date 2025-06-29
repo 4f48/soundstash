@@ -1,9 +1,10 @@
 ---
 import AllTracks from "@/components/all-tracks";
+import Playlists from "@/components/playlists.astro";
 import Layout from "@/layouts/player.astro";
 import { db } from "@/lib/database";
-import { track } from "@/lib/schema";
 import { eq } from "drizzle-orm";
+import { track } from "drizzle/schema";
 
 const user = Astro.locals.user;
 if (!user)
@@ -17,5 +18,6 @@ const tracks = await db.query.track.findMany({
 ---
 
 <Layout>
+	<Playlists />
 	<AllTracks tracks={tracks} client:load />
 </Layout>

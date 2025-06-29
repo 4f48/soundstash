@@ -2,8 +2,8 @@
 import LibraryComponent from "@/components/library";
 import Layout from "@/layouts/player.astro";
 import { db } from "@/lib/database";
-import { track } from "@/lib/schema";
 import { eq } from "drizzle-orm";
+import { track } from "drizzle/schema";
 
 const user = Astro.locals.user;
 if (!user)

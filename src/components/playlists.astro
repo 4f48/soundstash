@@ -1,0 +1,33 @@
+---
+import CreatePlaylist from "@/components/create-playlist";
+import { Card, CardContent } from "@/components/ui/card";
+import { db } from "@/lib/database";
+import { eq } from "drizzle-orm";
+import { playlist } from "drizzle/schema";
+
+const user = Astro.locals.user;
+if (!user)
+	return new Response(null, {
+		status: 401,
+	});
+
+const playlists = await db.query.playlist.findMany({
+	where: eq(playlist.owner, user.id),
+});
+---
+
+<div class="mx-3 space-y-3">
+	<h1 class="text-3xl font-bold">Playlists</h1>
+	<div class="flex flex-wrap gap-2">
+		{
+			playlists.slice(0, 6).map((playlist) => (
+				<a class="size-48 cursor-default" href={`/playlist/${playlist.id}`}>
+					<Card className="size-48 hover:bg-muted duration-100">
+						<CardContent className="size-48">{playlist.name}</CardContent>
+					</Card>
+				</a>
+			))
+		}
+		<CreatePlaylist count={playlists.length} client:idle />
+	</div>
+</div>
