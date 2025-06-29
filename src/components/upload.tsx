@@ -112,7 +112,7 @@ export default function Upload({
 				<DialogHeader>
 					<DialogTitle>Upload tracks</DialogTitle>
 					<DialogDescription>
-						Upload your MP3, FLAC, and OPUS files to SoundStash's cloud storage for
+						Upload your MP3, FLAC, and Opus files to SoundStash's cloud storage for
 						online playback.
 					</DialogDescription>
 				</DialogHeader>

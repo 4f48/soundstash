@@ -7,7 +7,7 @@ The music streaming platform where you own your music. Upload any MP3, FLAC, or 
 ## Features
 
 - high quality streaming, no compression
-- upload any .mp3, .flac, and .opus
+- upload any MP3, FLAC, and Opus
 - stream from anywhere in the world
 - 100 MB storage
 
