@@ -120,7 +120,7 @@ export default function Upload({
 					<Input
 						type="file"
 						multiple
-						accept=".mp3,.flac"
+						accept=".mp3,.flac,.opus"
 						required
 						onChange={(event) => {
 							setTracks(event.target.files!);
