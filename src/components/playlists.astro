@@ -2,21 +2,21 @@
 import CreatePlaylist from "@/components/create-playlist";
 import { Card, CardContent } from "@/components/ui/card";
 import { db } from "@/lib/database";
+import type { User } from "better-auth";
 import { eq } from "drizzle-orm";
 import { playlist } from "drizzle/schema";
 
-const user = Astro.locals.user;
-if (!user)
-	return new Response(null, {
-		status: 401,
-	});
+interface Props {
+	user: User;
+}
+const { user } = Astro.props;
 
 const playlists = await db.query.playlist.findMany({
 	where: eq(playlist.owner, user.id),
 });
 ---
 
-<div class="mx-3 space-y-3">
+<div class="space-y-3">
 	<h1 class="text-3xl font-bold">Playlists</h1>
 	<div class="flex flex-wrap gap-2">
 		{

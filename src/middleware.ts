@@ -7,6 +7,11 @@ const PROTECTED_ROUTES = [
 	"/api/delete",
 	"/api/delete",
 	"/api/download",
+	"/api/playlist/add",
+	"/api/playlist/list",
+	"/api/playlist/new",
+	"/api/playlist/remove",
+	"/api/playlist/tracks",
 	"/api/tracks",
 	"/api/upload/authorize",
 	"/api/upload/finalize",
@@ -26,7 +31,10 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 	} else {
 		ctx.locals.user = null;
 		ctx.locals.session = null;
-		if (PROTECTED_ROUTES.includes(ctx.url.pathname))
+		if (
+			PROTECTED_ROUTES.includes(ctx.url.pathname) ||
+			ctx.url.pathname.startsWith("/playlist/")
+		)
 			return ctx.redirect("/auth/signin", 303);
 	}
 

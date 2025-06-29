@@ -4,10 +4,7 @@ import { playlist } from "drizzle/schema";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;
-	if (!user)
-		return new Response(null, {
-			status: 401,
-		});
+	if (!user) return new Response(null, { status: 401 });
 	const request = (await ctx.request.json()) as App.NewPlaylistRequest;
 
 	const id = crypto.randomUUID();

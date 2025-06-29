@@ -50,6 +50,13 @@
 			"when": 1751191702297,
 			"tag": "0006_overrated_lake",
 			"breakpoints": true
+		},
+		{
+			"idx": 7,
+			"version": "7",
+			"when": 1751202290396,
+			"tag": "0007_remarkable_talisman",
+			"breakpoints": true
 		}
 	]
 }

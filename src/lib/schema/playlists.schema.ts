@@ -10,8 +10,8 @@ export const playlist = pgTable("playlist", {
 	name: text("name").notNull(),
 });
 
-export const playlistTrack = pgTable(
-	"playlist_track",
+export const playlistToTrack = pgTable(
+	"playlist_to_track",
 	{
 		playlistId: text("playlist_id")
 			.notNull()

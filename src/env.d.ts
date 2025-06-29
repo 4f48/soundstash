@@ -31,4 +31,8 @@ declare namespace App {
 	interface NewPlaylistRequest {
 		name: string;
 	}
+	interface ModifyPlaylistRequest {
+		playlistId: string;
+		trackId: string;
+	}
 }
