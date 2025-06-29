@@ -11,6 +11,7 @@ const PROTECTED_ROUTES = [
 	"/api/playlist/list",
 	"/api/playlist/new",
 	"/api/playlist/remove",
+	"/api/playlist/track",
 	"/api/playlist/tracks",
 	"/api/tracks",
 	"/api/upload/authorize",

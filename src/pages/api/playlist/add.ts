@@ -19,7 +19,7 @@ export const POST: APIRoute = async (ctx) => {
 			),
 		});
 		if (!isTrackOwned || !isPlaylistOwned)
-			return new Response(null, { status: 401 });
+			return new Response(null, { status: 403 });
 
 		await db
 			.insert(playlistTrack)

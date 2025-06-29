@@ -31,14 +31,22 @@ export default function Actions({
 }): React.JSX.Element {
 	const [open, setOpen] = React.useState(false);
 	const [playlists, setPlaylists] = React.useState<Playlists>();
+	const [inPlaylists, setInPlaylists] = React.useState<string[]>();
+
+	async function fetchPlaylists() {
+		const playlistsResult = await fetch("/api/playlist/list");
+		const playlistsJson = (await playlistsResult.json()) as Playlists;
+
+		const inPlaylistsResult = await fetch(`/api/playlist/track?id=${track.id}`);
+		const inPlaylistsJson = (await inPlaylistsResult.json()) as Playlists;
+		setPlaylists(playlistsJson);
+		setInPlaylists(inPlaylistsJson.map(({ id }) => id));
+	}
+
 	React.useEffect(() => {
 		if (!open) return;
 		setPlaylists(undefined);
-		(async () => {
-			const result = await fetch("/api/playlist/list");
-			const json = (await result.json()) as Playlists;
-			setPlaylists(json);
-		})();
+		(async () => await fetchPlaylists())();
 	}, [open]);
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -77,7 +85,7 @@ export default function Actions({
 				<ScrollArea className="h-[30vh]">
 					<Table>
 						<TableBody>
-							{playlists
+							{playlists && inPlaylists
 								? playlists.map((playlist) => (
 										<TableRow
 											key={playlist.id}
@@ -85,7 +93,28 @@ export default function Actions({
 										>
 											<TableCell className="flex-1">{playlist.name}</TableCell>
 											<td className="flex items-center">
-												<Checkbox />
+												<Checkbox
+													checked={inPlaylists.includes(playlist.id)}
+													onClick={async () => {
+														const request: App.ModifyPlaylistRequest = {
+															playlistId: playlist.id,
+															trackId: track.id,
+														};
+														await fetch(
+															inPlaylists.includes(playlist.id)
+																? "/api/playlist/remove"
+																: "/api/playlist/add",
+															{
+																body: JSON.stringify(request),
+																headers: {
+																	"Content-Type": "application/json",
+																},
+																method: "POST",
+															}
+														);
+														await fetchPlaylists();
+													}}
+												/>
 											</td>
 										</TableRow>
 									))
