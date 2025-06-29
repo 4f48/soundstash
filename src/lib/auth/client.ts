@@ -2,6 +2,6 @@ import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
 	baseURL: import.meta.env.PROD
-		? `https://${import.meta.env.VERCEL_URL}`
+		? import.meta.env.SITE
 		: "http://localhost:4321",
 });
