@@ -27,6 +27,6 @@ if (!playlist) return new Response(null, { status: 400 });
 <Layout>
 	<main class="mx-3 space-y-3">
 		<h1 class="text-3xl font-bold">{playlist.name}</h1>
-		<AllTracks tracks={playlist.playlistTracks.map((item) => item.track)} />
+		<AllTracks tracks={playlist.playlistTracks.map((item) => item.track)} client:idle />
 	</main>
 </Layout>
