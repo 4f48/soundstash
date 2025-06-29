@@ -1,6 +1,6 @@
 {
-	"id": "6165660c-280d-426a-9376-865a57719fa0",
-	"prevId": "e833063e-7420-4f32-b7b1-f04199ec4c04",
+	"id": "25ea949a-a6b5-4dda-9a93-1d00fdb152be",
+	"prevId": "6165660c-280d-426a-9376-865a57719fa0",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -333,8 +333,8 @@
 			"checkConstraints": {},
 			"isRLSEnabled": false
 		},
-		"public.playlist_track": {
-			"name": "playlist_track",
+		"public.playlist_to_track": {
+			"name": "playlist_to_track",
 			"schema": "",
 			"columns": {
 				"playlist_id": {
@@ -352,18 +352,18 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"playlist_track_playlist_id_playlist_id_fk": {
-					"name": "playlist_track_playlist_id_playlist_id_fk",
-					"tableFrom": "playlist_track",
+				"playlist_to_track_playlist_id_playlist_id_fk": {
+					"name": "playlist_to_track_playlist_id_playlist_id_fk",
+					"tableFrom": "playlist_to_track",
 					"tableTo": "playlist",
 					"columnsFrom": ["playlist_id"],
 					"columnsTo": ["id"],
 					"onDelete": "cascade",
 					"onUpdate": "no action"
 				},
-				"playlist_track_track_id_track_id_fk": {
-					"name": "playlist_track_track_id_track_id_fk",
-					"tableFrom": "playlist_track",
+				"playlist_to_track_track_id_track_id_fk": {
+					"name": "playlist_to_track_track_id_track_id_fk",
+					"tableFrom": "playlist_to_track",
 					"tableTo": "track",
 					"columnsFrom": ["track_id"],
 					"columnsTo": ["id"],
@@ -372,8 +372,8 @@
 				}
 			},
 			"compositePrimaryKeys": {
-				"playlist_track_playlist_id_track_id_pk": {
-					"name": "playlist_track_playlist_id_track_id_pk",
+				"playlist_to_track_playlist_id_track_id_pk": {
+					"name": "playlist_to_track_playlist_id_track_id_pk",
 					"columns": ["playlist_id", "track_id"]
 				}
 			},

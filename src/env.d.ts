@@ -28,4 +28,11 @@ declare namespace App {
 		title: string;
 		length: number;
 	}
+	interface NewPlaylistRequest {
+		name: string;
+	}
+	interface ModifyPlaylistRequest {
+		playlistId: string;
+		trackId: string;
+	}
 }

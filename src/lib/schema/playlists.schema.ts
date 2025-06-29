@@ -1,6 +1,6 @@
-import { user } from "@/lib/schema/auth.schema";
-import { track } from "@/lib/schema/tracks.schema";
 import { pgTable, primaryKey, text } from "drizzle-orm/pg-core";
+import { user } from "drizzle/schema";
+import { track } from "drizzle/schema";
 
 export const playlist = pgTable("playlist", {
 	id: text("id").primaryKey(),
@@ -10,8 +10,8 @@ export const playlist = pgTable("playlist", {
 	name: text("name").notNull(),
 });
 
-export const playlistTrack = pgTable(
-	"playlist_track",
+export const playlistToTrack = pgTable(
+	"playlist_to_track",
 	{
 		playlistId: text("playlist_id")
 			.notNull()

@@ -1,4 +1,4 @@
-import type { track } from "@/lib/schema/tracks.schema";
+import type { track } from "drizzle/schema";
 import { atom } from "nanostores";
 
 export const $currentTrack = atom(0);

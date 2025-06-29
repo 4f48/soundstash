@@ -1,11 +1,6 @@
+import Actions from "@/components/actions";
 import Title from "@/components/title";
 import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
 	Table,
@@ -15,7 +10,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { track } from "@/lib/schema/tracks.schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import {
@@ -26,7 +20,8 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import { MoreHorizontal, Play, ListPlus, Clock } from "lucide-react";
+import type { track } from "drizzle/schema";
+import { Play, Clock } from "lucide-react";
 import { useState, type JSX } from "react";
 
 export default function AllTracks({
@@ -92,27 +87,7 @@ export default function AllTracks({
 			id: "actions",
 			cell: ({ row }) => {
 				const track = row.original;
-				return (
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" size="icon">
-								<span className="sr-only">Open actions menu</span>
-								<MoreHorizontal />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<DropdownMenuItem
-								onClick={() => {
-									const current = $playlist.get();
-									$playlist.set([...current, track]);
-								}}
-							>
-								<ListPlus />
-								Add to queue
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				);
+				return <Actions track={track} />;
 			},
 		},
 	];
@@ -127,7 +102,7 @@ export default function AllTracks({
 		},
 	});
 	return (
-		<main className="m-3">
+		<main>
 			<Input
 				className="max-w-sm"
 				onChange={(event) =>

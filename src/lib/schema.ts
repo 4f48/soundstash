@@ -1,2 +1,2 @@
-export * from "@/lib/schema/auth.schema";
-export * from "@/lib/schema/tracks.schema";
+export * from "drizzle/schema";
+export * from "drizzle/relations";
