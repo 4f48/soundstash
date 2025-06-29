@@ -1,6 +1,6 @@
-import { playlist, playlistTrack } from "@/lib/schema/playlists.schema";
-import { track } from "@/lib/schema/tracks.schema";
 import { relations } from "drizzle-orm";
+import { playlist, playlistTrack } from "drizzle/schema";
+import { track } from "drizzle/schema";
 
 export const playlistRelations = relations(playlist, ({ many }) => ({
 	playlistTracks: many(playlistTrack),
