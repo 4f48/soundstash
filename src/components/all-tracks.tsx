@@ -36,16 +36,15 @@ export default function AllTracks({
 			header: "#",
 			size: 1,
 			cell: ({ row }) => {
-				const track = row.original;
 				return (
 					<>
 						<Button
 							size="icon"
 							variant="ghost"
-							onClick={() => {
+							onClick={async () => {
 								$playing.set(false);
-								$currentTrack.set(0);
-								$playlist.set([track]);
+								$playlist.set(tracks);
+								$currentTrack.set(row.index);
 								$playing.set(true);
 							}}
 						>
