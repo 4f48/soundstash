@@ -1,0 +1,38 @@
+---
+import AllTracks from "@/components/all-tracks";
+import PlaylistActions from "@/components/playlist-actions";
+import Layout from "@/layouts/player.astro";
+import { db } from "@/lib/database";
+import { playlist as playlistTable } from "@/lib/schema";
+import { and, eq } from "drizzle-orm";
+
+const user = Astro.locals.user;
+if (!user) return new Response(null, { status: 401 });
+
+const { id } = Astro.params;
+if (!id) return new Response(null, { status: 400 });
+
+const playlist = await db.query.playlist.findFirst({
+	where: and(eq(playlistTable.id, id), eq(playlistTable.owner, user.id)),
+	with: {
+		playlistToTracks: {
+			with: {
+				track: true,
+			},
+		},
+	},
+});
+if (!playlist) return new Response(null, { status: 400 });
+
+const tracks = playlist.playlistToTracks.map(({ track }) => track);
+---
+
+<Layout>
+	<main class="mx-3 space-y-3">
+		<div class="flex items-center gap-3">
+			<h1 class="text-3xl font-bold">{playlist.name}</h1>
+			<PlaylistActions playlist={playlist} client:idle />
+		</div>
+		<AllTracks tracks={tracks} client:idle />
+	</main>
+</Layout>
