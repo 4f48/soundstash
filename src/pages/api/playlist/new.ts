@@ -1,6 +1,6 @@
 import { db } from "@/lib/database";
+import { playlist } from "@/lib/schema";
 import type { APIRoute } from "astro";
-import { playlist } from "drizzle/schema";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;

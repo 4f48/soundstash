@@ -1,12 +1,13 @@
+import { user } from "@/lib/schema/auth.schema";
+import { track } from "@/lib/schema/tracks.schema";
 import { pgTable, primaryKey, text } from "drizzle-orm/pg-core";
-import { user } from "drizzle/schema";
-import { track } from "drizzle/schema";
 
 export const playlist = pgTable("playlist", {
 	id: text("id").primaryKey(),
 	owner: text("owner")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
+	image: text("image").unique(),
 	name: text("name").notNull(),
 });
 

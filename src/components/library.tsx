@@ -29,6 +29,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Upload from "@/components/upload";
+import type { track } from "@/lib/schema";
 import {
 	type Column,
 	type ColumnDef,
@@ -41,7 +42,6 @@ import {
 	getFilteredRowModel,
 } from "@tanstack/react-table";
 import byteSize from "byte-size";
-import type { track } from "drizzle/schema";
 import { HardDrive, ArrowUpDown, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState, type JSX } from "react";
 

@@ -10,6 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import type { track } from "@/lib/schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import {
@@ -20,7 +21,6 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import type { track } from "drizzle/schema";
 import { Play, Clock } from "lucide-react";
 import { useState, type JSX } from "react";
 

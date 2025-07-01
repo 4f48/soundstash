@@ -123,7 +123,7 @@ export const playlist = pgTable(
 	]
 );
 
-export const playlistTrack = pgTable(
+export const playlistToTrack = pgTable(
 	"playlist_track",
 	{
 		playlistId: text("playlist_id").notNull(),

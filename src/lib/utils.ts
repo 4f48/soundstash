@@ -1,6 +1,6 @@
+import type { track, playlist as playlistTable } from "@/lib/schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { clsx, type ClassValue } from "clsx";
-import type { track, playlist as playlistTable } from "drizzle/schema";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -16,11 +16,11 @@ export const formatTime = (seconds: number): string => {
 export async function playPlaylist(
 	playlist: typeof playlistTable.$inferSelect
 ) {
-	const playlistTracks = (await (
+	const playlistToTracks = (await (
 		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
 	).json()) as (typeof track.$inferSelect)[];
 	$playing.set(false);
-	$playlist.set(playlistTracks);
+	$playlist.set(playlistToTracks);
 	$currentTrack.set(0);
 	$playing.set(true);
 }
@@ -28,14 +28,17 @@ export async function playPlaylist(
 export async function playPlaylistShuffled(
 	playlist: typeof playlistTable.$inferSelect
 ) {
-	const playlistTracks = (await (
+	const playlistToTracks = (await (
 		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
 	).json()) as (typeof track.$inferSelect)[];
 
-	const shuffledTracks = [...playlistTracks];
+	const shuffledTracks = [...playlistToTracks];
 	for (let i = shuffledTracks.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
-		[shuffledTracks[i], shuffledTracks[j]] = [shuffledTracks[j], shuffledTracks[i]];
+		[shuffledTracks[i], shuffledTracks[j]] = [
+			shuffledTracks[j],
+			shuffledTracks[i],
+		];
 	}
 
 	$playing.set(false);

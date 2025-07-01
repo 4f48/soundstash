@@ -57,6 +57,13 @@
 			"when": 1751202290396,
 			"tag": "0007_remarkable_talisman",
 			"breakpoints": true
+		},
+		{
+			"idx": 8,
+			"version": "7",
+			"when": 1751378860307,
+			"tag": "0008_lying_sue_storm",
+			"breakpoints": true
 		}
 	]
 }

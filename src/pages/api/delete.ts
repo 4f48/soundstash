@@ -1,9 +1,9 @@
 import { db } from "@/lib/database";
+import { track } from "@/lib/schema";
 import { client } from "@/lib/storage";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
 import { eq } from "drizzle-orm";
-import { track } from "drizzle/schema";
 
 export const DELETE: APIRoute = async (ctx) => {
 	const id = ctx.url.searchParams.get("id");

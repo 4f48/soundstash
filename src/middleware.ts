@@ -8,6 +8,7 @@ const PROTECTED_ROUTES = [
 	"/api/delete",
 	"/api/download",
 	"/api/playlist/add",
+	"/api/playlist/image",
 	"/api/playlist/list",
 	"/api/playlist/new",
 	"/api/playlist/remove",
