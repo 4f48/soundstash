@@ -1,22 +1,25 @@
+import { playlist, playlistToTrack } from "@/lib/schema/playlists.schema";
+import { track } from "@/lib/schema/tracks.schema";
 import { relations } from "drizzle-orm";
-import { playlist, playlistTrack } from "drizzle/schema";
-import { track } from "drizzle/schema";
 
 export const playlistRelations = relations(playlist, ({ many }) => ({
-	playlistTracks: many(playlistTrack),
+	playlistToTracks: many(playlistToTrack),
 }));
 
 export const trackRelations = relations(track, ({ many }) => ({
-	playlistTracks: many(playlistTrack),
+	playlistToTracks: many(playlistToTrack),
 }));
 
-export const playlistTrackRelations = relations(playlistTrack, ({ one }) => ({
-	playlist: one(playlist, {
-		fields: [playlistTrack.playlistId],
-		references: [playlist.id],
-	}),
-	track: one(track, {
-		fields: [playlistTrack.trackId],
-		references: [track.id],
-	}),
-}));
+export const playlistToTrackRelations = relations(
+	playlistToTrack,
+	({ one }) => ({
+		playlist: one(playlist, {
+			fields: [playlistToTrack.playlistId],
+			references: [playlist.id],
+		}),
+		track: one(track, {
+			fields: [playlistToTrack.trackId],
+			references: [track.id],
+		}),
+	})
+);

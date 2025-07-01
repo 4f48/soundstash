@@ -4,7 +4,7 @@ import {
 	session,
 	track,
 	playlist,
-	playlistTrack,
+	playlistToTrack,
 } from "./schema";
 import { relations } from "drizzle-orm/relations";
 
@@ -34,7 +34,7 @@ export const trackRelations = relations(track, ({ one, many }) => ({
 		fields: [track.owner],
 		references: [user.id],
 	}),
-	playlistTracks: many(playlistTrack),
+	playlistToTracks: many(playlistToTrack),
 }));
 
 export const playlistRelations = relations(playlist, ({ one, many }) => ({
@@ -42,16 +42,19 @@ export const playlistRelations = relations(playlist, ({ one, many }) => ({
 		fields: [playlist.owner],
 		references: [user.id],
 	}),
-	playlistTracks: many(playlistTrack),
+	playlistToTracks: many(playlistToTrack),
 }));
 
-export const playlistTrackRelations = relations(playlistTrack, ({ one }) => ({
-	playlist: one(playlist, {
-		fields: [playlistTrack.playlistId],
-		references: [playlist.id],
-	}),
-	track: one(track, {
-		fields: [playlistTrack.trackId],
-		references: [track.id],
-	}),
-}));
+export const playlistToTrackRelations = relations(
+	playlistToTrack,
+	({ one }) => ({
+		playlist: one(playlist, {
+			fields: [playlistToTrack.playlistId],
+			references: [playlist.id],
+		}),
+		track: one(track, {
+			fields: [playlistToTrack.trackId],
+			references: [track.id],
+		}),
+	})
+);

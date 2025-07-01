@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { track as trackTable } from "@/lib/schema";
 import { $playlist } from "@/lib/stores";
-import { track as trackTable } from "drizzle/schema";
 import { ListPlus, MoreHorizontal, Plus } from "lucide-react";
 import React from "react";
 

@@ -1,7 +1,7 @@
 import { db } from "@/lib/database";
+import { playlist, playlistToTrack, track } from "@/lib/schema";
 import type { APIRoute } from "astro";
 import { and, eq } from "drizzle-orm";
-import { playlist, playlistTrack, track } from "drizzle/schema";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;
@@ -22,11 +22,11 @@ export const POST: APIRoute = async (ctx) => {
 			return new Response(null, { status: 403 });
 
 		await db
-			.delete(playlistTrack)
+			.delete(playlistToTrack)
 			.where(
 				and(
-					eq(playlistTrack.playlistId, request.playlistId),
-					eq(playlistTrack.trackId, request.trackId)
+					eq(playlistToTrack.playlistId, request.playlistId),
+					eq(playlistToTrack.trackId, request.trackId)
 				)
 			);
 	} catch (e) {

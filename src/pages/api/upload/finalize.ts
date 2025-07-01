@@ -1,8 +1,8 @@
 import { db } from "@/lib/database";
+import { track } from "@/lib/schema";
 import { client } from "@/lib/storage";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
-import { track } from "drizzle/schema";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;

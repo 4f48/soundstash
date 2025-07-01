@@ -1,5 +1,5 @@
+import { user } from "@/lib/schema/auth.schema";
 import { pgTable, text, integer } from "drizzle-orm/pg-core";
-import { user } from "drizzle/schema";
 
 export const track = pgTable("track", {
 	id: text("id").primaryKey(),

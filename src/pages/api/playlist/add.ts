@@ -1,7 +1,7 @@
 import { db } from "@/lib/database";
+import { playlist, playlistToTrack, track } from "@/lib/schema";
 import type { APIRoute } from "astro";
 import { and, eq } from "drizzle-orm";
-import { playlist, playlistTrack, track } from "drizzle/schema";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;
@@ -22,7 +22,7 @@ export const POST: APIRoute = async (ctx) => {
 			return new Response(null, { status: 403 });
 
 		await db
-			.insert(playlistTrack)
+			.insert(playlistToTrack)
 			.values({
 				playlistId: request.playlistId,
 				trackId: request.trackId,

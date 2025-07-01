@@ -1,7 +1,7 @@
 import { db } from "@/lib/database";
+import { playlist as playlistTable } from "@/lib/schema";
 import type { APIRoute } from "astro";
 import { and, eq } from "drizzle-orm";
-import { playlist as playlistTable } from "drizzle/schema";
 
 export const GET: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;
@@ -18,7 +18,7 @@ export const GET: APIRoute = async (ctx) => {
 		},
 		where: and(eq(playlistTable.id, id), eq(playlistTable.owner, user.id)),
 		with: {
-			playlistTracks: {
+			playlistToTracks: {
 				with: {
 					track: true,
 				},
@@ -27,7 +27,7 @@ export const GET: APIRoute = async (ctx) => {
 	});
 	if (!playlist) return new Response(null, { status: 401 });
 
-	const tracks = playlist.playlistTracks.map(({ track }) => track);
+	const tracks = playlist.playlistToTracks.map(({ track }) => track);
 	return new Response(JSON.stringify(tracks), {
 		headers: {
 			"Content-Type": "application/json",

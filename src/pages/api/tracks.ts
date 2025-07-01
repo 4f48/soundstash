@@ -1,7 +1,7 @@
 import { db } from "@/lib/database";
+import { track } from "@/lib/schema";
 import type { APIRoute } from "astro";
 import { eq } from "drizzle-orm";
-import { track } from "drizzle/schema";
 
 export const GET: APIRoute = async ({ locals }) => {
 	if (!locals.user?.id) {

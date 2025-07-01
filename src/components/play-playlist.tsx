@@ -1,5 +1,5 @@
+import { playlist as playlistTable } from "@/lib/schema";
 import { playPlaylist } from "@/lib/utils";
-import { playlist as playlistTable } from "drizzle/schema";
 import { PlayIcon } from "lucide-react";
 import type React from "react";
 
