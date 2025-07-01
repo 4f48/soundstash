@@ -57,10 +57,10 @@ export default function createPlaylist({
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
-				<Card className="size-48 hover:bg-muted duration-100">
-					<CardContent className="flex size-48 flex-col items-center justify-center gap-0">
+				<Card className="w-38.5 h-44.5 flex items-center justify-center hover:bg-muted duration-100">
+					<CardContent className="flex size-32 px-0 flex-col items-center justify-center gap-0">
 						<Plus />
-						Create playlist
+						<span className="text-sm">Create playlist</span>
 					</CardContent>
 				</Card>
 			</DialogTrigger>

@@ -1,10 +1,11 @@
 ---
 import CreatePlaylist from "@/components/create-playlist";
-import { Card, CardContent } from "@/components/ui/card";
+import Play from "@/components/play-playlist";
 import { db } from "@/lib/database";
 import type { User } from "better-auth";
 import { eq } from "drizzle-orm";
 import { playlist } from "drizzle/schema";
+import { CassetteTape } from "lucide-react";
 
 interface Props {
 	user: User;
@@ -21,11 +22,20 @@ const playlists = await db.query.playlist.findMany({
 	<div class="flex flex-wrap gap-2">
 		{
 			playlists.slice(0, 6).map((playlist) => (
-				<a class="size-48 cursor-default" href={`/playlist/${playlist.id}`}>
-					<Card className="size-48 hover:bg-muted duration-100">
-						<CardContent className="size-48">{playlist.name}</CardContent>
-					</Card>
-				</a>
+				<div class="group text-card-foreground bg-card grid gap-1 rounded-lg border p-3 shadow duration-100">
+					<div class="relative">
+						<div class="bg-muted flex size-32 items-center justify-center rounded-md">
+							<CassetteTape className="text-muted-foreground size-24" />
+						</div>
+						<Play playlist={playlist} client:visible />
+					</div>
+					<a
+						class="text-center text-sm group-hover:underline"
+						href={`/playlist/${playlist.id}`}
+					>
+						{playlist.name}
+					</a>
+				</div>
 			))
 		}
 		<CreatePlaylist count={playlists.length} client:idle />
