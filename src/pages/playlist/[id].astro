@@ -1,5 +1,6 @@
 ---
 import AllTracks from "@/components/all-tracks";
+import PlaylistActions from "@/components/playlist-actions";
 import Layout from "@/layouts/player.astro";
 import { db } from "@/lib/database";
 import { and, eq } from "drizzle-orm";
@@ -26,7 +27,13 @@ if (!playlist) return new Response(null, { status: 400 });
 
 <Layout>
 	<main class="mx-3 space-y-3">
-		<h1 class="text-3xl font-bold">{playlist.name}</h1>
-		<AllTracks tracks={playlist.playlistTracks.map((item) => item.track)} client:idle />
+		<div class="flex items-center gap-3">
+			<h1 class="text-3xl font-bold">{playlist.name}</h1>
+			<PlaylistActions playlist={playlist} client:idle />
+		</div>
+		<AllTracks
+			tracks={playlist.playlistTracks.map((item) => item.track)}
+			client:idle
+		/>
 	</main>
 </Layout>
