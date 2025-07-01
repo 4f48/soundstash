@@ -1,69 +1,13 @@
 {
-	"version": "7",
-	"dialect": "postgresql",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "7",
-			"when": 1750365209376,
-			"tag": "0000_special_goliath",
-			"breakpoints": true
-		},
-		{
-			"idx": 1,
-			"version": "7",
-			"when": 1750426747436,
-			"tag": "0001_clean_lorna_dane",
-			"breakpoints": true
-		},
-		{
-			"idx": 2,
-			"version": "7",
-			"when": 1750428834688,
-			"tag": "0002_deep_doctor_spectrum",
-			"breakpoints": true
-		},
-		{
-			"idx": 3,
-			"version": "7",
-			"when": 1750857433006,
-			"tag": "0003_kind_scarlet_witch",
-			"breakpoints": true
-		},
-		{
-			"idx": 4,
-			"version": "7",
-			"when": 1750945555420,
-			"tag": "0004_gray_black_knight",
-			"breakpoints": true
-		},
-		{
-			"idx": 5,
-			"version": "7",
-			"when": 1750945603194,
-			"tag": "0005_concerned_bug",
-			"breakpoints": true
-		},
-		{
-			"idx": 6,
-			"version": "7",
-			"when": 1751191702297,
-			"tag": "0006_overrated_lake",
-			"breakpoints": true
-		},
-		{
-			"idx": 7,
-			"version": "7",
-			"when": 1751202290396,
-			"tag": "0007_remarkable_talisman",
-			"breakpoints": true
-		},
-		{
-			"idx": 8,
-			"version": "7",
-			"when": 1751378860307,
-			"tag": "0008_lying_sue_storm",
-			"breakpoints": true
-		}
-	]
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1751408741882,
+      "tag": "0000_sour_lilandra",
+      "breakpoints": true
+    }
+  ]
 }

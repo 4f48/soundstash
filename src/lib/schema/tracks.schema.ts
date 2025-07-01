@@ -1,7 +1,7 @@
 import { user } from "@/lib/schema/auth.schema";
-import { pgTable, text, integer } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
-export const track = pgTable("track", {
+export const track = sqliteTable("track", {
 	id: text("id").primaryKey(),
 	owner: text("owner")
 		.notNull()

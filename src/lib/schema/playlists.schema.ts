@@ -1,8 +1,8 @@
 import { user } from "@/lib/schema/auth.schema";
 import { track } from "@/lib/schema/tracks.schema";
-import { pgTable, primaryKey, text } from "drizzle-orm/pg-core";
+import { sqliteTable, primaryKey, text } from "drizzle-orm/sqlite-core";
 
-export const playlist = pgTable("playlist", {
+export const playlist = sqliteTable("playlist", {
 	id: text("id").primaryKey(),
 	owner: text("owner")
 		.notNull()
@@ -11,7 +11,7 @@ export const playlist = pgTable("playlist", {
 	name: text("name").notNull(),
 });
 
-export const playlistToTrack = pgTable(
+export const playlistToTrack = sqliteTable(
 	"playlist_to_track",
 	{
 		playlistId: text("playlist_id")
