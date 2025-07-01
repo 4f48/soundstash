@@ -1,1 +1,0 @@
-ALTER TABLE "track" ADD COLUMN "length" integer DEFAULT 0 NOT NULL;
