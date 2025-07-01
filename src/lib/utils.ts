@@ -24,3 +24,22 @@ export async function playPlaylist(
 	$currentTrack.set(0);
 	$playing.set(true);
 }
+
+export async function playPlaylistShuffled(
+	playlist: typeof playlistTable.$inferSelect
+) {
+	const playlistTracks = (await (
+		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
+	).json()) as (typeof track.$inferSelect)[];
+
+	const shuffledTracks = [...playlistTracks];
+	for (let i = shuffledTracks.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffledTracks[i], shuffledTracks[j]] = [shuffledTracks[j], shuffledTracks[i]];
+	}
+
+	$playing.set(false);
+	$playlist.set(shuffledTracks);
+	$currentTrack.set(0);
+	$playing.set(true);
+}

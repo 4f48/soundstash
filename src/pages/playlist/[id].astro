@@ -23,6 +23,8 @@ const playlist = await db.query.playlist.findFirst({
 	},
 });
 if (!playlist) return new Response(null, { status: 400 });
+
+const tracks = playlist.playlistTracks.map(({ track }) => track);
 ---
 
 <Layout>
@@ -31,9 +33,6 @@ if (!playlist) return new Response(null, { status: 400 });
 			<h1 class="text-3xl font-bold">{playlist.name}</h1>
 			<PlaylistActions playlist={playlist} client:idle />
 		</div>
-		<AllTracks
-			tracks={playlist.playlistTracks.map((item) => item.track)}
-			client:idle
-		/>
+		<AllTracks tracks={tracks} client:idle />
 	</main>
 </Layout>

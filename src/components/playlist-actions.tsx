@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { playPlaylist } from "@/lib/utils";
+import { playPlaylist, playPlaylistShuffled } from "@/lib/utils";
 import { playlist as playlistTable } from "drizzle/schema";
 import { MoreHorizontal, Play, Shuffle } from "lucide-react";
 import type React from "react";
@@ -18,7 +18,7 @@ export default function PlaylistActions({
 			>
 				<Play />
 			</Button>
-			<Button size="icon" variant="ghost">
+			<Button onClick={() => playPlaylistShuffled(playlist)} size="icon" variant="ghost">
 				<Shuffle />
 			</Button>
 			<Button size="icon" variant="ghost">
