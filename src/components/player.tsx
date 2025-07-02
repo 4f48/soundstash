@@ -4,9 +4,10 @@ import { Slider } from "@/components/ui/slider";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
-import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
+import { Toggle } from "@/components/ui/toggle";
 
 export default function Player(): JSX.Element {
 	const current = useStore($currentTrack);
@@ -17,12 +18,16 @@ export default function Player(): JSX.Element {
 	const playerRef = useRef<ReactHowler>(null);
 	const [duration, setDuration] = useState(0);
 	const [position, setPosition] = useState(0);
+  const repeat = useRef(false);
 	const seeking = useRef(false);
 	function previous() {
 		if (current > 0) {
 			$playing.set(false);
 			$currentTrack.set(current - 1);
 			$playing.set(true);
+		} else if (current === 0 && repeat.current) {
+      $currentTrack.set(playlist.length - 1);
+      $playing.set(true);
 		}
 	}
 	function next() {
@@ -30,6 +35,9 @@ export default function Player(): JSX.Element {
 			$playing.set(false);
 			$currentTrack.set(current + 1);
 			$playing.set(true);
+		} else if (current === playlist.length - 1 && repeat.current) {
+      $currentTrack.set(0);
+      $playing.set(true);
 		}
 	}
 	function handleTracking() {
@@ -54,9 +62,14 @@ export default function Player(): JSX.Element {
 			$currentTrack.set(latestCurrent + 1);
 			$playing.set(true);
 		} else {
-			$playing.set(false);
+      if (repeat.current) {
+        $currentTrack.set(0)
+        $playing.set(true);
+      } else {
+        $playing.set(false);
+      }
 		}
-	}, []);
+	}, [repeat]);
 	useEffect(() => {
 		if (!currentKey) return;
 		(async () => {
@@ -89,11 +102,17 @@ export default function Player(): JSX.Element {
 				</div>
 				<div>
 					<div className="flex items-center justify-center gap-2">
+					<Toggle
+						onPressedChange={() => {}}
+						disabled={playlist.length <= 0}
+					>
+						<Shuffle className="text-primary" />
+					</Toggle>
 						<Button
 							size="icon"
 							variant="ghost"
 							onClick={() => previous()}
-							disabled={current == 0}
+							disabled={current == 0 && !repeat.current}
 						>
 							<SkipBack className="fill-primary" />
 						</Button>
@@ -119,10 +138,16 @@ export default function Player(): JSX.Element {
 							size="icon"
 							variant="ghost"
 							onClick={() => next()}
-							disabled={current == playlist.length - 1 || !playlist[current]}
+							disabled={current == playlist.length - 1 && !repeat.current || !playlist[current]}
 						>
 							<SkipForward className="fill-primary" />
 						</Button>
+  				<Toggle
+              disabled={playlist.length <= 0}
+              onPressedChange={(value) => { repeat.current = value }}
+						>
+							<Repeat className="text-primary" />
+						</Toggle>
 					</div>
 					<div className="flex items-center gap-3">
 						<span className="text-sm text-muted-foreground">
