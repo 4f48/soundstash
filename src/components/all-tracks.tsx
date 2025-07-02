@@ -13,6 +13,7 @@ import {
 import type { track } from "@/lib/schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
+import { useStore } from "@nanostores/react";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
@@ -21,8 +22,8 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
-import { Play, Clock } from "lucide-react";
-import { useState, type JSX } from "react";
+import { Play, Clock, Pause } from "lucide-react";
+import { useEffect, useState, type JSX } from "react";
 
 export default function AllTracks({
 	tracks,
@@ -36,20 +37,43 @@ export default function AllTracks({
 			header: "#",
 			size: 1,
 			cell: ({ row }) => {
+				const track = row.original;
+				const [trackPlaying, setTrackPlaying] = useState(false);
+				const currentTrack = useStore($currentTrack);
+				const playlist = useStore($playlist);
+				const playing = useStore($playing);
+				useEffect(() => {
+					if (!playlist[currentTrack]) return;
+					else if (playlist[currentTrack].id === track.id)
+						setTrackPlaying(true);
+					else setTrackPlaying(false);
+				}, [playlist[currentTrack], playing]);
 				return (
 					<>
 						<Button
 							size="icon"
 							variant="ghost"
 							onClick={async () => {
+								if (trackPlaying && playing) {
+									$playing.set(false);
+									return;
+								}
 								$playing.set(false);
 								$playlist.set(tracks);
 								$currentTrack.set(row.index);
 								$playing.set(true);
 							}}
 						>
-							<span className="group-hover:hidden block">{row.index + 1}</span>
-							<Play className="group-hover:flex m-0 hidden" />
+							<span
+								className={`group-hover:hidden block ${trackPlaying && "font-semibold"}`}
+							>
+								{row.index + 1}
+							</span>
+							{trackPlaying && playing ? (
+								<Pause className="group-hover:flex m-0 hidden fill-primary" />
+							) : (
+								<Play className="group-hover:flex m-0 hidden fill-primary" />
+							)}
 						</Button>
 					</>
 				);
@@ -62,7 +86,12 @@ export default function AllTracks({
 			cell: ({ row }) => {
 				const track = row.original;
 				return (
-					<Title artist={track.artist} id={track.id} title={track.title} />
+					<Title
+						artist={track.artist}
+						id={track.id}
+						indicatePlaying
+						title={track.title}
+					/>
 				);
 			},
 		},
