@@ -7,6 +7,7 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "sqlite",
 	}),
+	secret: import.meta.env.BETTER_AUTH_SECRET,
 	emailAndPassword: {
 		enabled: true,
 		autoSignIn: false,

@@ -27,7 +27,7 @@ const playlists = await db.query.playlist.findMany({
 					<div class="relative">
 						{playlist.image ? (
 							<Image
-								src={`http://localhost:4321/api/playlist/image?id=${playlist.id}`}
+								src={`/api/playlist/image?id=${playlist.id}`}
 								alt=""
 								width="8"
 								height="8"

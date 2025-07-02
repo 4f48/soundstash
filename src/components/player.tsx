@@ -23,7 +23,7 @@ export default function Player(): JSX.Element {
 	const playlist = useStore($playlist);
 	const [url, setUrl] = useState<string | undefined>();
 	const currentKey = playlist[current];
-	const [original, setOriginal] = useState<typeof track.$inferSelect[]>([]);
+	const [original, setOriginal] = useState<(typeof track.$inferSelect)[]>([]);
 	const playerRef = useRef<ReactHowler>(null);
 	const [duration, setDuration] = useState(0);
 	const [position, setPosition] = useState(0);
@@ -46,7 +46,7 @@ export default function Player(): JSX.Element {
 			$currentTrack.set(current + 1);
 			$playing.set(true);
 		} else if (current === playlist.length - 1 && repeat.current) {
-      if (shuffle.current) shufflePlaylist();
+			if (shuffle.current) shufflePlaylist();
 			$currentTrack.set(0);
 			$playing.set(true);
 		}
@@ -89,10 +89,10 @@ export default function Player(): JSX.Element {
 			$playing.set(true);
 		} else {
 			if (repeat.current) {
-        $playing.set(false);
-        if (shuffle.current) {
-          shufflePlaylist();
-        }
+				$playing.set(false);
+				if (shuffle.current) {
+					shufflePlaylist();
+				}
 				$currentTrack.set(0);
 				$playing.set(true);
 			} else {
@@ -116,7 +116,7 @@ export default function Player(): JSX.Element {
 		} else if (original.length > 0) {
 			// Restore original playlist when disabled
 			const currentId = playlist[current].id;
-			const index = original.findIndex(track => track.id === currentId);
+			const index = original.findIndex((track) => track.id === currentId);
 			$playlist.set(original);
 			$currentTrack.set(index >= 0 ? index : current);
 			setOriginal([]); // Clear the saved original
