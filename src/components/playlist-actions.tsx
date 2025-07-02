@@ -32,10 +32,10 @@ import {
 	Pencil,
 	Play,
 	Shuffle,
-	TextCursorInput,
 	Trash2,
 } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 export default function PlaylistActions({
 	playlist,
@@ -61,19 +61,40 @@ export default function PlaylistActions({
 			});
 		} catch (e) {
 			setLoading(false);
-			if (e instanceof Error) console.error(e.message);
+			if (e instanceof Error) {
+				toast.error(
+					`Failed to ${playlist.image ? "change" : "add"} image: ${e.message}`
+				);
+				console.error(e.message);
+			}
 			return 1;
 		} finally {
 			setLoading(false);
 			setOpen(false);
-			if (!playlist.image) navigate(`/playlist/${playlist.id}`);
+			if (playlist.image) toast.success("Changed image");
+			else {
+				toast.success("Added an image");
+				navigate(`/playlist/${playlist.id}`);
+			}
 		}
 	}
 	async function removeImage() {
-		await fetch(`/api/playlist/image?id=${playlist.id}`, {
+		const result = await fetch(`/api/playlist/image?id=${playlist.id}`, {
 			method: "DELETE",
 		});
-		navigate(`/playlist/${playlist.id}`);
+		if (result.ok) {
+			toast.success(`Removed image`);
+			navigate(`/playlist/${playlist.id}`);
+		} else toast.error(`Failed to removed image`);
+	}
+	async function deletePlaylist() {
+		const result = await fetch(`/api/playlist/delete?id=${playlist.id}`, {
+			method: "DELETE",
+		});
+		if (result.ok) {
+			toast.success(`Deleted playlist "${playlist.name}"`);
+			navigate("/");
+		} else toast.error(`Failed to delete "${playlist.name}"`);
 	}
 	return (
 		<div className="grid grid-cols-3 w-fit border rounded-md shadow-xs">
@@ -130,11 +151,7 @@ export default function PlaylistActions({
 									</DropdownMenuItem>
 								</DialogTrigger>
 							)}
-							<DropdownMenuItem>
-								<TextCursorInput className="text-muted-foreground" />
-								Rename
-							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem onClick={() => deletePlaylist()}>
 								<Trash2 />
 								Delete
 							</DropdownMenuItem>

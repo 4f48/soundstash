@@ -19,6 +19,7 @@ export async function playPlaylist(
 	const playlistToTracks = (await (
 		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
 	).json()) as (typeof track.$inferSelect)[];
+  if (playlistToTracks.length <= 0) return;
 	$playing.set(false);
 	$playlist.set(playlistToTracks);
 	$currentTrack.set(0);
@@ -31,6 +32,7 @@ export async function playPlaylistShuffled(
 	const playlistToTracks = (await (
 		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
 	).json()) as (typeof track.$inferSelect)[];
+	if (playlistToTracks.length <= 0) return;
 
 	const shuffledTracks = [...playlistToTracks];
 	for (let i = shuffledTracks.length - 1; i > 0; i--) {

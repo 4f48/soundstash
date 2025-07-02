@@ -22,7 +22,7 @@ const playlists = await db.query.playlist.findMany({
 	<h1 class="text-3xl font-bold">Playlists</h1>
 	<div class="flex flex-wrap gap-2">
 		{
-			playlists.slice(0, 6).map((playlist) => (
+			playlists.map((playlist) => (
 				<div class="group text-card-foreground bg-card grid gap-1 rounded-lg border p-3 shadow duration-100">
 					<div class="relative">
 						{playlist.image ? (

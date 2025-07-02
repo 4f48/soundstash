@@ -19,9 +19,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { navigate } from "astro:transitions/client";
-import { Plus } from "lucide-react";
+import { LoaderCircle, Plus } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -33,6 +34,7 @@ export default function createPlaylist({
 }: {
 	count: number;
 }): React.JSX.Element {
+	const [loading, setLoading] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -41,6 +43,7 @@ export default function createPlaylist({
 		},
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		const request: App.NewPlaylistRequest = { name: values.name };
 		const result = await fetch("/api/playlist/new", {
 			body: JSON.stringify(request),
@@ -51,8 +54,10 @@ export default function createPlaylist({
 		});
 		if (result.ok) {
 			const id = await result.text();
+      toast.success(`Created playlist "${values.name}"`);
 			navigate(`/playlist/${id}`);
 		}
+		setLoading(false);
 	}
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -89,7 +94,8 @@ export default function createPlaylist({
 								</FormItem>
 							)}
 						/>
-						<Button type="submit" className="w-full">
+						<Button className="w-full" disabled={loading} type="submit">
+							{loading && <LoaderCircle className="animate-spin" />}
 							Create
 						</Button>
 					</form>
