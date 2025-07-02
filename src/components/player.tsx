@@ -46,7 +46,7 @@ export default function Player(): JSX.Element {
 			$currentTrack.set(current + 1);
 			$playing.set(true);
 		} else if (current === playlist.length - 1 && repeat.current) {
-      shufflePlaylist();
+      if (shuffle.current) shufflePlaylist();
 			$currentTrack.set(0);
 			$playing.set(true);
 		}
