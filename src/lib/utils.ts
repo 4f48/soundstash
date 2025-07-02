@@ -19,7 +19,7 @@ export async function playPlaylist(
 	const playlistToTracks = (await (
 		await fetch(`/api/playlist/tracks?id=${playlist.id}`)
 	).json()) as (typeof track.$inferSelect)[];
-  if (playlistToTracks.length <= 0) return;
+	if (playlistToTracks.length <= 0) return;
 	$playing.set(false);
 	$playlist.set(playlistToTracks);
 	$currentTrack.set(0);

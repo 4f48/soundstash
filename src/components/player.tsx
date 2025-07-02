@@ -1,13 +1,21 @@
 import Title from "@/components/title";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Toggle } from "@/components/ui/toggle";
+import type { track } from "@/lib/schema";
 import { $currentTrack, $playing, $playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
-import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward } from "lucide-react";
+import {
+	Pause,
+	Play,
+	Repeat,
+	Shuffle,
+	SkipBack,
+	SkipForward,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
-import { Toggle } from "@/components/ui/toggle";
 
 export default function Player(): JSX.Element {
 	const current = useStore($currentTrack);
@@ -15,19 +23,21 @@ export default function Player(): JSX.Element {
 	const playlist = useStore($playlist);
 	const [url, setUrl] = useState<string | undefined>();
 	const currentKey = playlist[current];
+	const [original, setOriginal] = useState<typeof track.$inferSelect[]>([]);
 	const playerRef = useRef<ReactHowler>(null);
 	const [duration, setDuration] = useState(0);
 	const [position, setPosition] = useState(0);
-  const repeat = useRef(false);
+	const repeat = useRef(false);
 	const seeking = useRef(false);
+	const shuffle = useRef(false);
 	function previous() {
 		if (current > 0) {
 			$playing.set(false);
 			$currentTrack.set(current - 1);
 			$playing.set(true);
 		} else if (current === 0 && repeat.current) {
-      $currentTrack.set(playlist.length - 1);
-      $playing.set(true);
+			$currentTrack.set(playlist.length - 1);
+			$playing.set(true);
 		}
 	}
 	function next() {
@@ -36,8 +46,9 @@ export default function Player(): JSX.Element {
 			$currentTrack.set(current + 1);
 			$playing.set(true);
 		} else if (current === playlist.length - 1 && repeat.current) {
-      $currentTrack.set(0);
-      $playing.set(true);
+      shufflePlaylist();
+			$currentTrack.set(0);
+			$playing.set(true);
 		}
 	}
 	function handleTracking() {
@@ -54,7 +65,22 @@ export default function Player(): JSX.Element {
 		setDuration(howler.duration());
 		setPosition(0);
 	}, []);
-	const handleEnd = useCallback<HowlCallback>(() => {
+	function shufflePlaylist() {
+		// Save the original playlist before shuffling
+		if (shuffle.current && original.length === 0) {
+			setOriginal([...playlist]);
+		}
+
+		const copy = playlist.slice(0, current).concat(playlist.slice(current + 1));
+		for (let i = copy.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[copy[i], copy[j]] = [copy[j], copy[i]];
+		}
+		copy.splice(current, 0, playlist[current]);
+
+		$playlist.set(copy);
+	}
+	const handleEnd: HowlCallback = () => {
 		const latestCurrent = $currentTrack.get();
 		const latestPlaylist = $playlist.get();
 
@@ -62,14 +88,18 @@ export default function Player(): JSX.Element {
 			$currentTrack.set(latestCurrent + 1);
 			$playing.set(true);
 		} else {
-      if (repeat.current) {
-        $currentTrack.set(0)
-        $playing.set(true);
-      } else {
+			if (repeat.current) {
         $playing.set(false);
-      }
+        if (shuffle.current) {
+          shufflePlaylist();
+        }
+				$currentTrack.set(0);
+				$playing.set(true);
+			} else {
+				$playing.set(false);
+			}
 		}
-	}, [repeat]);
+	};
 	useEffect(() => {
 		if (!currentKey) return;
 		(async () => {
@@ -77,6 +107,21 @@ export default function Player(): JSX.Element {
 			setUrl(await response.text());
 		})();
 	}, [currentKey]);
+	useEffect(() => {
+		if (!playlist[current]) return;
+
+		if (shuffle.current) {
+			// Shuffle when enabled
+			shufflePlaylist();
+		} else if (original.length > 0) {
+			// Restore original playlist when disabled
+			const currentId = playlist[current].id;
+			const index = original.findIndex(track => track.id === currentId);
+			$playlist.set(original);
+			$currentTrack.set(index >= 0 ? index : current);
+			setOriginal([]); // Clear the saved original
+		}
+	}, [shuffle.current]);
 	return (
 		<>
 			{url && (
@@ -102,12 +147,14 @@ export default function Player(): JSX.Element {
 				</div>
 				<div>
 					<div className="flex items-center justify-center gap-2">
-					<Toggle
-						onPressedChange={() => {}}
-						disabled={playlist.length <= 0}
-					>
-						<Shuffle className="text-primary" />
-					</Toggle>
+						<Toggle
+							onPressedChange={(value) => {
+								shuffle.current = value;
+							}}
+							disabled={playlist.length <= 0}
+						>
+							<Shuffle className="text-primary" />
+						</Toggle>
 						<Button
 							size="icon"
 							variant="ghost"
@@ -138,13 +185,18 @@ export default function Player(): JSX.Element {
 							size="icon"
 							variant="ghost"
 							onClick={() => next()}
-							disabled={current == playlist.length - 1 && !repeat.current || !playlist[current]}
+							disabled={
+								(current == playlist.length - 1 && !repeat.current) ||
+								!playlist[current]
+							}
 						>
 							<SkipForward className="fill-primary" />
 						</Button>
-  				<Toggle
-              disabled={playlist.length <= 0}
-              onPressedChange={(value) => { repeat.current = value }}
+						<Toggle
+							disabled={playlist.length <= 0}
+							onPressedChange={(value) => {
+								repeat.current = value;
+							}}
 						>
 							<Repeat className="text-primary" />
 						</Toggle>

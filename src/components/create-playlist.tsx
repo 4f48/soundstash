@@ -54,7 +54,7 @@ export default function createPlaylist({
 		});
 		if (result.ok) {
 			const id = await result.text();
-      toast.success(`Created playlist "${values.name}"`);
+			toast.success(`Created playlist "${values.name}"`);
 			navigate(`/playlist/${id}`);
 		}
 		setLoading(false);

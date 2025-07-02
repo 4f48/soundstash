@@ -17,8 +17,8 @@
 		"@astrojs/react": "^4.3.0",
 		"@astrojs/sitemap": "^3.4.1",
 		"@astrojs/vercel": "^8.2.0",
-		"@aws-sdk/client-s3": "^3.840.0",
-		"@aws-sdk/s3-request-presigner": "^3.840.0",
+		"@aws-sdk/client-s3": "^3.842.0",
+		"@aws-sdk/s3-request-presigner": "^3.842.0",
 		"@hookform/resolvers": "^5.1.1",
 		"@libsql/client": "^0.15.9",
 		"@nanostores/react": "^1.0.0",
@@ -55,7 +55,7 @@
 		"tailwind-merge": "^3.3.1",
 		"tailwindcss": "^4.1.11",
 		"typescript": "^5.8.3",
-		"zod": "^3.25.67"
+		"zod": "^3.25.68"
 	},
 	"devDependencies": {
 		"@ayco/astro-sw": "^0.8.14",
