@@ -19,7 +19,7 @@ const tracks = await db.query.track.findMany({
 		<Playlists user={user} />
 		<div class="space-y-3">
 			<h1 class="text-3xl font-bold">All your tracks</h1>
-			<AllTracks tracks={tracks} client:load />
+			<AllTracks tracks={tracks} client:idle />
 		</div>
 	</main>
 </Layout>
