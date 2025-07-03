@@ -25,7 +25,7 @@ async function forwardRequest(
 		method: request.method,
 		headers: headers,
 		body:
-			request.method != "GET"
+			request.method !== "GET"
 				? new Uint8Array(await request.arrayBuffer())
 				: undefined,
 	});
