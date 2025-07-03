@@ -8,7 +8,10 @@ async function retrieveStatic(
 	pathname: string
 ): Promise<Response> {
 	const response: Response = await fetch(`https://${ASSET_HOST}${pathname}`);
-	return new Response(new Uint8Array(await response.arrayBuffer()));
+	return new Response(response.body, {
+		headers: response.headers,
+		status: response.status,
+	});
 }
 
 async function forwardRequest(
@@ -26,7 +29,10 @@ async function forwardRequest(
 				? new Uint8Array(await request.arrayBuffer())
 				: undefined,
 	});
-	return new Response(new Uint8Array(await response.arrayBuffer()));
+	return new Response(response.body, {
+		headers: response.headers,
+		status: response.status,
+	});
 }
 
 async function handleRequest(request: Request): Promise<Response> {
