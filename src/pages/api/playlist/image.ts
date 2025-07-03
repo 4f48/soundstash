@@ -8,6 +8,7 @@ import {
 	PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
 import { and, eq } from "drizzle-orm";
 
 export const GET: APIRoute = async (ctx) => {
@@ -22,7 +23,7 @@ export const GET: APIRoute = async (ctx) => {
 	});
 	if (!checkResult) return new Response(null, { status: 403 });
 
-	const bucket = import.meta.env.CLOUDFLARE_R2_BUCKET;
+	const bucket = CLOUDFLARE_R2_BUCKET;
 	const key = `playlists/${id}`;
 
 	const headCommand = new HeadObjectCommand({ Bucket: bucket, Key: key });
@@ -81,7 +82,7 @@ export const POST: APIRoute = async (ctx) => {
 		const body = await ctx.request.arrayBuffer();
 		if (!body) return new Response("no request body", { status: 400 });
 		const command = new PutObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			ContentLength: Number(contentLength),
 			ContentType: contentType,
 			Key: `playlists/${id}`,
@@ -122,7 +123,7 @@ export const PUT: APIRoute = async (ctx) => {
 
 		const headResponse = await client.send(
 			new HeadObjectCommand({
-				Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+				Bucket: CLOUDFLARE_R2_BUCKET,
 				Key: `playlists/${id}`,
 			})
 		);
@@ -132,7 +133,7 @@ export const PUT: APIRoute = async (ctx) => {
 		const body = await ctx.request.arrayBuffer();
 		if (!body) return new Response("no request body", { status: 400 });
 		const command = new PutObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			ContentLength: Number(contentLength),
 			ContentType: contentType,
 			Key: `playlists/${id}`,
@@ -160,7 +161,7 @@ export const DELETE: APIRoute = async (ctx) => {
 		if (!checkResult) return new Response(null, { status: 403 });
 
 		const command = new DeleteObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			Key: `playlists/${id}`,
 		});
 		await client.send(command);

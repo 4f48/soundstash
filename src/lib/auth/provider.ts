@@ -1,5 +1,6 @@
 import { db } from "@/lib/database";
 import { resend } from "@/lib/email";
+import { BETTER_AUTH_SECRET } from "astro:env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
@@ -7,7 +8,7 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "sqlite",
 	}),
-	secret: import.meta.env.BETTER_AUTH_SECRET,
+	secret: BETTER_AUTH_SECRET,
 	emailAndPassword: {
 		enabled: true,
 		autoSignIn: false,

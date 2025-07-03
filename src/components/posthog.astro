@@ -1,8 +1,8 @@
 ---
-const baseUrl = import.meta.env.BETTER_AUTH_URL;
+import { BETTER_AUTH_URL } from "astro:env/client";
 ---
 
-<script define:vars={{ baseUrl }} is:inline>
+<script define:vars={{ baseUrl: BETTER_AUTH_URL }} is:inline>
 	!(function (t, e) {
 		var o, n, p, r;
 		e.__SV ||

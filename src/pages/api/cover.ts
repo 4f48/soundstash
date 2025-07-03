@@ -3,6 +3,7 @@ import { track } from "@/lib/schema";
 import { client } from "@/lib/storage";
 import { GetObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
 import { eq } from "drizzle-orm";
 
 export const GET: APIRoute = async (ctx) => {
@@ -18,7 +19,7 @@ export const GET: APIRoute = async (ctx) => {
 	});
 	if (dbCheck?.owner != user.id) return new Response(null, { status: 401 });
 
-	const bucket = import.meta.env.CLOUDFLARE_R2_BUCKET;
+	const bucket = CLOUDFLARE_R2_BUCKET;
 	const key = `covers/${id}`;
 
 	const headCommand = new HeadObjectCommand({ Bucket: bucket, Key: key });

@@ -4,6 +4,7 @@ import { client } from "@/lib/storage";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import type { APIRoute } from "astro";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
 import { eq, sum } from "drizzle-orm";
 
 export const POST: APIRoute = async (ctx) => {
@@ -27,7 +28,7 @@ export const POST: APIRoute = async (ctx) => {
 	const uuid = crypto.randomUUID();
 
 	const trackCommand = new PutObjectCommand({
-		Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+		Bucket: CLOUDFLARE_R2_BUCKET,
 		ContentLength: request.trackLength,
 		ContentType: request.trackType,
 		Key: `tracks/${uuid}`,
@@ -40,7 +41,7 @@ export const POST: APIRoute = async (ctx) => {
 	let coverUrl: string | undefined;
 	if (request.coverLength && request.coverType) {
 		const coverCommand = new PutObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			ContentLength: request.coverLength,
 			ContentType: request.coverType,
 			Key: `covers/${uuid}`,

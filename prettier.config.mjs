@@ -1,6 +1,7 @@
-import type { Config } from "prettier";
+// @ts-check
 
-const config: Config = {
+/** @type {import("prettier").Config}  **/
+const config = {
 	overrides: [
 		{
 			files: "*.astro",

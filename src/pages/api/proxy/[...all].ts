@@ -21,9 +21,12 @@ async function forwardRequest(
 	const response = await fetch(`https://${API_HOST}${pathWithSearch}`, {
 		method: request.method,
 		headers: headers,
-		body: request.method != "GET" ? new Uint8Array(await request.arrayBuffer()) : undefined,
+		body:
+			request.method != "GET"
+				? new Uint8Array(await request.arrayBuffer())
+				: undefined,
 	});
-  return new Response(new Uint8Array(await response.arrayBuffer()));
+	return new Response(new Uint8Array(await response.arrayBuffer()));
 }
 
 async function handleRequest(request: Request): Promise<Response> {

@@ -3,6 +3,7 @@ import { track } from "@/lib/schema";
 import { client } from "@/lib/storage";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
 
 export const POST: APIRoute = async (ctx) => {
 	const user = ctx.locals.user;
@@ -15,7 +16,7 @@ export const POST: APIRoute = async (ctx) => {
 	await client
 		.send(
 			new HeadObjectCommand({
-				Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+				Bucket: CLOUDFLARE_R2_BUCKET,
 				Key: `tracks/${request.id}`,
 			})
 		)

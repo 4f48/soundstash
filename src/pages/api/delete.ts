@@ -3,6 +3,7 @@ import { track } from "@/lib/schema";
 import { client } from "@/lib/storage";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
 import { eq } from "drizzle-orm";
 
 export const DELETE: APIRoute = async (ctx) => {
@@ -11,13 +12,13 @@ export const DELETE: APIRoute = async (ctx) => {
 
 	await client.send(
 		new DeleteObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			Key: `tracks/${id}`,
 		})
 	);
 	await client.send(
 		new DeleteObjectCommand({
-			Bucket: import.meta.env.CLOUDFLARE_R2_BUCKET,
+			Bucket: CLOUDFLARE_R2_BUCKET,
 			Key: `covers/${id}`,
 		})
 	);

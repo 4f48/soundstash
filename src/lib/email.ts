@@ -1,3 +1,4 @@
+import { RESEND_KEY } from "astro:env/server";
 import { Resend } from "resend";
 
-export const resend = new Resend(import.meta.env.RESEND_KEY);
+export const resend = new Resend(RESEND_KEY);
