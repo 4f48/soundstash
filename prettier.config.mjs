@@ -9,6 +9,12 @@ const config = {
 				parser: "astro",
 			},
 		},
+		{
+			files: "*.svelte",
+			options: {
+				parser: "svelte",
+			},
+		},
 	],
 	plugins: [
 		"prettier-plugin-astro",

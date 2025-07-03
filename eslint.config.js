@@ -1,3 +1,4 @@
+// @ts-check
 import eslintcss from "@eslint/css";
 import eslint from "@eslint/js";
 import prettier from "eslint-config-prettier";
@@ -10,13 +11,27 @@ export default tseslint.config([
 	eslint.configs.recommended,
 	tseslint.configs.recommended,
 	eslintcss.configs.recommended,
-	prettier,
 	...astro.configs.recommended,
 	...svelte.configs.recommended,
+	prettier,
+	...svelte.configs.prettier,
 	{
 		languageOptions: {
 			globals: {
 				...globals.browser,
+			},
+		},
+		rules: {
+			"no-undef": "off",
+		},
+	},
+	{
+		files: ["**/*.svelte"],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: [".svelte"],
+				parser: tseslint.parser,
 			},
 		},
 	},
