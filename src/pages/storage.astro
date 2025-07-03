@@ -14,5 +14,5 @@ const tracks = await db.query.track.findMany({
 ---
 
 <Layout>
-	<LibraryComponent initialTracks={tracks} client:idle />
+	<LibraryComponent initialTracks={tracks} client:load />
 </Layout>

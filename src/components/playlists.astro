@@ -49,6 +49,6 @@ const playlists = await db.query.playlist.findMany({
 				</div>
 			))
 		}
-		<CreatePlaylist count={playlists.length} client:idle />
+		<CreatePlaylist count={playlists.length} client:load />
 	</div>
 </div>
