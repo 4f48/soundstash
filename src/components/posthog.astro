@@ -1,4 +1,8 @@
-<script is:inline>
+---
+const baseUrl = import.meta.env.BETTER_AUTH_URL;
+---
+
+<script define:vars={{ baseUrl }} is:inline>
 	!(function (t, e) {
 		var o, n, p, r;
 		e.__SV ||
@@ -51,7 +55,7 @@
 			(e.__SV = 1));
 	})(document, window.posthog || []);
 	posthog.init("phc_88SD8f9bWD050DHuUSWa81C5jAQdqgGR6mvSBg2ln7K", {
-		api_host: "http://localhost:4321/api/proxy",
+		api_host: `${baseUrl}/api/proxy`,
 		ui_host: "https://eu.posthog.com",
 		defaults: "2025-05-24",
 	});
