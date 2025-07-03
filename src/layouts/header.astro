@@ -1,9 +1,11 @@
 ---
-import HeaderBar from "@/components/header.astro";
+import HeaderComponent from "@/components/header";
 import Layout from "@/layouts/html.astro";
+
+const session = Astro.locals.session;
 ---
 
 <Layout>
-	<HeaderBar />
+	<HeaderComponent authenticated={session} />
 	<slot />
 </Layout>

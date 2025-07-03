@@ -10,7 +10,7 @@
 		"drizzle": "drizzle-kit",
 		"fmt": "prettier --write .",
 		"preview": "astro preview",
-		"lint": "NODE_OPTIONS=\"--experimental-strip-types\" prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint ."
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
