@@ -1,0 +1,21 @@
+---
+import { cn } from "@/lib/utils";
+import type { ClassValue } from "clsx";
+
+interface Props {
+	class?: ClassValue;
+	level?: number;
+}
+const { class: className, level } = Astro.props;
+---
+
+<div
+	class={cn(
+		"flex flex-col gap-2 rounded-md border p-3",
+		`bg-bg${level ? level : ""}`,
+		`border-bg${(level ? level : 0) + 2}`,
+		className
+	)}
+>
+	<slot />
+</div>
