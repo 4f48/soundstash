@@ -6,6 +6,8 @@ const session = Astro.locals.session;
 ---
 
 <Layout>
-	<HeaderComponent authenticated={session} />
-	<slot />
+	<HeaderComponent authenticated={session} client:idle />
+	<main class="mt-16">
+		<slot />
+	</main>
 </Layout>

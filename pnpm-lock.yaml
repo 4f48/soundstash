@@ -138,6 +138,9 @@ importers:
       svelte:
         specifier: ^5.35.1
         version: 5.35.1
+      svelte-hero-icons:
+        specifier: ^5.2.0
+        version: 5.2.0(svelte@5.35.1)
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -2441,6 +2444,12 @@ packages:
     resolution:
       {
         integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==,
+      }
+
+  "@steeze-ui/heroicons@2.4.2":
+    resolution:
+      {
+        integrity: sha512-66luL+uaxyC6mcZigewH4phfDxNWj4sH+n6qK2VnY3zcgpMmNAgVQbMGfZYfKhLqrUo13BlqpmhWuHqAUpehlA==,
       }
 
   "@sveltejs/acorn-typescript@1.0.5":
@@ -5447,6 +5456,15 @@ packages:
     peerDependenciesMeta:
       svelte:
         optional: true
+
+  svelte-hero-icons@5.2.0:
+    resolution:
+      {
+        integrity: sha512-KpdMTL0bOnkxciEmDXvyVF/R5nrZ1x1uHCSt9gMrrbEd3g5HSIaaDChOutTOfeI+cZ3EJbb+OcBH/lBzJr1aEw==,
+      }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0
 
   svelte-toolbelt@0.9.3:
     resolution:
@@ -8611,6 +8629,8 @@ snapshots:
       tslib: 2.8.1
 
   '@speed-highlight/core@1.2.7': {}
+
+  "@steeze-ui/heroicons@2.4.2": {}
 
   "@sveltejs/acorn-typescript@1.0.5(acorn@8.15.0)":
     dependencies:
@@ -12052,6 +12072,11 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.6)
       postcss-selector-parser: 7.1.0
     optionalDependencies:
+      svelte: 5.35.1
+
+  svelte-hero-icons@5.2.0(svelte@5.35.1):
+    dependencies:
+      "@steeze-ui/heroicons": 2.4.2
       svelte: 5.35.1
 
   svelte-toolbelt@0.9.3(svelte@5.35.1):
