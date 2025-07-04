@@ -57,7 +57,7 @@ export default function Signup(): React.JSX.Element {
 		);
 	}
 	return (
-		<Card className="w-full max-w-sm self-center my-auto">
+		<Card className="my-auto w-full max-w-sm self-center">
 			<CardHeader>
 				<CardTitle>Login to your account</CardTitle>
 				<CardDescription>

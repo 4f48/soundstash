@@ -8,11 +8,11 @@
 	let open = $state(false);
 </script>
 
-<header class="w-full fixed left-0 top-0 z-50 p-2">
-	<div class="bg-text/20 bg-bg border border-bg2 rounded-lg px-3 relative">
+<header class="fixed top-0 left-0 z-50 w-full p-2">
+	<div class="bg-text/20 bg-bg border-bg2 relative rounded-lg border px-3">
 		<div class="flex h-[2.9rem] items-center">
-			<h1 class="text-xl sm:mx-3 font-bold tracking-tight">SoundStash</h1>
-			<div class="flex-1 flex justify-end sm:hidden">
+			<h1 class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</h1>
+			<div class="flex flex-1 justify-end sm:hidden">
 				<Button onclick={() => (open = !open)} size="icon" variant="ghost">
 					<div class="size-7">
 						{#if !open}
@@ -24,12 +24,12 @@
 				</Button>
 			</div>
 			<Separator.Root
-				class="bg-bg2 hidden sm:block p-0 mx-3 shrink-0 h-8 w-[1px]"
+				class="bg-bg2 mx-3 hidden h-8 w-[1px] shrink-0 p-0 sm:block"
 				orientation="vertical"
 			/>
-			<NavigationMenu.Root class="flex-1 hidden sm:block">
+			<NavigationMenu.Root class="hidden flex-1 sm:block">
 				<NavigationMenu.List class="flex items-center justify-end gap-1">
-					<div class="flex-1 hidden gap-1 sm:flex">
+					<div class="hidden flex-1 gap-1 sm:flex">
 						<Link href="#features">Features</Link>
 						<Link href="#pricing">Pricing</Link>
 						<Link href="#faq">FAQ</Link>
@@ -47,7 +47,7 @@
 						<Link href="#features">Features</Link>
 						<Link href="#pricing">Pricing</Link>
 						<Link href="#faq">FAQ</Link>
-						<Separator.Root class="bg-border my-2 shrink-0 w-full h-[1px]" />
+						<Separator.Root class="bg-bg2 my-2 h-[1px] w-full shrink-0" />
 						<Link href="/auth/signup">Sign up</Link>
 						<Link href="/auth/signin">Sign in</Link>
 					</NavigationMenu.List>

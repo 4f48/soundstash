@@ -53,7 +53,7 @@ export default function ResetDialog(): JSX.Element {
 	}
 	return (
 		<Dialog>
-			<DialogTrigger className="hover:underline underline-offset-4 text-sm">
+			<DialogTrigger className="text-sm underline-offset-4 hover:underline">
 				Forgot your password?
 			</DialogTrigger>
 			<DialogContent>
