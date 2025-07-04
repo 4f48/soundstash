@@ -1,8 +1,20 @@
 ---
-import SignIn from "@/components/signin";
-import Layout from "@/layouts/html.astro";
+import {
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/card";
+import Layout from "@/layouts/auth.astro";
 ---
 
 <Layout>
-	<SignIn client:load />
+	<Card class="w-sm">
+		<CardHeader>
+			<CardTitle>Welcome back!</CardTitle>
+			<CardDescription
+				>Enter your email to sign in to your account.</CardDescription
+			>
+		</CardHeader>
+	</Card>
 </Layout>

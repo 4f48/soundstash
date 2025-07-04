@@ -1,0 +1,13 @@
+---
+import { cn } from "@/lib/utils";
+import type { ClassValue } from "clsx";
+
+interface Props {
+	class?: ClassValue;
+}
+const { class: className } = Astro.props;
+---
+
+<div class={cn("mb-1 grid", className)}>
+	<slot />
+</div>
