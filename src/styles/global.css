@@ -4,6 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	--font-sans: var(--font-inter);
 	--color-bg0: var(--bg0);
 	--color-bg: var(--bg);
 	--color-bg1: var(--bg1);
@@ -14,6 +15,8 @@
 	--color-fg0: var(--fg0);
 	--color-fg: var(--fg);
 	--color-fg1: var(--fg1);
+	--color-destructive: oklch(0.5458 0.203 28.66);
+	--color-primary: var(--primary);
 }
 
 :root {
@@ -27,6 +30,7 @@
 	--fg0: oklch(0.2768 0 0);
 	--fg: oklch(0.3441 0.0066 48.52);
 	--fg1: oklch(0.411 0.0115 51.87);
+	--primary: oklch(0.6176 0.1277 70.67);
 }
 .dark {
 	--bg0: oklch(0.2408 0.0049 219.67);
@@ -39,4 +43,5 @@
 	--fg0: oklch(0.9555 0.0555 96.15);
 	--fg: oklch(0.8941 0.0566 89.24);
 	--fg1: oklch(0.8255 0.0507 85.12);
+	--primary: oklch(0.8325 0.1595 82.99);
 }

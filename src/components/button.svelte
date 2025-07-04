@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { cn } from "../lib/utils";
+	import Loader from "./loader.svelte";
 	import { Button } from "bits-ui";
 	import { cva, type VariantProps } from "class-variance-authority";
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-offset-background focus-visible:ring-muted-foreground inline-flex items-center justify-center rounded-sm text-sm font-medium duration-150 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-75",
+		"focus-visible:ring-bg4/50 inline-flex cursor-pointer items-center justify-center rounded-sm text-sm font-medium transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:opacity-75",
 		{
 			variants: {
 				size: {
@@ -14,7 +15,7 @@
 					icon: "size-8",
 				},
 				variant: {
-					default: "bg-primary text-background enabled:hover:bg-secondary",
+					default: "bg-primary text-bg enabled:hover:bg-primary/95",
 					outline:
 						"border-primary text-foreground enabled:hover:bg-primary/20 border",
 					ghost: "text-foreground enabled:hover:bg-muted-background",
@@ -48,7 +49,6 @@
 	class={cn(buttonVariants({ className, size, variant }))}
 	disabled={loading}
 	{...props}
-	>{#if loading}<div
-			class="i-lucide:loader-circle animate-spin"
-		></div>{/if}{@render children()}</Button.Root
+	>{#if loading}<Loader class="text-bg" />
+	{:else}{@render children()}{/if}</Button.Root
 >
