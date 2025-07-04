@@ -39,13 +39,15 @@ import "node_modules/sonner/dist/styles.css";
 	<body
 		class="text-fg0 selection:bg-primary selection:text-bg bg-bg0 relative flex min-h-screen w-screen flex-col gap-3 antialiased"
 	>
+		<div class="fixed">
+			<Toaster
+				closeButton
+				richColors
+				swipeDirections={["right", "bottom"]}
+				client:load
+				transition:persist
+			/>
+		</div>
 		<slot />
-		<Toaster
-			closeButton
-			richColors
-			swipeDirections={["right", "bottom"]}
-			client:load
-			transition:persist
-		/>
 	</body>
 </html>
