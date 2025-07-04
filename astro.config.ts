@@ -83,7 +83,7 @@ export default defineConfig({
 	integrations: [react(), sitemap(), svelte()],
 	output: "server",
 	prefetch: {
-		defaultStrategy: "viewport",
+		defaultStrategy: "hover",
 		prefetchAll: true,
 	},
 	site: "https://soundstash.pirger.eu",
