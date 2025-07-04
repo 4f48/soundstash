@@ -1,8 +1,22 @@
 ---
-import SignUp from "@/components/signup";
-import Layout from "@/layouts/html.astro";
+import {
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/card";
+import Form from "@/components/forms/signup.svelte";
+import Layout from "@/layouts/auth.astro";
 ---
 
 <Layout>
-	<SignUp client:load />
+	<Card class="w-sm">
+		<CardHeader>
+			<CardTitle>Create your account</CardTitle>
+			<CardDescription
+				>Enter your name and email to create an account.</CardDescription
+			>
+		</CardHeader>
+		<Form client:idle />
+	</Card>
 </Layout>
