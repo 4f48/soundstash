@@ -5,7 +5,7 @@
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-offset-background focus-visible:ring-muted-foreground inline-flex items-center justify-center rounded-sm text-sm font-medium duration-150 focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 disabled:opacity-75",
+		"focus-visible:ring-offset-background focus-visible:ring-muted-foreground inline-flex items-center justify-center rounded-sm text-sm font-medium duration-150 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-75",
 		{
 			variants: {
 				size: {

@@ -25,6 +25,7 @@ const config = {
 	],
 	trailingComma: "es5",
 	useTabs: true,
+	tailwindFunctions: ["cva", "cn"],
 };
 
 export default config;

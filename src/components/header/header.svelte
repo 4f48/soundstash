@@ -9,7 +9,7 @@
 </script>
 
 <header class="w-full fixed left-0 top-0 z-50 p-2">
-	<div class="bg-muted border rounded-lg px-3 relative">
+	<div class="bg-text/20 bg-bg border border-bg2 rounded-lg px-3 relative">
 		<div class="flex h-[2.9rem] items-center">
 			<h1 class="text-xl sm:mx-3 font-bold tracking-tight">SoundStash</h1>
 			<div class="flex-1 flex justify-end sm:hidden">
@@ -24,7 +24,7 @@
 				</Button>
 			</div>
 			<Separator.Root
-				class="bg-border hidden sm:block p-0 mx-3 shrink-0 h-8 w-[1px]"
+				class="bg-bg2 hidden sm:block p-0 mx-3 shrink-0 h-8 w-[1px]"
 				orientation="vertical"
 			/>
 			<NavigationMenu.Root class="flex-1 hidden sm:block">
