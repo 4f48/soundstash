@@ -8,6 +8,6 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<h1 class={cn("font-semibold text-lg tracking-tight leading-none", className)}>
+<h1 class={cn("text-lg leading-none font-semibold tracking-tight", className)}>
 	<slot />
 </h1>

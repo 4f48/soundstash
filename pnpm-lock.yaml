@@ -33,6 +33,12 @@ importers:
       "@aws-sdk/s3-request-presigner":
         specifier: ^3.842.0
         version: 3.842.0
+      "@felte/reporter-svelte":
+        specifier: ^1.2.0
+        version: 1.2.0(svelte@5.35.1)
+      "@felte/validator-zod":
+        specifier: ^1.0.18
+        version: 1.0.18(zod@3.25.71)
       "@hookform/resolvers":
         specifier: ^5.1.1
         version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
@@ -202,6 +208,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^3.10.1
         version: 3.10.1(eslint@9.30.1(jiti@2.4.2))(svelte@5.35.1)
+      felte:
+        specifier: ^1.3.0
+        version: 1.3.0(svelte@5.35.1)
       globals:
         specifier: ^16.3.0
         version: 16.3.0
@@ -1174,8 +1183,43 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@floating-ui/core@1.7.2':
-    resolution: {integrity: sha512-wNB5ooIKHQc+Kui96jE/n69rHFWAVoxn5CAzL1Xdd8FG03cgY3MLO+GF9U3W737fYDSgPWA6MReKhBQBop6Pcw==}
+  "@felte/common@1.1.9":
+    resolution:
+      {
+        integrity: sha512-d9e9M5FWc7AyaX/fb2I78AvwIAAA6S8ncKoTd3vYdPGQfgryl18oMU+ScM1WgFnbOBSoItdt61oaZAuRqfE4AA==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+
+  "@felte/core@1.4.4":
+    resolution:
+      {
+        integrity: sha512-qXEofmfc0tKvd1MOP9T1ixoI4+u0ZcUtC7JpBfb2A/lr/mhc8HrkvVWGatrGBnNovTc4lgIKWOySVVFswa4BYg==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+
+  "@felte/reporter-svelte@1.2.0":
+    resolution:
+      {
+        integrity: sha512-FCWfezLdc7XXjtU8uAWk/r3VQktRvUFk4GYQji3DjjdOR/UQP4P1Y1xha/HAEj/Fnst5S/DipYVDzfa0DU6GZQ==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    peerDependencies:
+      svelte: ^3.31.0 || ^4.0.0 || ^5.0.0
+
+  "@felte/validator-zod@1.0.18":
+    resolution:
+      {
+        integrity: sha512-nLhy3qhCrL14iMxIHXtIH0MckZr/dmpqRd/KcqQ6HJoT2tjvv8gPpgOGJdOR15Wfzd25n/UUr3tyX7ydgXA5xQ==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    peerDependencies:
+      zod: ^3.2.0
+
+  "@floating-ui/core@1.7.2":
+    resolution:
+      {
+        integrity: sha512-wNB5ooIKHQc+Kui96jE/n69rHFWAVoxn5CAzL1Xdd8FG03cgY3MLO+GF9U3W737fYDSgPWA6MReKhBQBop6Pcw==,
+      }
 
   '@floating-ui/dom@1.7.2':
     resolution: {integrity: sha512-7cfaOQuCS27HD7DX+6ib2OrnW+b4ZBwDNnCcT0uTyidcmyWb03FnQqJybDBoCnpdxwBSfA94UAYlRCt7mV+TbA==}
@@ -3728,6 +3772,15 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  felte@1.3.0:
+    resolution:
+      {
+        integrity: sha512-J09vuOC2Hw/d+ajhT4ueVEcSU0af+tlnfwF9QWVTuOWQf286pSGS48cFYhjmS7K7hUNMRUIwXwCnHWpyasadmA==,
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    peerDependencies:
+      svelte: ^3.31.0 || ^4.0.0 || ^5.0.0
 
   fetch-blob@3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
@@ -7483,7 +7536,23 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@floating-ui/core@1.7.2':
+  "@felte/common@1.1.9": {}
+
+  "@felte/core@1.4.4":
+    dependencies:
+      "@felte/common": 1.1.9
+
+  "@felte/reporter-svelte@1.2.0(svelte@5.35.1)":
+    dependencies:
+      "@felte/common": 1.1.9
+      svelte: 5.35.1
+
+  "@felte/validator-zod@1.0.18(zod@3.25.71)":
+    dependencies:
+      "@felte/common": 1.1.9
+      zod: 3.25.71
+
+  "@floating-ui/core@1.7.2":
     dependencies:
       '@floating-ui/utils': 0.2.10
 
@@ -10077,6 +10146,11 @@ snapshots:
   fdir@6.4.6(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
+
+  felte@1.3.0(svelte@5.35.1):
+    dependencies:
+      "@felte/core": 1.4.4
+      svelte: 5.35.1
 
   fetch-blob@3.2.0:
     dependencies:

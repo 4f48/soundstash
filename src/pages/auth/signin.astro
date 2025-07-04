@@ -5,6 +5,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/card";
+import Form from "@/components/signin-form.svelte";
 import Layout from "@/layouts/auth.astro";
 ---
 
@@ -16,5 +17,6 @@ import Layout from "@/layouts/auth.astro";
 				>Enter your email to sign in to your account.</CardDescription
 			>
 		</CardHeader>
+		<Form client:load />
 	</Card>
 </Layout>
