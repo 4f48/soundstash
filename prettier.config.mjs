@@ -19,9 +19,9 @@ const config = {
 	plugins: [
 		"prettier-plugin-astro",
 		"prettier-plugin-svelte",
-		"prettier-plugin-tailwindcss",
 		"@trivago/prettier-plugin-sort-imports",
 		"prettier-plugin-astro-organize-imports",
+		"prettier-plugin-tailwindcss",
 	],
 	trailingComma: "es5",
 	useTabs: true,

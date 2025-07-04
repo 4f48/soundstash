@@ -24,9 +24,9 @@ export default function Title({
 		else setPlaying(false);
 	}, [playlist[currentTrack]]);
 	return (
-		<div className="flex gap-2 items-center">
+		<div className="flex items-center gap-2">
 			{!ok && (
-				<span className="bg-muted rounded-sm flex items-center justify-center p-2">
+				<span className="bg-muted flex items-center justify-center rounded-sm p-2">
 					<Music2 className="text-muted-foreground" />
 				</span>
 			)}
@@ -44,7 +44,7 @@ export default function Title({
 				>
 					{title}
 				</span>
-				<span className="text-sm text-muted-foreground">{artist}</span>
+				<span className="text-muted-foreground text-sm">{artist}</span>
 			</div>
 		</div>
 	);

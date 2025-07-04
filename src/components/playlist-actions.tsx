@@ -97,7 +97,7 @@ export default function PlaylistActions({
 		} else toast.error(`Failed to delete "${playlist.name}"`);
 	}
 	return (
-		<div className="grid grid-cols-3 w-fit border rounded-md shadow-xs">
+		<div className="grid w-fit grid-cols-3 rounded-md border shadow-xs">
 			<Button
 				onClick={() => playPlaylist(playlist)}
 				size="icon"
@@ -124,7 +124,7 @@ export default function PlaylistActions({
 						<DropdownMenuGroup>
 							{playlist.image ? (
 								<DropdownMenuSub>
-									<DropdownMenuSubTrigger className="[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground gap-2">
+									<DropdownMenuSubTrigger className="data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
 										<Image />
 										Image
 									</DropdownMenuSubTrigger>

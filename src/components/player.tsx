@@ -135,7 +135,7 @@ export default function Player(): JSX.Element {
 					html5={true}
 				/>
 			)}
-			<div className="border absolute bottom-2 h-[58px] w-[calc(100vw-16px)] items-center grid grid-rows-1 grid-cols-3 justify-center left-2 p-2 gap-3 border-border bg-card text-card-foreground rounded-xl shadow-sm">
+			<div className="border-border bg-card text-card-foreground absolute bottom-2 left-2 grid h-[58px] w-[calc(100vw-16px)] grid-cols-3 grid-rows-1 items-center justify-center gap-3 rounded-xl border p-2 shadow-sm">
 				<div className="flex items-center gap-2">
 					{playlist[current] && (
 						<Title
@@ -202,7 +202,7 @@ export default function Player(): JSX.Element {
 						</Toggle>
 					</div>
 					<div className="flex items-center gap-3">
-						<span className="text-sm text-muted-foreground">
+						<span className="text-muted-foreground text-sm">
 							{formatTime(position)}
 						</span>
 						<Slider
@@ -224,7 +224,7 @@ export default function Player(): JSX.Element {
 								setPosition(e[0]);
 							}}
 						/>
-						<span className="text-sm text-muted-foreground">
+						<span className="text-muted-foreground text-sm">
 							{formatTime(duration)}
 						</span>
 					</div>

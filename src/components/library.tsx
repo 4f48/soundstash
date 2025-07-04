@@ -170,7 +170,7 @@ export default function Account({
 						placeholder="Filter by title..."
 						value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
 					/>
-					<p className="flex flex-1 text-sm text-muted-foreground justify-end items-center">
+					<p className="text-muted-foreground flex flex-1 items-center justify-end text-sm">
 						{byteSize(usedBytes, {
 							precision: 2,
 						}).toString()}{" "}
