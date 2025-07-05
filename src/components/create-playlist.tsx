@@ -22,7 +22,7 @@ import { navigate } from "astro:transitions/client";
 import { LoaderCircle, Plus } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { toast } from "svelte-sonner";
 import { z } from "zod";
 
 const formSchema = z.object({

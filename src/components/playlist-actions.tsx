@@ -35,7 +35,7 @@ import {
 	Trash2,
 } from "lucide-react";
 import React from "react";
-import { toast } from "sonner";
+import { toast } from "svelte-sonner";
 
 export default function PlaylistActions({
 	playlist,

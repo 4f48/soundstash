@@ -6,7 +6,7 @@
 	import { validator } from "@felte/validator-zod";
 	import { navigate } from "astro:transitions/client";
 	import { createForm } from "felte";
-	import { toast } from "sonner";
+	import { toast } from "svelte-sonner";
 	import { object, string, type infer as zInfer } from "zod";
 
 	const schema = object({
