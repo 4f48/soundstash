@@ -42,8 +42,3 @@
 	<Formfield name="Password" type="password" />
 	<Button loading={$isSubmitting} type="submit">Sign in</Button>
 </form>
-<span class="text-fg1 text-center text-sm [&_a]:underline">
-	<a href="/auth/reset">Forgot your password?</a>
-	&bull;
-	<a href="/auth/signup">Sign up</a>
-</span>

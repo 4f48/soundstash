@@ -1,8 +1,28 @@
 ---
+import Button from "@/components/button.svelte";
 import Layout from "@/layouts/html.astro";
+import { ChevronLeft, Icon } from "svelte-hero-icons";
+
+interface Props {
+	backButton?: boolean;
+	backDestination?: string;
+}
+const { backButton = true, backDestination = "/" } = Astro.props;
 ---
 
 <Layout>
+	{
+		backButton && (
+			<Button
+				class="fixed top-0 left-0 m-2"
+				href={backDestination}
+				variant="ghost"
+			>
+				<Icon src={ChevronLeft} />
+				Back
+			</Button>
+		)
+	}
 	<div class="flex h-screen w-full items-center justify-center p-3">
 		<slot />
 	</div>

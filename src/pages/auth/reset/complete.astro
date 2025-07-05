@@ -1,0 +1,23 @@
+---
+import {
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/card";
+import Form from "@/components/forms/reset-password/complete.svelte";
+import Layout from "@/layouts/auth.astro";
+
+const token = new URLSearchParams(Astro.url.searchParams).get("token");
+if (!token) return Astro.redirect("/auth/reset/request");
+---
+
+<Layout backButton={false}>
+	<Card class="w-sm">
+		<CardHeader>
+			<CardTitle>Create new password</CardTitle>
+			<CardDescription>Make sure you remember it this time.</CardDescription>
+		</CardHeader>
+		<Form client:idle token={token} />
+	</Card>
+</Layout>
