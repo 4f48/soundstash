@@ -13,14 +13,17 @@
 		<div class="flex h-[2.9rem] items-center">
 			<h1 class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</h1>
 			<div class="flex flex-1 justify-end sm:hidden">
-				<Button onclick={() => (open = !open)} size="icon" variant="ghost">
-					<div class="size-7">
-						{#if !open}
-							<Icon src={Bars3} />
-						{:else}
-							<Icon src={XMark} />
-						{/if}
-					</div>
+				<Button
+					class="[&_svg]:size-7"
+					onclick={() => (open = !open)}
+					size="icon"
+					variant="ghost"
+				>
+					{#if !open}
+						<Icon src={Bars3} />
+					{:else}
+						<Icon src={XMark} />
+					{/if}
 				</Button>
 			</div>
 			<Separator.Root

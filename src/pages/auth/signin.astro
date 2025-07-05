@@ -18,5 +18,10 @@ import Layout from "@/layouts/auth.astro";
 			>
 		</CardHeader>
 		<Form client:idle />
+		<span class="text-fg1 text-center text-sm [&_a]:underline">
+			<a href="/auth/reset/request">Forgot your password?</a>
+			&bull;
+			<a href="/auth/signup">Sign up</a>
+		</span>
 	</Card>
 </Layout>
