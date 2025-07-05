@@ -1,0 +1,14 @@
+---
+import Skeleton from "@/components/skeleton.astro";
+
+interface Props {
+	n: number;
+}
+const { n } = Astro.props;
+---
+
+{
+	[...Array(n)].map((value, index) => (
+		<Skeleton class="h-15 w-full rounded-md px-1.5" />
+	))
+}

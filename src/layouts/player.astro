@@ -1,9 +1,9 @@
 ---
-import PlayerCard from "@/components/player";
-import Layout from "@/layouts/header.astro";
+import { Sidebar } from "@/components/sidebar";
+import Layout from "@/layouts/html.astro";
 ---
 
-<Layout>
+<Layout direction="row">
+	<Sidebar />
 	<slot />
-	<PlayerCard client:only="react" transition:persist />
 </Layout>

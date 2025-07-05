@@ -4,6 +4,12 @@ import { Toaster } from "svelte-sonner";
 import "@/styles/global.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import { cn } from "@/lib/utils";
+
+interface Props {
+	direction?: "row" | "column";
+}
+const { direction = "column" } = Astro.props;
 ---
 
 <html class="min-h-screen w-screen" lang="en" transition:animate="none">
@@ -36,7 +42,10 @@ import { ClientRouter } from "astro:transitions";
 		<PostHog />
 	</head>
 	<body
-		class="text-fg0 selection:bg-primary selection:text-bg bg-bg0 relative flex min-h-screen w-screen flex-col gap-3 antialiased"
+		class={cn(
+			"text-fg0 selection:bg-primary selection:text-bg bg-bg0 relative flex min-h-screen w-screen gap-3 antialiased",
+			direction === "column" && "flex-col"
+		)}
 	>
 		<div class="fixed">
 			<Toaster
