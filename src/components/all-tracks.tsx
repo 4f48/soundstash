@@ -65,14 +65,14 @@ export default function AllTracks({
 							}}
 						>
 							<span
-								className={`group-hover:hidden block ${trackPlaying && "font-semibold"}`}
+								className={`block group-hover:hidden ${trackPlaying && "font-semibold"}`}
 							>
 								{row.index + 1}
 							</span>
 							{trackPlaying && playing ? (
-								<Pause className="group-hover:flex m-0 hidden fill-primary" />
+								<Pause className="fill-primary m-0 hidden group-hover:flex" />
 							) : (
-								<Play className="group-hover:flex m-0 hidden fill-primary" />
+								<Play className="fill-primary m-0 hidden group-hover:flex" />
 							)}
 						</Button>
 					</>

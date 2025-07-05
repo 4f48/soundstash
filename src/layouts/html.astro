@@ -1,10 +1,15 @@
 ---
 import PostHog from "@/components/posthog.astro";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "svelte-sonner";
 import "@/styles/global.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import "node_modules/sonner/dist/styles.css";
+import { cn } from "@/lib/utils";
+
+interface Props {
+	direction?: "row" | "column";
+}
+const { direction = "column" } = Astro.props;
 ---
 
 <html class="min-h-screen w-screen" lang="en" transition:animate="none">
@@ -36,14 +41,21 @@ import "node_modules/sonner/dist/styles.css";
 
 		<PostHog />
 	</head>
-	<body class="relative flex min-h-screen w-screen flex-col gap-3 antialiased">
+	<body
+		class={cn(
+			"text-fg0 selection:bg-primary selection:text-bg bg-bg0 relative flex min-h-screen w-screen gap-3 antialiased",
+			direction === "column" && "flex-col"
+		)}
+	>
+		<div class="fixed">
+			<Toaster
+				closeButton
+				richColors
+				swipeDirections={["right", "bottom"]}
+				client:load
+				transition:persist
+			/>
+		</div>
 		<slot />
-		<Toaster
-			closeButton
-			richColors
-			swipeDirections={["right", "bottom"]}
-			client:load
-			transition:persist
-		/>
 	</body>
 </html>

@@ -22,7 +22,7 @@ import { navigate } from "astro:transitions/client";
 import { LoaderCircle, Plus } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { toast } from "svelte-sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -62,8 +62,8 @@ export default function createPlaylist({
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger>
-				<Card className="w-38.5 h-44.5 flex items-center justify-center hover:bg-muted duration-100">
-					<CardContent className="flex size-32 px-0 flex-col items-center justify-center gap-0">
+				<Card className="hover:bg-muted flex h-44.5 w-38.5 items-center justify-center duration-100">
+					<CardContent className="flex size-32 flex-col items-center justify-center gap-0 px-0">
 						<Plus />
 						<span className="text-sm">Create playlist</span>
 					</CardContent>

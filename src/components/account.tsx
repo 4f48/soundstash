@@ -68,7 +68,7 @@ export default function Account({
 					<p>email verified: {user?.emailVerified ? "Yes" : "No"}</p>
 				</section>
 				<section className="flex flex-col items-start gap-2">
-					<h1 className="scroll-m-20 border-b pb-2 w-full text-xl font-semibold tracking-tight first:mt-0">
+					<h1 className="w-full scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0">
 						Account Actions
 					</h1>
 					<div className="flex gap-2">

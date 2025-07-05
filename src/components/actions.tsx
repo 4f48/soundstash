@@ -89,7 +89,7 @@ export default function Actions({
 								? playlists.map((playlist) => (
 										<TableRow
 											key={playlist.id}
-											className="flex items-center pr-2 gap-5"
+											className="flex items-center gap-5 pr-2"
 										>
 											<TableCell className="flex-1">{playlist.name}</TableCell>
 											<td className="flex items-center">
