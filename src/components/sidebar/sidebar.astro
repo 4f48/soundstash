@@ -1,0 +1,37 @@
+---
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+import { Separator } from "bits-ui";
+import { Loading, Playlists } from "./library";
+
+interface Props extends HTMLAttributes<"div"> {
+	class?: string;
+}
+const { class: className, ...props } = Astro.props;
+
+let n = 4;
+if (Astro.cookies.has("playlists")) {
+	const playlists = Astro.cookies.get("playlists");
+	const value = playlists?.number();
+	if (value !== undefined && !isNaN(value)) n = value;
+}
+---
+
+<div
+	class={cn(
+		"bg-bg border-bg2 hidden h-screen w-64 shrink-0 flex-col items-center gap-3 border-r py-3 sm:flex",
+		className
+	)}
+	{...props}
+>
+	<h1 class="text-xl font-bold tracking-tight">SoundStash</h1>
+	<Separator.Root class="bg-bg2 h-[1px] w-full shrink-0" />
+	<section class="flex w-full flex-col gap-1 px-3">
+		<a class="font-medium tracking-tight hover:underline" href="/">
+			<h1>Your Library</h1>
+		</a>
+		<Playlists server:defer>
+			<Loading n={n} slot="fallback" />
+		</Playlists>
+	</section>
+</div>
