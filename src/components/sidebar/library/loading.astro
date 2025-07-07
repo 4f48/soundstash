@@ -7,8 +7,4 @@ interface Props {
 const { n } = Astro.props;
 ---
 
-{
-	[...Array(n)].map((value, index) => (
-		<Skeleton class="h-15 w-full rounded-md px-1.5" />
-	))
-}
+{[...Array(n)].map(() => <Skeleton class="h-15 w-full rounded-md px-1.5" />)}

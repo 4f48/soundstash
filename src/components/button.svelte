@@ -10,7 +10,7 @@
 		{
 			variants: {
 				size: {
-					sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5 [&_svg]:text-base",
+					sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5 [&_svg]:size-4",
 					lg: "h-10 gap-2 px-6 has-[div[class*='i-']]:px-4 [&_div[class*='i-']]:text-lg",
 					icon: "size-8",
 				},
@@ -47,6 +47,7 @@
 
 <Button.Root
 	class={cn(buttonVariants({ className, size, variant }))}
+	draggable={false}
 	disabled={loading}
 	{...props}
 	>{#if loading}<Loader class="text-bg" />

@@ -1,0 +1,11 @@
+---
+import Actions from "./actions.svelte";
+---
+
+<div class="border-bg2 bg-bg grid h-16 grid-cols-3 grid-rows-2 border-t p-2">
+	<div class="row-span-2">1</div>
+	<div class="flex justify-center">
+		<Actions client:idle />
+	</div>
+	<div class="col-start-2 row-start-2 flex justify-center">3</div>
+</div>

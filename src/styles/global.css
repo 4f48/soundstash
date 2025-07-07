@@ -15,6 +15,7 @@
 	--color-fg0: var(--fg0);
 	--color-fg: var(--fg);
 	--color-fg1: var(--fg1);
+	--color-fg2: var(--fg2);
 	--color-destructive: oklch(0.5458 0.203 28.66);
 	--color-primary: var(--primary);
 }
@@ -30,6 +31,7 @@
 	--fg0: oklch(0.2768 0 0);
 	--fg: oklch(0.3441 0.0066 48.52);
 	--fg1: oklch(0.411 0.0115 51.87);
+	--fg2: oklch(0.4818 0.0181 61.04);
 	--primary: oklch(0.6176 0.1277 70.67);
 }
 .dark {
@@ -43,5 +45,6 @@
 	--fg0: oklch(0.9555 0.0555 96.15);
 	--fg: oklch(0.8941 0.0566 89.24);
 	--fg1: oklch(0.8255 0.0507 85.12);
+	--fg2: oklch(0.7564 0.041 82.28);
 	--primary: oklch(0.8325 0.1595 82.99);
 }

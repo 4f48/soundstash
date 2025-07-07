@@ -7,9 +7,10 @@ import { ClientRouter } from "astro:transitions";
 import { cn } from "@/lib/utils";
 
 interface Props {
+	class?: string;
 	direction?: "row" | "column";
 }
-const { direction = "column" } = Astro.props;
+const { class: className, direction = "column" } = Astro.props;
 ---
 
 <html class="min-h-screen w-screen" lang="en" transition:animate="none">
@@ -44,6 +45,7 @@ const { direction = "column" } = Astro.props;
 	<body
 		class={cn(
 			"text-fg0 selection:bg-primary selection:text-bg bg-bg0 relative flex min-h-screen w-screen gap-3 antialiased",
+			className,
 			direction === "column" && "flex-col"
 		)}
 	>
@@ -52,7 +54,7 @@ const { direction = "column" } = Astro.props;
 				closeButton
 				richColors
 				swipeDirections={["right", "bottom"]}
-				client:load
+				client:idle
 				transition:persist
 			/>
 		</div>
