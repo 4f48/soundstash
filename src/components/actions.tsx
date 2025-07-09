@@ -18,7 +18,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { track as trackTable } from "@/lib/schema";
-import { $playlist } from "@/lib/stores";
+import { playlist } from "@/lib/stores";
 import { ListPlus, MoreHorizontal, Plus } from "lucide-react";
 import React from "react";
 
@@ -60,8 +60,8 @@ export default function Actions({
 				<DropdownMenuContent>
 					<DropdownMenuItem
 						onClick={() => {
-							const current = $playlist.get();
-							$playlist.set([...current, track]);
+							const current = playlist.get();
+							playlist.set([...current, track]);
 						}}
 					>
 						<ListPlus />

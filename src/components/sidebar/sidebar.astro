@@ -31,7 +31,11 @@ if (!user) return new Response(null, { status: 401 });
 	<h1 class="text-xl font-bold tracking-tight">SoundStash</h1>
 	<Separator.Root class="bg-bg2 h-[1px] w-full shrink-0" />
 	<section class="flex w-full flex-1 flex-col gap-1 px-3">
-		<a class="font-medium tracking-tight hover:underline" href="/">
+		<a
+			class="font-medium tracking-tight hover:underline"
+			draggable={false}
+			href="/"
+		>
 			<h1>Your Library</h1>
 		</a>
 		<Playlists server:defer>

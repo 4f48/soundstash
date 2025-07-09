@@ -26,12 +26,14 @@ Astro.cookies.set("playlists", String(playlists.length), {
 	playlists.map((playlist) => (
 		<a
 			class="hover:bg-bg1/50 flex h-15 w-full items-center gap-2 rounded-md px-1.5"
+			draggable={false}
 			href={`/playlist/${playlist.id}`}
 		>
 			{playlist.image ? (
 				<Image
 					alt=""
 					class="row-span-2 size-12 shrink-0 rounded-sm"
+					draggable={false}
 					src={`/api/playlist/image?id=${playlist.id}`}
 					height={36}
 					width={36}

@@ -11,7 +11,11 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { track } from "@/lib/schema";
-import { $currentTrack, $playing, $playlist } from "@/lib/stores";
+import {
+	currentTrack as $currentTrack,
+	playing as $playing,
+	playlist as $playlist,
+} from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
 import {

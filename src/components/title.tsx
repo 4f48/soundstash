@@ -1,4 +1,7 @@
-import { $currentTrack, $playlist } from "@/lib/stores";
+import {
+	currentTrack as $currentTrack,
+	playlist as $playlist,
+} from "@/lib/stores";
 import { useStore } from "@nanostores/react";
 import { Music2 } from "lucide-react";
 import { useEffect, useState, type JSX } from "react";
