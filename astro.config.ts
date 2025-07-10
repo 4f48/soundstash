@@ -8,6 +8,12 @@ import { defineConfig, envField } from "astro/config";
 export default defineConfig({
 	adapter: cloudflare({
 		imageService: "cloudflare",
+		platformProxy: {
+			enabled: true,
+			experimental: {
+				remoteBindings: true,
+			},
+		},
 	}),
 	env: {
 		schema: {

@@ -3,7 +3,7 @@
 	"name": "soundstash",
 	"main": "./dist/_worker.js/index.js",
 	"compatibility_date": "2025-06-21",
-	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist",
@@ -11,4 +11,11 @@
 	"observability": {
 		"enabled": true,
 	},
+	"r2_buckets": [
+		{
+			"binding": "R2",
+			"bucket_name": "soundstash",
+			"experimental_remote": true,
+		},
+	],
 }

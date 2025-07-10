@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { playlist, currentTrack } from "@/lib/stores";
+	import { playlist, index } from "@/lib/stores";
 	import { cn, formatTime } from "@/lib/utils";
 	import { Slider } from "bits-ui";
 
@@ -9,7 +9,7 @@
 	const { progress }: Props = $props();
 
 	let value = $state(progress);
-	const track = $derived($playlist[$currentTrack]);
+	const track = $derived($playlist[$index]);
 	const max = $derived(track ? track.length * 100 : 100);
 </script>
 

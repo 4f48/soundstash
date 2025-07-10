@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import type { track } from "@/lib/schema";
 import {
-	currentTrack as $currentTrack,
+	index as $currentTrack,
 	playing as $playing,
 	playlist as $playlist,
 } from "@/lib/stores";
@@ -63,8 +63,8 @@ export default function AllTracks({
 									return;
 								}
 								$playing.set(false);
-								$playlist.set(tracks);
 								$currentTrack.set(row.index);
+								$playlist.set(tracks);
 								$playing.set(true);
 							}}
 						>

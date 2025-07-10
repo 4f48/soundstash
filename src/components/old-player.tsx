@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
 import type { track } from "@/lib/schema";
-import { currentTrack, playing, playlist } from "@/lib/stores";
+import { index, playing, playlist } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
 import {
@@ -18,7 +18,7 @@ import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
 
 export default function Player(): JSX.Element {
-	const current = useStore(currentTrack);
+	const current = useStore(index);
 	const playing = useStore(playing);
 	const playlist = useStore(playlist);
 	const [url, setUrl] = useState<string | undefined>();
@@ -33,21 +33,21 @@ export default function Player(): JSX.Element {
 	function previous() {
 		if (current > 0) {
 			playing.set(false);
-			currentTrack.set(current - 1);
+			index.set(current - 1);
 			playing.set(true);
 		} else if (current === 0 && repeat.current) {
-			currentTrack.set(playlist.length - 1);
+			index.set(playlist.length - 1);
 			playing.set(true);
 		}
 	}
 	function next() {
 		if (current < playlist.length - 1) {
 			playing.set(false);
-			currentTrack.set(current + 1);
+			index.set(current + 1);
 			playing.set(true);
 		} else if (current === playlist.length - 1 && repeat.current) {
 			if (shuffle.current) shufflePlaylist();
-			currentTrack.set(0);
+			index.set(0);
 			playing.set(true);
 		}
 	}
@@ -81,11 +81,11 @@ export default function Player(): JSX.Element {
 		playlist.set(copy);
 	}
 	const handleEnd: HowlCallback = () => {
-		const latestCurrent = currentTrack.get();
+		const latestCurrent = index.get();
 		const latestPlaylist = playlist.get();
 
 		if (latestCurrent < latestPlaylist.length - 1) {
-			currentTrack.set(latestCurrent + 1);
+			index.set(latestCurrent + 1);
 			playing.set(true);
 		} else {
 			if (repeat.current) {
@@ -93,7 +93,7 @@ export default function Player(): JSX.Element {
 				if (shuffle.current) {
 					shufflePlaylist();
 				}
-				currentTrack.set(0);
+				index.set(0);
 				playing.set(true);
 			} else {
 				playing.set(false);
@@ -118,7 +118,7 @@ export default function Player(): JSX.Element {
 			const currentId = playlist[current].id;
 			const index = original.findIndex((track) => track.id === currentId);
 			playlist.set(original);
-			currentTrack.set(index >= 0 ? index : current);
+			index.set(index >= 0 ? index : current);
 			setOriginal([]); // Clear the saved original
 		}
 	}, [shuffle.current]);

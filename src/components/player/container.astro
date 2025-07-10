@@ -2,14 +2,16 @@
 import Actions from "./actions.svelte";
 import Playing from "./playing.svelte";
 import Progress from "./progress.svelte";
+import Player from "./player.svelte";
 ---
 
 <div class="border-bg2 bg-bg grid h-16 grid-cols-3 grid-rows-2 border-t p-2">
 	<div class="row-span-2"><Playing client:idle transition:persist /></div>
 	<div class="flex items-center justify-center">
-		<Actions client:idle />
+		<Actions client:idle transition:persist />
 	</div>
 	<div class="col-start-2 row-start-2 flex items-center justify-center gap-2">
 		<Progress client:load transition:persist />
 	</div>
+	<Player client:only="svelte" transition:persist />
 </div>
