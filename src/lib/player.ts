@@ -1,3 +1,4 @@
+import { playing } from "@/lib/stores";
 import { Howl } from "howler";
 
 /**
@@ -20,6 +21,8 @@ export function createPlayer(src: URL): Howl {
 	return new Howl({
 		autoplay: true,
 		html5: true,
+		onpause: () => playing.set(false),
+		onplay: () => playing.set(true),
 		src: [src.toString()],
 	});
 }

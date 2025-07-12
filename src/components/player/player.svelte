@@ -59,6 +59,20 @@
 		if ($seeking) seek = $position;
 	});
 
+	$effect(() => {
+		if (!current) return;
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: current.title,
+			artist: current.artist,
+			album: current.album ? current.album : undefined,
+			artwork: [
+				{
+					src: `/api/track/cover/${current.id}`,
+				},
+			],
+		});
+	});
+
 	onDestroy(() => {
 		clearInterval(interval);
 		if (player) {

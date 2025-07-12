@@ -1,23 +1,27 @@
-import { db } from "@/lib/database";
-import { track } from "@/lib/schema";
+// import { db } from "@/lib/database";
+// import { track } from "@/lib/schema";
+// import { eq } from "drizzle-orm";
 import { client } from "@/lib/storage";
 import { GetObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
 import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
-import { eq } from "drizzle-orm";
 
 export const GET: APIRoute = async (ctx) => {
-	const user = ctx.locals.user;
-	if (!user) return new Response(null, { status: 401 });
+	/*
+	 * const user = ctx.locals.user;
+	 * if (!user) return new Response(null, { status: 401 });
+	 */
 
 	const id = ctx.url.searchParams.get("id");
 	if (!id) return new Response(null, { status: 400 });
 
-	const dbCheck = await db.query.track.findFirst({
-		columns: { owner: true },
-		where: eq(track.id, id),
-	});
-	if (dbCheck?.owner != user.id) return new Response(null, { status: 401 });
+	/*
+	 * const dbCheck = await db.query.track.findFirst({
+	 * 	columns: { owner: true },
+	 * 	where: eq(track.id, id),
+	 * });
+	 * if (dbCheck?.owner != user.id) return new Response(null, { status: 401 });
+	 */
 
 	const bucket = CLOUDFLARE_R2_BUCKET;
 	const key = `covers/${id}`;

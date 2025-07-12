@@ -12,7 +12,7 @@
 			alt="{track?.title} album cover"
 			class="size-12 rounded-sm"
 			draggable={false}
-			src="/api/cover?id={track?.id}"
+			src="/api/track/cover/{track?.id}"
 		/>
 		<Avatar.Fallback>
 			<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">

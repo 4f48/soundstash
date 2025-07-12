@@ -11,7 +11,6 @@ export const GET: APIRoute = async (ctx) => {
 	try {
 		const { id } = ctx.params;
 		if (!id) return new Response("no track id provided", { status: 400 });
-
 		const user = ctx.locals.user;
 		if (!user) return new Response(null, { status: 401 });
 
