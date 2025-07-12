@@ -1,28 +1,26 @@
 <script lang="ts">
-	import { playlist, index } from "@/lib/stores";
+	import { progress, seeking, playlist, index, position } from "@/lib/stores";
 	import { cn, formatTime } from "@/lib/utils";
 	import { Slider } from "bits-ui";
 
-	interface Props {
-		progress: number;
-	}
-	const { progress }: Props = $props();
-
-	let value = $state(progress);
 	const track = $derived($playlist[$index]);
 	const max = $derived(track ? track.length * 100 : 100);
 </script>
 
 <span class="inline-block w-12 tabular-nums"
-	>{track ? formatTime(Math.floor(value / 100)) : "0:00"}</span
+	>{track ? formatTime(Math.floor($progress / 100)) : "0:00"}</span
 >
 <Slider.Root
 	type="single"
-	bind:value
+	bind:value={$position}
 	class="group relative flex w-full shrink-0 grow-0 touch-none items-center select-none"
 	disabled={!track}
 	{max}
 	min={0}
+	onpointerdown={() => track && ($seeking = true)}
+	onValueCommit={() => {
+		$seeking = false;
+	}}
 >
 	<span
 		class="bg-bg2 relative h-2 w-full grow cursor-pointer overflow-hidden rounded-full"

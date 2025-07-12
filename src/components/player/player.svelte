@@ -1,10 +1,25 @@
 <script lang="ts">
 	import { createPlayer, getPresignedUrl } from "@/lib/player";
-	import { index, playing, playlist } from "@/lib/stores";
+	import {
+		index,
+		playing,
+		playlist,
+		seeking,
+		progress,
+		position,
+	} from "@/lib/stores";
 	import { Howl } from "howler";
 	import { onDestroy } from "svelte";
 
 	let player: Howl | null = null;
+	let seek: number | null = null;
+
+	const interval = setInterval(() => {
+		if (!player) return;
+		const pos = player.seek() * 100;
+		if (!$seeking) $position = pos;
+		$progress = pos;
+	}, 100);
 
 	const current = $derived($playlist.at($index));
 
@@ -33,7 +48,19 @@
 		else player.pause();
 	});
 
+	$effect(() => {
+		if (!$seeking && seek !== null && player) {
+			player.seek(Math.floor(seek / 100));
+			seek = null;
+		}
+	});
+
+	$effect(() => {
+		if ($seeking) seek = $position;
+	});
+
 	onDestroy(() => {
+		clearInterval(interval);
 		if (player) {
 			player.stop();
 			player.unload();
