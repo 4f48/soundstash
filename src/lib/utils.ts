@@ -1,5 +1,5 @@
 import type { track, playlist as playlistTable } from "@/lib/schema";
-import { index, playing, playlist } from "@/lib/stores";
+import { index, playing, playlist as playlistStore } from "@/lib/stores";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -21,7 +21,7 @@ export async function playPlaylist(
 	).json()) as (typeof track.$inferSelect)[];
 	if (playlistToTracks.length <= 0) return;
 	playing.set(false);
-	playlist.set(playlistToTracks);
+	playlistStore.set(playlistToTracks);
 	index.set(0);
 	playing.set(true);
 }
@@ -44,7 +44,7 @@ export async function playPlaylistShuffled(
 	}
 
 	playing.set(false);
-	playlist.set(shuffledTracks);
+	playlistStore.set(shuffledTracks);
 	index.set(0);
 	playing.set(true);
 }

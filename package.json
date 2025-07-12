@@ -57,7 +57,7 @@
 		"react-hook-form": "^7.60.0",
 		"react-howler": "^5.2.0",
 		"resend": "^4.6.0",
-		"svelte": "^5.35.5",
+		"svelte": "^5.35.6",
 		"svelte-hero-icons": "^5.2.0",
 		"svelte-sonner": "^1.0.5",
 		"tailwind-merge": "^3.3.1",

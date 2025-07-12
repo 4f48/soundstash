@@ -6,7 +6,7 @@
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-bg4/50 inline-flex cursor-pointer items-center justify-center rounded-sm text-sm font-medium transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:opacity-75 [&_svg]:size-4",
+		"focus-visible:ring-bg4/50 inline-flex cursor-pointer items-center justify-center rounded-sm text-sm font-medium transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default disabled:opacity-75 [&_svg]:size-4",
 		{
 			variants: {
 				size: {
@@ -16,8 +16,9 @@
 				},
 				variant: {
 					default: "bg-primary text-bg enabled:hover:bg-primary/95",
-					outline:
-						"border-primary text-foreground enabled:hover:bg-primary/20 border",
+					secondary:
+						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1",
+					outline: "border-primary text-fg enabled:hover:bg-bg bg-bg0 border",
 					ghost: "text-fg hover:bg-bg1/50 disabled:hover:bg-transparent",
 					destructive:
 						"bg-destructive text-foreground enabled:hover:bg-destructive/80",

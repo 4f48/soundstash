@@ -34,11 +34,11 @@
 		<div class="bg-bg1 border-bg3 rounded-full border p-2">
 			<Icon class="text-bg5 size-6" src={User} />
 		</div>
-		<div class="flex flex-1 flex-col items-start text-sm font-normal">
+		<div class="flex min-w-0 flex-1 flex-col items-start text-sm font-normal">
 			<span>Account</span>
-			<span class="text-fg2">{email}</span>
+			<span class="text-fg2 max-w-full grow-0 truncate">{email}</span>
 		</div>
-		<Icon class="size-6" src={ChevronUpDown} />
+		<Icon class="size-6 shrink-0" src={ChevronUpDown} />
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Portal>
 		<DropdownMenu.Content

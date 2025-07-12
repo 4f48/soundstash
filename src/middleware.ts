@@ -28,7 +28,25 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 	if (authenticated) {
 		ctx.locals.user = authenticated.user;
 		ctx.locals.session = authenticated.session;
-		if (ctx.url.pathname.startsWith("/auth/")) return ctx.redirect("/");
+		if (
+			!authenticated.user.emailVerified &&
+			PROTECTED_ROUTES.includes(ctx.url.pathname)
+		) {
+			return ctx.redirect("/auth/verify");
+		}
+		/*
+		if (
+			authenticated.user.emailVerified &&
+			ctx.url.pathname === "/auth/verify"
+		) {
+			return ctx.redirect("/account");
+		}
+		*/
+		if (
+			ctx.url.pathname.startsWith("/auth/") &&
+			ctx.url.pathname !== "/auth/verify"
+		)
+			return ctx.redirect("/");
 		if (ctx.url.pathname === "/") return ctx.rewrite("/home");
 	} else {
 		ctx.locals.user = null;

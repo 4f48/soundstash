@@ -1,0 +1,32 @@
+---
+import {
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/card";
+import Button from "@/components/button.svelte";
+import Layout from "@/layouts/auth.astro";
+import { ResendButton } from "@/components/verify";
+
+const user = Astro.locals.user;
+if (!user) return new Response(null, { status: 401 });
+---
+
+<Layout backButton={false}>
+	<Card class="w-sm">
+		<CardHeader>
+			<CardTitle>Verify your email</CardTitle>
+			<CardDescription
+				>We need to confirm that you own <b>{user.email}</b> before using SoundStash.</CardDescription
+			>
+		</CardHeader>
+		<Button href="/">Done</Button>
+		<div class="flex gap-1">
+			<ResendButton client:idle email={user.email} />
+			<Button class="flex-1" href="/auth/change-email" variant="secondary"
+				>Change email</Button
+			>
+		</div>
+	</Card>
+</Layout>

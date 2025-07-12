@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
 import type { track } from "@/lib/schema";
-import { index, playing, playlist } from "@/lib/stores";
+import { index as indexStore } from "@/lib/stores";
+import {
+	playing as playingStore,
+	playlist as playlistStore,
+} from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
 import {
@@ -18,9 +22,9 @@ import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import ReactHowler, { type HowlCallback } from "react-howler";
 
 export default function Player(): JSX.Element {
-	const current = useStore(index);
-	const playing = useStore(playing);
-	const playlist = useStore(playlist);
+	const current = useStore(indexStore);
+	const playing = useStore(playingStore);
+	const playlist = useStore(playlistStore);
 	const [url, setUrl] = useState<string | undefined>();
 	const currentKey = playlist[current];
 	const [original, setOriginal] = useState<(typeof track.$inferSelect)[]>([]);
@@ -32,23 +36,23 @@ export default function Player(): JSX.Element {
 	const shuffle = useRef(false);
 	function previous() {
 		if (current > 0) {
-			playing.set(false);
-			index.set(current - 1);
-			playing.set(true);
+			playingStore.set(false);
+			indexStore.set(current - 1);
+			playingStore.set(true);
 		} else if (current === 0 && repeat.current) {
-			index.set(playlist.length - 1);
-			playing.set(true);
+			indexStore.set(playlist.length - 1);
+			playingStore.set(true);
 		}
 	}
 	function next() {
 		if (current < playlist.length - 1) {
-			playing.set(false);
-			index.set(current + 1);
-			playing.set(true);
+			playingStore.set(false);
+			indexStore.set(current + 1);
+			playingStore.set(true);
 		} else if (current === playlist.length - 1 && repeat.current) {
 			if (shuffle.current) shufflePlaylist();
-			index.set(0);
-			playing.set(true);
+			indexStore.set(0);
+			playingStore.set(true);
 		}
 	}
 	function handleTracking() {
@@ -78,25 +82,25 @@ export default function Player(): JSX.Element {
 		}
 		copy.splice(current, 0, playlist[current]);
 
-		playlist.set(copy);
+		playlistStore.set(copy);
 	}
 	const handleEnd: HowlCallback = () => {
-		const latestCurrent = index.get();
-		const latestPlaylist = playlist.get();
+		const latestCurrent = indexStore.get();
+		const latestPlaylist = playlistStore.get();
 
 		if (latestCurrent < latestPlaylist.length - 1) {
-			index.set(latestCurrent + 1);
-			playing.set(true);
+			indexStore.set(latestCurrent + 1);
+			playingStore.set(true);
 		} else {
 			if (repeat.current) {
-				playing.set(false);
+				playingStore.set(false);
 				if (shuffle.current) {
 					shufflePlaylist();
 				}
-				index.set(0);
-				playing.set(true);
+				indexStore.set(0);
+				playingStore.set(true);
 			} else {
-				playing.set(false);
+				playingStore.set(false);
 			}
 		}
 	};
@@ -117,8 +121,8 @@ export default function Player(): JSX.Element {
 			// Restore original playlist when disabled
 			const currentId = playlist[current].id;
 			const index = original.findIndex((track) => track.id === currentId);
-			playlist.set(original);
-			index.set(index >= 0 ? index : current);
+			playlistStore.set(original);
+			indexStore.set(index >= 0 ? index : current);
 			setOriginal([]); // Clear the saved original
 		}
 	}, [shuffle.current]);
@@ -167,7 +171,7 @@ export default function Player(): JSX.Element {
 							<Button
 								size="icon"
 								variant="ghost"
-								onClick={() => playing.set(false)}
+								onClick={() => playingStore.set(false)}
 							>
 								<Pause className="fill-primary" />
 							</Button>
@@ -175,7 +179,7 @@ export default function Player(): JSX.Element {
 							<Button
 								size="icon"
 								variant="ghost"
-								onClick={() => playing.set(true)}
+								onClick={() => playingStore.set(true)}
 								disabled={!playlist[current]}
 							>
 								<Play className="fill-primary" />
@@ -211,8 +215,8 @@ export default function Player(): JSX.Element {
 							onPointerDown={() => (seeking.current = true)}
 							onPointerUp={() => (seeking.current = false)}
 							onValueChange={(e) => setPosition(e[0])}
-							onPlay={() => playing.set(true)}
-							onPause={() => playing.set(false)}
+							onPlay={() => playingStore.set(true)}
+							onPause={() => playingStore.set(false)}
 							min={0}
 							step={0.01}
 							max={duration}

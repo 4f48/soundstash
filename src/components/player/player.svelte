@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createPlayer, getPresignedUrl } from "@/lib/player";
-	import { index, playlist } from "@/lib/stores";
+	import { index, playing, playlist } from "@/lib/stores";
 	import { Howl } from "howler";
 	import { onDestroy } from "svelte";
 
@@ -24,6 +24,13 @@
 
 		player = createPlayer(url);
 		player.play();
+	});
+
+	$effect(() => {
+		const play = $playing;
+		if (!player) return;
+		if (play) player.play();
+		else player.pause();
 	});
 
 	onDestroy(() => {

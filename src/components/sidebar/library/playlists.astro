@@ -3,7 +3,7 @@ import { db } from "@/lib/database";
 import { playlist } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { Image } from "astro:assets";
-import { Icon, MusicalNote } from "svelte-hero-icons";
+import { Icon, MusicalNote, Plus } from "svelte-hero-icons";
 
 const user = Astro.locals.user;
 if (!user) return new Response(null, { status: 401 });
@@ -23,32 +23,44 @@ Astro.cookies.set("playlists", String(playlists.length), {
 ---
 
 {
-	playlists.map((playlist) => (
-		<a
-			class="hover:bg-bg1/50 flex h-15 w-full items-center gap-2 rounded-md px-1.5"
-			draggable={false}
-			href={`/playlist/${playlist.id}`}
-		>
-			{playlist.image ? (
-				<Image
-					alt=""
-					class="row-span-2 size-12 shrink-0 rounded-sm"
-					draggable={false}
-					src={`/api/playlist/image?id=${playlist.id}`}
-					height={36}
-					width={36}
-				/>
-			) : (
-				<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
-					<Icon class="text-bg5 size-8" src={MusicalNote} />
+	playlists.length > 0 ? (
+		playlists.map((playlist) => (
+			<a
+				class="hover:bg-bg1/50 flex h-15 w-full items-center gap-2 rounded-md px-1.5"
+				draggable={false}
+				href={`/playlist/${playlist.id}`}
+			>
+				{playlist.image ? (
+					<Image
+						alt=""
+						class="row-span-2 size-12 shrink-0 rounded-sm"
+						draggable={false}
+						src={`/api/playlist/image?id=${playlist.id}`}
+						height={36}
+						width={36}
+					/>
+				) : (
+					<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
+						<Icon class="text-bg5 size-8" src={MusicalNote} />
+					</div>
+				)}
+				<div class="flex min-w-0 flex-1 flex-col">
+					<span class="truncate">{playlist.name}</span>
+					<span class="col-start-2 text-sm">
+						Playlist &bull; {playlist.playlistToTracks.length} tracks
+					</span>
 				</div>
-			)}
-			<div class="flex min-w-0 flex-1 flex-col">
-				<span class="truncate">{playlist.name}</span>
-				<span class="col-start-2 text-sm">
-					Playlist &bull; {playlist.playlistToTracks.length} tracks
-				</span>
+			</a>
+		))
+	) : (
+		<button class="hover:bg-bg1/50 flex h-15 w-full cursor-pointer items-center gap-2 rounded-md px-1.5">
+			<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
+				<Icon class="text-bg5 size-8" src={Plus} />
 			</div>
-		</a>
-	))
+			<div class="flex flex-1 flex-col items-start">
+				<span>Create playlist</span>
+				<span class="text-fg2 col-start-2 text-sm">Organize your tracks</span>
+			</div>
+		</button>
+	)
 }
