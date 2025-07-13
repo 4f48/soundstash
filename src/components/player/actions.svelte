@@ -28,7 +28,12 @@
 	size="icon"
 	variant="ghost"><SkipBack weight="fill" /></Button
 >
-<Button size="icon" variant="ghost" onclick={() => ($playing = !$playing)}>
+<Button
+	disabled={$playlist.length === 0}
+	size="icon"
+	variant="ghost"
+	onclick={() => ($playing = !$playing)}
+>
 	{#if !$playing}
 		<Play weight="fill" />
 	{:else}
@@ -36,7 +41,7 @@
 	{/if}
 </Button>
 <Button
-	disabled={!$repeat && $index === $playlist.length - 1}
+	disabled={!$repeat && $index >= $playlist.length - 1}
 	onclick={skipForward}
 	size="icon"
 	variant="ghost"><SkipForward weight="fill" /></Button
