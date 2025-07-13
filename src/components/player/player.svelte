@@ -3,7 +3,7 @@
 	import {
 		index,
 		playing,
-		playlist,
+		queue,
 		seeking,
 		progress,
 		position,
@@ -21,7 +21,7 @@
 		$progress = pos;
 	}, 100);
 
-	const current = $derived($playlist.at($index));
+	const current = $derived($queue.at($index));
 
 	let url = $state<URL>();
 	$effect(() => {
@@ -38,15 +38,13 @@
 		}
 
 		player = createPlayer(url);
-		$playing = true;
 		player.play();
+		$playing = true;
 	});
 
 	$effect(() => {
-		const play = $playing;
-		if (!player) return;
-		if (play) player.play();
-		else player.pause();
+		if ($playing) player?.play();
+		else player?.pause();
 	});
 
 	$effect(() => {

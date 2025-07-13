@@ -1,4 +1,4 @@
-import { playing, index, playlist, repeat } from "@/lib/stores";
+import { index, repeat, queue } from "@/lib/stores";
 import { Howl } from "howler";
 
 /**
@@ -21,13 +21,9 @@ export function createPlayer(src: URL): Howl {
 	return new Howl({
 		html5: true,
 		onend: () => {
-			if (index.get() === playlist.get().length - 1 && repeat.get())
-				index.set(0);
-			else if (index.get() < playlist.get().length - 1) skip(1);
+			if (index.get() === queue.get().length - 1 && repeat.get()) index.set(0);
+			else if (index.get() < queue.get().length - 1) skip(1);
 		},
-		onpause: () => playing.set(false),
-		onplay: () => playing.set(true),
-		onstop: () => playing.set(false),
 		src: [src.toString()],
 	});
 }
@@ -38,4 +34,18 @@ export function createPlayer(src: URL): Howl {
  */
 export function skip(n: number): void {
 	index.set(index.get() + n);
+}
+
+/**
+ * Shuffles an array of items using Fisher-Yates
+ * @param arr Array to be shuffled
+ * @returns Shuffled array
+ */
+export function shuffle<T>(arr: T[]): T[] {
+	const shuffled = arr.slice();
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
 }

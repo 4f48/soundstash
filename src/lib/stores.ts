@@ -6,8 +6,10 @@ export const progress = atom(0);
 export const seeking = atom(false);
 
 export const repeat = atom(false);
+export const shuffle = atom(false);
 
 export const loading = atom(false);
 export const index = atom(0);
 export const playing = atom(false);
 export const playlist = atom<(typeof track.$inferSelect)[]>([]);
+export const queue = atom<(typeof track.$inferSelect)[]>([]);

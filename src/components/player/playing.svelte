@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { index, playlist } from "@/lib/stores";
+	import { index, queue } from "@/lib/stores";
 	import { Avatar } from "bits-ui";
 	import { Icon, MusicalNote } from "svelte-hero-icons";
 
-	const track = $derived($playlist[$index]);
+	const track = $derived($queue[$index]);
 </script>
 
 <div class="flex items-center gap-2">

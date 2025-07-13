@@ -2,7 +2,17 @@
 	import Toggle from "../toggle.svelte";
 	import Button from "@/components/button.svelte";
 	import { skip } from "@/lib/player";
-	import { playing, playlist, index, repeat } from "@/lib/stores";
+	import { shuffle as shuffleArray } from "@/lib/player";
+	import type { track } from "@/lib/schema";
+	import {
+		playing,
+		playlist,
+		index,
+		repeat,
+		queue,
+		shuffle,
+	} from "@/lib/stores";
+	import { effect } from "nanostores";
 	import Pause from "phosphor-svelte/lib/Pause";
 	import Play from "phosphor-svelte/lib/Play";
 	import Repeat from "phosphor-svelte/lib/Repeat";
@@ -10,13 +20,33 @@
 	import SkipBack from "phosphor-svelte/lib/SkipBack";
 	import SkipForward from "phosphor-svelte/lib/SkipForward";
 
+	effect([shuffle, playlist], (shuffle, playlist) => {
+		if (!shuffle) {
+			$queue = playlist;
+			const current = $queue.at($index);
+			if (!current) return;
+			const indexes = playlist.map(({ id }) => id);
+			$index = indexes.findIndex((i) => i === current.id);
+		} else {
+			const before = playlist.slice(0, $index);
+			const after = playlist.slice($index + 1, playlist.length);
+
+			const shuffled: (typeof track.$inferSelect)[] = [];
+			shuffled.push(...shuffleArray(before));
+			shuffled.push(playlist[$index]);
+			shuffled.push(...shuffleArray(after));
+
+			$queue = shuffled;
+		}
+	});
+
 	function skipBack(): void {
-		if ($repeat && $index === 0) $index = $playlist.length - 1;
+		if ($repeat && $index === 0) $index = $queue.length - 1;
 		else skip(-1);
 	}
 
 	function skipForward(): void {
-		if ($repeat && $index === $playlist.length - 1) $index = 0;
+		if ($repeat && $index === $queue.length - 1) $index = 0;
 		else skip(1);
 	}
 </script>
@@ -29,7 +59,7 @@
 	variant="ghost"><SkipBack weight="fill" /></Button
 >
 <Button
-	disabled={$playlist.length === 0}
+	disabled={$queue.length === 0}
 	size="icon"
 	variant="ghost"
 	onclick={() => ($playing = !$playing)}
@@ -41,9 +71,9 @@
 	{/if}
 </Button>
 <Button
-	disabled={!$repeat && $index >= $playlist.length - 1}
+	disabled={!$repeat && $index >= $queue.length - 1}
 	onclick={skipForward}
 	size="icon"
 	variant="ghost"><SkipForward weight="fill" /></Button
 >
-<Button size="icon" variant="ghost"><Shuffle weight="fill" /></Button>
+<Toggle bind:pressed={$shuffle}><Shuffle weight="fill" /></Toggle>

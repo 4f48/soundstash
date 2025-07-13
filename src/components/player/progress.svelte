@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { progress, seeking, playlist, index, position } from "@/lib/stores";
+	import { progress, seeking, queue, index, position } from "@/lib/stores";
 	import { cn, formatTime } from "@/lib/utils";
 	import { Slider } from "bits-ui";
 
-	const track = $derived($playlist?.[$index] ?? null);
+	const track = $derived($queue?.[$index] ?? null);
 	const max = $derived(track?.length ? track.length * 100 : 100);
 </script>
 

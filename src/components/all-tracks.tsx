@@ -15,6 +15,7 @@ import {
 	index as $currentTrack,
 	playing as $playing,
 	playlist as $playlist,
+	queue as $queue,
 } from "@/lib/stores";
 import { formatTime } from "@/lib/utils";
 import { useStore } from "@nanostores/react";
@@ -44,14 +45,13 @@ export default function AllTracks({
 				const track = row.original;
 				const [trackPlaying, setTrackPlaying] = useState(false);
 				const currentTrack = useStore($currentTrack);
-				const playlist = useStore($playlist);
 				const playing = useStore($playing);
+				const queue = useStore($queue);
 				useEffect(() => {
-					if (!playlist[currentTrack]) return;
-					else if (playlist[currentTrack].id === track.id)
-						setTrackPlaying(true);
+					if (!queue[currentTrack]) return;
+					else if (queue[currentTrack].id === track.id) setTrackPlaying(true);
 					else setTrackPlaying(false);
-				}, [playlist[currentTrack], playing]);
+				}, [queue[currentTrack], playing]);
 				return (
 					<>
 						<Button
