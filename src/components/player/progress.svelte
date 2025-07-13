@@ -3,12 +3,12 @@
 	import { cn, formatTime } from "@/lib/utils";
 	import { Slider } from "bits-ui";
 
-	const track = $derived($playlist[$index]);
-	const max = $derived(track ? track.length * 100 : 100);
+	const track = $derived($playlist?.[$index] ?? null);
+	const max = $derived(track?.length ? track.length * 100 : 100);
 </script>
 
 <span class="inline-block w-12 tabular-nums"
-	>{track ? formatTime(Math.floor($progress / 100)) : "0:00"}</span
+	>{track ? formatTime($progress / 100) : "0:00"}</span
 >
 <Slider.Root
 	type="single"
@@ -18,9 +18,7 @@
 	{max}
 	min={0}
 	onpointerdown={() => track && ($seeking = true)}
-	onValueCommit={() => {
-		$seeking = false;
-	}}
+	onValueCommit={() => ($seeking = false)}
 >
 	<span
 		class="bg-bg2 relative h-2 w-full grow cursor-pointer overflow-hidden rounded-full"
@@ -35,5 +33,5 @@
 	/>
 </Slider.Root>
 <span class="inline-block w-12 tabular-nums"
-	>{track ? formatTime(Math.floor(max / 100)) : "0:00"}</span
+	>{track ? formatTime(track.length) : "0:00"}</span
 >

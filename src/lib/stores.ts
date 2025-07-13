@@ -5,6 +5,8 @@ export const position = atom(0);
 export const progress = atom(0);
 export const seeking = atom(false);
 
+export const repeat = atom(false);
+
 export const loading = atom(false);
 export const index = atom(0);
 export const playing = atom(false);

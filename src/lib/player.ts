@@ -1,4 +1,4 @@
-import { playing } from "@/lib/stores";
+import { playing, index, playlist, repeat } from "@/lib/stores";
 import { Howl } from "howler";
 
 /**
@@ -19,10 +19,23 @@ export async function getPresignedUrl(id: string): Promise<URL> {
  */
 export function createPlayer(src: URL): Howl {
 	return new Howl({
-		autoplay: true,
 		html5: true,
+		onend: () => {
+			if (index.get() === playlist.get().length - 1 && repeat.get())
+				index.set(0);
+			else if (index.get() < playlist.get().length - 1) skip(1);
+		},
 		onpause: () => playing.set(false),
 		onplay: () => playing.set(true),
+		onstop: () => playing.set(false),
 		src: [src.toString()],
 	});
+}
+
+/**
+ * Skips n tracks in the queue
+ * @param n Tracks to skip, negative number to jump back
+ */
+export function skip(n: number): void {
+	index.set(index.get() + n);
 }
