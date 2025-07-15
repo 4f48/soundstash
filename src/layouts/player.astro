@@ -2,12 +2,18 @@
 import { Sidebar } from "@/components/sidebar";
 import Layout from "@/layouts/html.astro";
 import { Container } from "@/components/player";
+import { cn } from "@/lib/utils";
+
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
 ---
 
 <Layout class="flex h-screen flex-col gap-0">
 	<div class="flex min-h-0 flex-1">
 		<Sidebar />
-		<div class="flex-1 overflow-auto">
+		<div class={cn("flex-1 overflow-auto p-3", className)}>
 			<slot />
 		</div>
 	</div>

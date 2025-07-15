@@ -1,12 +1,12 @@
 ---
 import { cn } from "@/lib/utils";
-import type { ClassValue } from "clsx";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props {
-	class?: ClassValue;
+interface Props extends HTMLAttributes<"div"> {
+	class?: string;
 	level?: number;
 }
-const { class: className, level } = Astro.props;
+const { class: className, level, ...props } = Astro.props;
 ---
 
 <div
@@ -16,6 +16,7 @@ const { class: className, level } = Astro.props;
 		`border-bg${(level ? level : 0) + 2}`,
 		className
 	)}
+	{...props}
 >
 	<slot />
 </div>

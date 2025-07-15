@@ -65,7 +65,6 @@ export default function AllTracks({
 								$playing.set(false);
 								$currentTrack.set(row.index);
 								$playlist.set(tracks);
-								$playing.set(true);
 							}}
 						>
 							<span
