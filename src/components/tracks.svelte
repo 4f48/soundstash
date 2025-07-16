@@ -1,7 +1,14 @@
 <script lang="ts">
+	import Title from "./title.svelte";
 	import type { track } from "@/lib/schema";
 	import { playlist, index } from "@/lib/stores";
-	import SvelteTable, { type TableColumns } from "svelte-table";
+	import {
+		createSvelteTable,
+		createColumnHelper,
+		getCoreRowModel,
+		flexRender,
+		renderComponent,
+	} from "@tanstack/svelte-table";
 
 	type Track = typeof track.$inferSelect;
 	interface Props {
@@ -9,36 +16,72 @@
 	}
 	const { tracks }: Props = $props();
 
-	const columns: TableColumns<Track> = $state([
-		{
-			key: "index",
-			title: "#",
-			value: (_, i) => i || 0,
-		},
-		{
-			key: "title",
-			title: "Title",
-			value: (v) => v.title,
-		},
-		{
-			key: "album",
-			title: "Album",
-			value: (v) => v.album || "-",
-		},
-	]);
+	const columnHelper = createColumnHelper<Track>();
+	const columns = [
+		columnHelper.display({
+			id: "index",
+			header: "#",
+			cell: ({ row }) => row.index,
+		}),
+		columnHelper.accessor("title", {
+			header: "Title",
+			cell: ({ row }) => renderComponent(Title, { track: row.original }),
+		}),
+		columnHelper.accessor("album", { header: "Album" }),
+	];
+	const table = createSvelteTable({
+		data: tracks,
+		columns,
+		getCoreRowModel: getCoreRowModel(),
+	});
 </script>
 
 <div class="border-bg2 rounded-md border">
-	<SvelteTable
-		{columns}
-		rows={tracks}
-		classNameTable="bg-bg rounded-md"
-		classNameCell="px-4 py-2"
-		classNameRow="border-t hover:bg-bg1/50 cursor-pointer border-bg2"
-		classNameThead="[&_th]:font-normal [&_th]:text-start [&_th]:px-4 [&_th]:py-2"
-		on:clickRow={(e) => {
-			$index = tracks.findIndex((row) => row.id === e.detail.row.id);
-			$playlist = tracks;
-		}}
-	/>
+	<table
+		class="bg-bg h-full w-full rounded-md [&_td,&_th]:px-3 [&_td,&_th]:py-1"
+	>
+		<thead>
+			{#each $table.getHeaderGroups() as headerGroup (headerGroup.id)}
+				<tr>
+					{#each headerGroup.headers as header (header.id)}
+						<th class="text-start font-normal">
+							{#if !header.isPlaceholder}
+								{@const Component = flexRender(
+									header.column.columnDef.header,
+									header.getContext()
+								)}
+								{#if Component}
+									<Component />
+								{/if}
+							{/if}
+						</th>
+					{/each}
+				</tr>
+			{/each}
+		</thead>
+		<tbody>
+			{#each $table.getRowModel().rows as row (row.id)}
+				<tr
+					class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 cursor-pointer border-t"
+					onclick={() => {
+						$index = row.index;
+						$playlist = tracks;
+					}}
+					role="button"
+				>
+					{#each row.getVisibleCells() as cell (cell.id)}
+						{@const Component = flexRender(
+							cell.column.columnDef.cell,
+							cell.getContext()
+						)}
+						<td>
+							{#if Component}
+								<Component />
+							{/if}
+						</td>
+					{/each}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 </div>
