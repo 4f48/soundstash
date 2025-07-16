@@ -1,0 +1,43 @@
+---
+import Skeleton from "@/components/skeleton.astro";
+import { Icon, MusicalNote } from "svelte-hero-icons";
+
+interface Props {
+	n: number;
+}
+const { n } = Astro.props;
+---
+
+<div class="border-bg2 rounded-md border">
+	<table
+		class="bg-bg h-full w-full rounded-md [&_td,&_th]:px-3 [&_td,&_th]:py-1"
+	>
+		<thead>
+			<tr>
+				<th class="w-[6.2%] text-start font-normal">#</th>
+				<th class="text-start font-normal">Title</th>
+				<th class="text-start font-normal">Album</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				[...Array(n)].map((_, i) => (
+					<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 cursor-pointer border-t">
+						<td class="w-fit px-3 py-1">{i}</td>
+						<td class="px-3 py-1">
+							<div class="flex items-center gap-1">
+								<div class="bg-bg1 flex size-10 shrink-0 items-center justify-center rounded-sm">
+									<Icon class="text-bg5 size-8" src={MusicalNote} />
+								</div>
+								<Skeleton class="h-11 w-full rounded-md" />
+							</div>
+						</td>
+						<td>
+							<Skeleton class="h-5 w-full rounded-md" />
+						</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</div>

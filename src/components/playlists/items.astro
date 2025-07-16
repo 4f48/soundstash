@@ -1,0 +1,45 @@
+---
+import { db } from "@/lib/database";
+import { Card } from "@/components/card";
+import { eq } from "drizzle-orm";
+import { playlist } from "@/lib/schema";
+import { Image } from "astro:assets";
+import { Icon, MusicalNote, Plus } from "svelte-hero-icons";
+
+const user = Astro.locals.user;
+if (!user) return new Response(null, { status: 401 });
+const playlists = await db.query.playlist.findMany({
+	where: eq(playlist.owner, user.id),
+});
+if (!playlists) return new Response(null, { status: 500 });
+---
+
+{
+	playlists.slice(0, 8).map(({ id, name }) => (
+		<a href={`/playlist/${id}`}>
+			<Card class="hover:bg-bg1/50 flex-row items-center">
+				{playlist.image ? (
+					<Image
+						alt=""
+						class="row-span-2 size-8 shrink-0 rounded-sm"
+						draggable={false}
+						src={`/api/playlist/image?id=${id}`}
+						height={36}
+						width={36}
+					/>
+				) : (
+					<div class="bg-bg1 flex size-8 items-center justify-center rounded-sm">
+						<Icon class="text-bg5 size-5" src={MusicalNote} />
+					</div>
+				)}
+				<span class="truncate">{name}</span>
+			</Card>
+		</a>
+	))
+}
+<Card class="hover:bg-bg1/50 cursor-pointer flex-row items-center">
+	<div class="bg-bg1 flex size-8 items-center justify-center rounded-sm">
+		<Icon class="text-bg5 size-5" src={Plus} />
+	</div>
+	<span class="text-fg1 truncate">Create playlist</span>
+</Card>

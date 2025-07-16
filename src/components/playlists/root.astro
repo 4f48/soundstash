@@ -1,0 +1,13 @@
+---
+interface Props {
+	n: number;
+}
+const { n } = Astro.props;
+---
+
+<section>
+	<h1 class="sr-only">Playlists</h1>
+	<div class={`grid grid-cols-4 grid-rows-${n > 3 ? "2" : "1"} gap-2`}>
+		<slot />
+	</div>
+</section>

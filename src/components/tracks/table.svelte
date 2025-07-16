@@ -27,7 +27,10 @@
 			header: "Title",
 			cell: ({ row }) => renderComponent(Title, { track: row.original }),
 		}),
-		columnHelper.accessor("album", { header: "Album" }),
+		columnHelper.accessor("album", {
+			header: "Album",
+			cell: ({ row }) => row.original.album || "-",
+		}),
 	];
 	const table = createSvelteTable({
 		data: tracks,

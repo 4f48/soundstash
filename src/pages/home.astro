@@ -1,12 +1,30 @@
 ---
-import Tracks from "@/components/tracks.astro";
+import * as Tracks from "@/components/tracks";
 import Layout from "@/layouts/player.astro";
-import Playlists from "@/components/playlists.astro";
+import * as Playlists from "@/components/playlists";
 import { Separator } from "bits-ui";
+
+let n = { playlists: 4, tracks: 8 };
+if (Astro.cookies.has("playlists")) {
+	const playlists = Astro.cookies.get("playlists");
+	const value = playlists?.number();
+	if (value !== undefined && !isNaN(value)) n.playlists = value;
+}
+if (Astro.cookies.has("tracks")) {
+	const tracks = Astro.cookies.get("tracks");
+	const value = tracks?.number();
+	if (value !== undefined && !isNaN(value)) n.tracks = value;
+}
 ---
 
 <Layout>
-	<Playlists server:defer />
+	<Playlists.Root n={n.playlists}>
+		<Playlists.Items server:defer>
+			<Playlists.Loading n={n.playlists} slot="fallback" />
+		</Playlists.Items>
+	</Playlists.Root>
 	<Separator.Root class="bg-bg2 my-3 h-[1px] w-full" />
-	<Tracks />
+	<Tracks.Root server:defer>
+		<Tracks.Loading n={n.tracks} slot="fallback" />
+	</Tracks.Root>
 </Layout>
