@@ -3,7 +3,8 @@ import { db } from "@/lib/database";
 import { playlist } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { Image } from "astro:assets";
-import { Icon, MusicalNote, Plus } from "svelte-hero-icons";
+import { Icon, MusicalNote } from "svelte-hero-icons";
+import Create from "./create.svelte";
 
 const user = Astro.locals.user;
 if (!user) return new Response(null, { status: 401 });
@@ -53,14 +54,6 @@ Astro.cookies.set("playlists", String(playlists.length), {
 			</a>
 		))
 	) : (
-		<button class="hover:bg-bg1/50 flex h-15 w-full cursor-pointer items-center gap-2 rounded-md px-1.5">
-			<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
-				<Icon class="text-bg5 size-8" src={Plus} />
-			</div>
-			<div class="flex flex-1 flex-col items-start">
-				<span>Create playlist</span>
-				<span class="text-fg2 col-start-2 text-sm">Organize your tracks</span>
-			</div>
-		</button>
+		<Create client:visible n={playlists.length} />
 	)
 }
