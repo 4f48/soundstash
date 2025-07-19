@@ -3,13 +3,19 @@
 	import Title from "./title.svelte";
 	import type { track } from "@/lib/schema";
 	import { playlist, index } from "@/lib/stores";
+	import { rankItem } from "@tanstack/match-sorter-utils";
 	import {
 		createSvelteTable,
 		createColumnHelper,
 		getCoreRowModel,
+		getFilteredRowModel,
 		flexRender,
 		renderComponent,
+		type FilterFn,
+		type TableOptions,
 	} from "@tanstack/svelte-table";
+	import { atom } from "nanostores";
+	import { Icon, MagnifyingGlass } from "svelte-hero-icons";
 
 	type Track = typeof track.$inferSelect;
 	interface Props {
@@ -22,21 +28,42 @@
 		columnHelper.display({
 			id: "index",
 			header: "#",
-			cell: ({ row }) => row.index,
+			cell: ({ row }) => row.index + 1,
 		}),
 		columnHelper.accessor("title", {
 			header: "Title",
 			cell: ({ row }) => renderComponent(Title, { track: row.original }),
+			enableGlobalFilter: true,
 		}),
 		columnHelper.accessor("album", {
 			header: "Album",
 			cell: ({ row }) => row.original.album || "-",
+			enableGlobalFilter: true,
 		}),
 	];
-	const table = createSvelteTable({
+
+	let globalFilter = atom("");
+	const fuzzyFilter: FilterFn<Track> = (row, columnId, value, addMeta) => {
+		const itemRank = rankItem(row.getValue(columnId), value);
+		addMeta({ itemRank });
+		return itemRank.passed;
+	};
+
+	const options = atom<TableOptions<Track>>({
 		data: tracks,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		filterFns: {
+			fuzzy: fuzzyFilter,
+		},
+		globalFilterFn: fuzzyFilter,
+	});
+
+	const table = createSvelteTable($options);
+
+	globalFilter.subscribe((filter) => {
+		$table.setGlobalFilter(filter);
 	});
 </script>
 
@@ -60,6 +87,21 @@
 							{/if}
 						</th>
 					{/each}
+					<th class="w-32 pr-1! text-end">
+						<div class="relative inline-block">
+							<div
+								class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2"
+							>
+								<Icon class="text-fg2 size-4" src={MagnifyingGlass} micro />
+							</div>
+							<input
+								bind:value={$globalFilter}
+								type="text"
+								placeholder="Search..."
+								class="bg-bg1 border-bg3 text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
+							/>
+						</div>
+					</th>
 				</tr>
 			{/each}
 		</thead>
@@ -84,7 +126,7 @@
 							{/if}
 						</td>
 					{/each}
-					<td>
+					<td class="text-end">
 						<Actions track={row.original} />
 					</td>
 				</tr>
