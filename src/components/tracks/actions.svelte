@@ -5,7 +5,8 @@
 	import { queue } from "@/lib/stores";
 	import { DropdownMenu } from "bits-ui";
 	import ListPlus from "phosphor-svelte/lib/ListPlus";
-	import { EllipsisHorizontal, Icon, Plus } from "svelte-hero-icons";
+	import Plus from "phosphor-svelte/lib/Plus";
+	import { EllipsisHorizontal, Icon } from "svelte-hero-icons";
 
 	interface Props {
 		track: typeof trackTable.$inferSelect;
@@ -29,7 +30,7 @@
 		>
 			<Item onclick={() => addToQueue()}><ListPlus />Add to queue</Item>
 			<Item onclick={() => console.debug("add to playlist")}
-				><Icon src={Plus} />Add to playlist</Item
+				><Plus />Add to playlist</Item
 			>
 		</DropdownMenu.Content>
 	</DropdownMenu.Portal>

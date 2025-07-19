@@ -1,21 +1,17 @@
 ---
-import {
-	Card,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/card";
+import * as Card from "@/components/card";
 import Form from "@/components/forms/reset-password/request.svelte";
 import Layout from "@/layouts/auth.astro";
 ---
 
 <Layout backDestination="/auth/signin">
-	<Card class="w-sm">
-		<CardHeader>
-			<CardTitle>Forgot your password?</CardTitle>
-			<CardDescription>Enter your email to reset your password.</CardDescription
+	<Card.Root class="w-sm">
+		<Card.Header>
+			<Card.Title>Forgot your password?</Card.Title>
+			<Card.Description
+				>Enter your email to reset your password.</Card.Description
 			>
-		</CardHeader>
+		</Card.Header>
 		<Form client:idle />
-	</Card>
+	</Card.Root>
 </Layout>

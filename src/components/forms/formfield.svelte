@@ -6,11 +6,12 @@
 
 	interface Props extends HTMLInputAttributes {
 		name: string;
+		focusSelect?: boolean;
 	}
-	const { name, ...props }: Props = $props();
+	const { name, focusSelect, ...props }: Props = $props();
 </script>
 
-<div class="grid">
+<div class="grid items-center">
 	<div class="flex items-center">
 		<Label for={name.toLowerCase()}>{name}</Label>
 		<ValidationMessage for={name.toLowerCase()} let:messages={message}>
@@ -19,5 +20,10 @@
 			</p>
 		</ValidationMessage>
 	</div>
-	<Input id={name.toLowerCase()} name={name.toLowerCase()} {...props} />
+	<Input
+		{focusSelect}
+		id={name.toLowerCase()}
+		name={name.toLowerCase()}
+		{...props}
+	/>
 </div>

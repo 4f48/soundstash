@@ -1,4 +1,4 @@
-export { default as Card } from "./card.astro";
-export { default as CardHeader } from "./card-header.astro";
-export { default as CardTitle } from "./card-title.astro";
-export { default as CardDescription } from "./card-description.astro";
+export { default as Root } from "./root.svelte";
+export { default as Header } from "./header.svelte";
+export { default as Title } from "./title.svelte";
+export { default as Description } from "./description.svelte";

@@ -1,26 +1,21 @@
 ---
-import {
-	Card,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/card";
+import * as Card from "@/components/card";
 import Form from "@/components/forms/signup.svelte";
 import Layout from "@/layouts/auth.astro";
 ---
 
 <Layout>
-	<Card class="w-sm">
-		<CardHeader>
-			<CardTitle>Create your account</CardTitle>
-			<CardDescription
-				>Enter your name and email to create an account.</CardDescription
+	<Card.Root class="w-sm">
+		<Card.Header>
+			<Card.Title>Create your account</Card.Title>
+			<Card.Description
+				>Enter your name and email to create an account.</Card.Description
 			>
-		</CardHeader>
+		</Card.Header>
 		<Form client:idle />
 		<span class="text-fg1 text-center text-sm [&_a]:underline">
 			Already have an account?
 			<a href="/auth/signin">Sign in</a>
 		</span>
-	</Card>
+	</Card.Root>
 </Layout>
