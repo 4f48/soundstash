@@ -29,10 +29,8 @@
 	</Avatar.Root>
 	<div class="flex min-w-0 flex-col">
 		<span
-			class={cn(
-				"truncate",
-				current === track ? "font-semibold" : "font-normal"
-			)}>{track.title}</span
+			class={cn("truncate", current === track ? "font-medium" : "font-normal")}
+			>{track.title}</span
 		>
 		<span class="text-fg2 truncate text-sm">{track.artist}</span>
 	</div>

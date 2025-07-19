@@ -26,6 +26,8 @@
 	let url = $state<URL>();
 	$effect(() => {
 		if (!current) return;
+		/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+		const currentIndex = $index;
 		getPresignedUrl(current.id).then((result) => (url = result));
 	});
 
@@ -72,6 +74,16 @@
 		});
 	});
 
+	function handleKeyPlayPause(
+		e: KeyboardEvent & { currentTarget: EventTarget & Window }
+	): void {
+		if (e.code === "Space") {
+			e.preventDefault();
+
+			$playing = !$playing;
+		}
+	}
+
 	onDestroy(() => {
 		clearInterval(interval);
 		if (player) {
@@ -80,3 +92,5 @@
 		}
 	});
 </script>
+
+<svelte:window onkeydown={handleKeyPlayPause} />

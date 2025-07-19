@@ -38,7 +38,7 @@ export const GET: APIRoute = async (ctx) => {
 			},
 		});
 	} catch (e) {
-		if (e instanceof Error) console.error(e);
+		if (e instanceof Error) console.error(e.message);
 		return new Response("something went wrong", { status: 500 });
 	}
 };

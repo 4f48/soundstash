@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Actions from "./actions.svelte";
 	import Title from "./title.svelte";
 	import type { track } from "@/lib/schema";
 	import { playlist, index } from "@/lib/stores";
@@ -64,25 +65,28 @@
 		</thead>
 		<tbody>
 			{#each $table.getRowModel().rows as row (row.id)}
-				<tr
-					class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 cursor-pointer border-t"
-					onclick={() => {
-						$index = row.index;
-						$playlist = tracks;
-					}}
-					role="button"
-				>
+				<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 border-t">
 					{#each row.getVisibleCells() as cell (cell.id)}
 						{@const Component = flexRender(
 							cell.column.columnDef.cell,
 							cell.getContext()
 						)}
-						<td>
+						<td
+							class="cursor-pointer"
+							onclick={() => {
+								$index = row.index;
+								$playlist = tracks;
+							}}
+							role="button"
+						>
 							{#if Component}
 								<Component />
 							{/if}
 						</td>
 					{/each}
+					<td>
+						<Actions track={row.original} />
+					</td>
 				</tr>
 			{/each}
 		</tbody>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Item from "./dropdownitem.svelte";
+	import Item from "@/components/dropdownitem.svelte";
 	import { authClient } from "@/lib/auth/client";
 	import { navigate } from "astro:transitions/client";
 	import { DropdownMenu } from "bits-ui";
@@ -16,18 +16,9 @@
 		email: string;
 	}
 	const { email }: Props = $props();
-
-	let open = $state(false);
-
-	function getOpen(): boolean {
-		return open;
-	}
-	function setOpen(value: boolean): void {
-		open = value;
-	}
 </script>
 
-<DropdownMenu.Root bind:open={getOpen, setOpen}>
+<DropdownMenu.Root>
 	<DropdownMenu.Trigger
 		class="hover:bg-bg1/50 flex w-full cursor-pointer items-center gap-3 rounded-md p-2"
 	>
