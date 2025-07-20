@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Actions from "./actions.svelte";
 	import Title from "./title.svelte";
-	import type { track } from "@/lib/schema";
-	import { playlist, index } from "@/lib/stores";
+	import type { playlist as playlistTable, track } from "@/lib/schema";
+	import { index, playlist } from "@/lib/stores";
 	import { rankItem } from "@tanstack/match-sorter-utils";
 	import {
 		createSvelteTable,
@@ -18,10 +18,12 @@
 	import { Icon, MagnifyingGlass } from "svelte-hero-icons";
 
 	type Track = typeof track.$inferSelect;
+	type Playlist = typeof playlistTable.$inferSelect;
 	interface Props {
+		playlists: Playlist[];
 		tracks: Track[];
 	}
-	const { tracks }: Props = $props();
+	const { playlists, tracks }: Props = $props();
 
 	const columnHelper = createColumnHelper<Track>();
 	const columns = [
@@ -127,7 +129,7 @@
 						</td>
 					{/each}
 					<td class="text-end">
-						<Actions track={row.original} />
+						<Actions {playlists} track={row.original} />
 					</td>
 				</tr>
 			{/each}

@@ -7,7 +7,7 @@
 		contentProps?: WithoutChild<Dialog.ContentProps>;
 		description: Snippet;
 		title: Snippet;
-		trigger: Snippet<[{ props: Record<string, unknown> }]>;
+		trigger?: Snippet<[{ props: Record<string, unknown> }]>;
 	}
 	let {
 		children,
@@ -21,11 +21,13 @@
 </script>
 
 <Dialog.Root bind:open {...props}>
-	<Dialog.Trigger>
-		{#snippet child({ props })}
-			{@render trigger({ props })}
-		{/snippet}
-	</Dialog.Trigger>
+	{#if trigger}
+		<Dialog.Trigger>
+			{#snippet child({ props })}
+				{@render trigger({ props })}
+			{/snippet}
+		</Dialog.Trigger>
+	{/if}
 	<Dialog.Portal>
 		<Dialog.Overlay forceMount>
 			{#snippet child({ open, props })}
@@ -49,7 +51,7 @@
 							start: 0.95,
 						}}
 					>
-						<div class="mb-1 grid">
+						<div class="mb-1 grid gap-0.5">
 							<Dialog.Title
 								class="text-lg leading-none font-semibold tracking-tight"
 								>{@render title()}</Dialog.Title

@@ -8,23 +8,16 @@
 	interface Props extends DropdownMenuItemProps {
 		children: Snippet;
 		class?: string;
+		href?: string;
+		onclick?: EventHandler;
 	}
-	type PropsWithHref = Props & {
-		href: string;
-		onclick?: never;
-	};
-	type PropsWithOnclick = Props & {
-		href?: never;
-		onclick: EventHandler;
-	};
-	type PropsUnion = PropsWithHref | PropsWithOnclick;
 	const {
 		children,
 		class: className,
 		href,
 		onclick,
 		...props
-	}: PropsUnion = $props();
+	}: Props = $props();
 </script>
 
 <DropdownMenu.Item {...props}

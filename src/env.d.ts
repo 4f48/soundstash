@@ -5,6 +5,11 @@ declare namespace App {
 		user: import("better-auth").User | null;
 		session: import("better-auth").Session | null;
 	}
+
+	type Playlist =
+		typeof import("@/lib/schema/playlists.schema").playlist.$inferSelect;
+	type Track = typeof import("@/lib/schema/tracks.schema").track.$inferSelect;
+
 	interface DeleteTrackRequest {
 		id: string;
 	}

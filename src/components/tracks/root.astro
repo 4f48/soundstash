@@ -19,6 +19,9 @@ const tracks = playlistId
 			where: eq(track.owner, user.id),
 		});
 if (!tracks) return new Response(null, { status: 500 });
+const playlists = await db.query.playlist.findMany({
+	where: eq(playlist.owner, user.id),
+});
 
 Astro.cookies.set("tracks", String(tracks.length), {
 	path: "/",
@@ -27,4 +30,4 @@ Astro.cookies.set("tracks", String(tracks.length), {
 });
 ---
 
-<Table client:idle tracks={tracks} />
+<Table client:idle playlists={playlists} tracks={tracks} />

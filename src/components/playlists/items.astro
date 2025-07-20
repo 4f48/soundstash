@@ -16,10 +16,10 @@ if (!playlists) return new Response(null, { status: 500 });
 ---
 
 {
-	playlists.slice(0, 8).map(({ id, name }) => (
+	playlists.slice(0, 8).map(({ id, name, image }) => (
 		<a href={`/playlist/${id}`}>
 			<Card.Root class="hover:bg-bg1/50 flex-row items-center">
-				{playlist.image ? (
+				{image ? (
 					<Image
 						alt=""
 						class="row-span-2 size-8 shrink-0 rounded-sm"
