@@ -10,9 +10,16 @@ const user = Astro.locals.user;
 if (!user) return new Response(null, { status: 401 });
 
 const playlists = await db.query.playlist.findMany({
+	columns: {
+		owner: false,
+	},
 	where: eq(playlist.owner, user.id),
 	with: {
-		playlistToTracks: true,
+		playlistToTracks: {
+			columns: {
+				playlistId: true,
+			},
+		},
 	},
 });
 

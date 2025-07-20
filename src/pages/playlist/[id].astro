@@ -1,38 +1,35 @@
 ---
-import AllTracks from "@/components/all-tracks";
-import PlaylistActions from "@/components/playlist-actions";
+import * as Tracks from "@/components/tracks";
 import Layout from "@/layouts/player.astro";
+import * as Playlists from "@/components/playlists";
+import { Separator } from "bits-ui";
 import { db } from "@/lib/database";
-import { playlist as playlistTable } from "@/lib/schema";
 import { and, eq } from "drizzle-orm";
+import { playlist } from "@/lib/schema";
+
+const { id } = Astro.params;
+if (!id) return new Response("no id provided", { status: 400 });
+const cookie = `tracks+${id}`;
+let n = 8;
+if (Astro.cookies.has(cookie)) {
+	const tracks = Astro.cookies.get(cookie);
+	const value = tracks?.number();
+	if (value !== undefined && !isNaN(value)) n = value;
+}
 
 const user = Astro.locals.user;
 if (!user) return new Response(null, { status: 401 });
-
-const { id } = Astro.params;
-if (!id) return new Response(null, { status: 400 });
-
-const playlist = await db.query.playlist.findFirst({
-	where: and(eq(playlistTable.id, id), eq(playlistTable.owner, user.id)),
-	with: {
-		playlistToTracks: {
-			with: {
-				track: true,
-			},
-		},
+const result = await db.query.playlist.findFirst({
+	columns: {
+		name: true,
 	},
+	where: and(eq(playlist.id, id), eq(playlist.owner, user.id)),
 });
-if (!playlist) return new Response(null, { status: 400 });
-
-const tracks = playlist.playlistToTracks.map(({ track }) => track);
 ---
 
 <Layout>
-	<main class="mx-3 space-y-3">
-		<div class="flex items-center gap-3">
-			<h1 class="text-3xl font-bold">{playlist.name}</h1>
-			<PlaylistActions playlist={playlist} client:load />
-		</div>
-		<AllTracks tracks={tracks} client:load />
-	</main>
+	<h2 class="mb-2 text-2xl font-bold tracking-tight">{result?.name}</h2>
+	<Tracks.Root playlistId={id} server:defer>
+		<Tracks.Loading n={n} slot="fallback" />
+	</Tracks.Root>
 </Layout>

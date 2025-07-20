@@ -1,6 +1,12 @@
 ---
 import Skeleton from "@/components/skeleton.astro";
-import { Icon, MusicalNote } from "svelte-hero-icons";
+import {
+	EllipsisHorizontal,
+	Icon,
+	MagnifyingGlass,
+	MusicalNote,
+} from "svelte-hero-icons";
+import Button from "@/components/button.svelte";
 
 interface Props {
 	n: number;
@@ -17,6 +23,20 @@ const { n } = Astro.props;
 				<th class="w-[6.2%] text-start font-normal">#</th>
 				<th class="text-start font-normal">Title</th>
 				<th class="text-start font-normal">Album</th>
+				<th class="w-32 pr-1! text-end">
+					<div class="relative inline-block">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2"
+						>
+							<Icon class="text-fg2 size-4" src={MagnifyingGlass} micro />
+						</div>
+						<input
+							type="text"
+							placeholder="Search..."
+							class="bg-bg1 border-bg3 text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
+						/>
+					</div>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,6 +54,12 @@ const { n } = Astro.props;
 						</td>
 						<td>
 							<Skeleton class="h-5 w-full rounded-md" />
+						</td>
+
+						<td class="text-end">
+							<Button size="icon" variant="ghost">
+								<Icon src={EllipsisHorizontal} />
+							</Button>
 						</td>
 					</tr>
 				))
