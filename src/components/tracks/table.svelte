@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Actions from "./actions.svelte";
 	import Title from "./title.svelte";
-	import type { playlist as playlistTable, track } from "@/lib/schema";
 	import { index, playlist } from "@/lib/stores";
 	import { rankItem } from "@tanstack/match-sorter-utils";
 	import {
@@ -15,17 +14,20 @@
 		type TableOptions,
 	} from "@tanstack/svelte-table";
 	import { atom } from "nanostores";
-	import { Icon, MagnifyingGlass } from "svelte-hero-icons";
+	import {
+		EllipsisHorizontalCircle,
+		Icon,
+		MagnifyingGlass,
+	} from "svelte-hero-icons";
 
-	type Track = typeof track.$inferSelect;
-	type Playlist = typeof playlistTable.$inferSelect;
 	interface Props {
-		playlists: Playlist[];
-		tracks: Track[];
+		isPlaylist?: boolean;
+		playlists: App.Playlist[];
+		tracks: App.Track[];
 	}
-	const { playlists, tracks }: Props = $props();
+	const { isPlaylist = false, playlists, tracks }: Props = $props();
 
-	const columnHelper = createColumnHelper<Track>();
+	const columnHelper = createColumnHelper<App.Track>();
 	const columns = [
 		columnHelper.display({
 			id: "index",
@@ -45,13 +47,13 @@
 	];
 
 	let globalFilter = atom("");
-	const fuzzyFilter: FilterFn<Track> = (row, columnId, value, addMeta) => {
+	const fuzzyFilter: FilterFn<App.Track> = (row, columnId, value, addMeta) => {
 		const itemRank = rankItem(row.getValue(columnId), value);
 		addMeta({ itemRank });
 		return itemRank.passed;
 	};
 
-	const options = atom<TableOptions<Track>>({
+	const options = atom<TableOptions<App.Track>>({
 		data: tracks,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
@@ -69,7 +71,7 @@
 	});
 </script>
 
-<div class="border-bg2 rounded-md border">
+<div class="border-bg2 overflow-hidden rounded-md border">
 	<table
 		class="bg-bg h-full w-full rounded-md [&_td,&_th]:px-3 [&_td,&_th]:py-1"
 	>
@@ -91,48 +93,72 @@
 					{/each}
 					<th class="w-32 pr-1! text-end">
 						<div class="relative inline-block">
-							<div
-								class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2"
-							>
-								<Icon class="text-fg2 size-4" src={MagnifyingGlass} micro />
-							</div>
 							<input
 								bind:value={$globalFilter}
+								disabled={tracks.length < 1}
 								type="text"
 								placeholder="Search..."
-								class="bg-bg1 border-bg3 text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
+								class="bg-bg1 border-bg3 peer text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 disabled:border-bg2 disabled:bg-bg1/50 disabled:placeholder:text-fg2/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
 							/>
+							<div
+								class="[&_svg]:text-fg2 peer-disabled:[&_svg]:text-fg2/50 pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 [&_svg]:size-4"
+							>
+								<Icon src={MagnifyingGlass} micro />
+							</div>
 						</div>
 					</th>
 				</tr>
 			{/each}
 		</thead>
-		<tbody>
-			{#each $table.getRowModel().rows as row (row.id)}
-				<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 border-t">
-					{#each row.getVisibleCells() as cell (cell.id)}
-						{@const Component = flexRender(
-							cell.column.columnDef.cell,
-							cell.getContext()
-						)}
-						<td
-							class="cursor-pointer"
-							onclick={() => {
-								$index = row.index;
-								$playlist = tracks;
-							}}
-							role="button"
-						>
-							{#if Component}
-								<Component />
-							{/if}
+		{#if tracks.length > 0}
+			<tbody>
+				{#each $table.getRowModel().rows as row (row.id)}
+					<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 border-t">
+						{#each row.getVisibleCells() as cell (cell.id)}
+							{@const Component = flexRender(
+								cell.column.columnDef.cell,
+								cell.getContext()
+							)}
+							<td
+								class="cursor-pointer"
+								onclick={() => {
+									$index = row.index;
+									$playlist = tracks;
+								}}
+								role="button"
+							>
+								{#if Component}
+									<Component />
+								{/if}
+							</td>
+						{/each}
+						<td class="text-end">
+							<Actions {playlists} track={row.original} />
 						</td>
-					{/each}
-					<td class="text-end">
-						<Actions {playlists} track={row.original} />
-					</td>
-				</tr>
-			{/each}
-		</tbody>
+					</tr>
+				{/each}
+			</tbody>
+		{/if}
 	</table>
+	{#if tracks.length < 1}
+		<div class="bg-bg border-bg2 border-t py-2 text-center">
+			<p>You don't have any tracks yet.</p>
+			{#if isPlaylist}
+				<p>
+					Add some by clicking on <Icon
+						class="inline-block size-5"
+						src={EllipsisHorizontalCircle}
+					/> and selecting "Add to playlist" on tracks found in
+					<a href="/" class="underline">your library</a>.
+				</p>
+			{:else}
+				<p>
+					Add some by uploading files on the <a
+						class="underline"
+						href="/storage">storage page</a
+					>.
+				</p>
+			{/if}
+		</div>
+	{/if}
 </div>

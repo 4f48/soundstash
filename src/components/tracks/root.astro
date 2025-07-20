@@ -64,4 +64,9 @@ Astro.cookies.set(
 );
 ---
 
-<Table client:idle playlists={playlists} tracks={tracks} />
+<Table
+	client:idle
+	isPlaylist={playlistId}
+	playlists={playlists}
+	tracks={tracks}
+/>

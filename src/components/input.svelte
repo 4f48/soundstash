@@ -26,7 +26,7 @@
 
 <input
 	class={cn(
-		"aria-[invalid=true]:bg-destructive/30 aria-[invalid=true]:focus:ring-destructive/75! border-bg3 bg-bg1 placeholder:fg2 disabled:border-fg2 focus-visible:ring-bg4/50 h-8 rounded-sm border px-3 text-sm focus:outline-none focus-visible:ring-[2.5px]",
+		"aria-[invalid=true]:bg-destructive/30 aria-[invalid=true]:focus:ring-destructive/75! border-bg3 bg-bg1 placeholder:fg2 disabled:border-bg4 focus-visible:ring-bg4/50 h-8 rounded-sm border px-3 text-sm focus:outline-none focus-visible:ring-[2.5px]",
 		className
 	)}
 	use:select

@@ -7,6 +7,7 @@ import {
 	MusicalNote,
 } from "svelte-hero-icons";
 import Button from "@/components/button.svelte";
+import Loader from "@/components/loader.svelte";
 
 interface Props {
 	n: number;
@@ -14,7 +15,7 @@ interface Props {
 const { n } = Astro.props;
 ---
 
-<div class="border-bg2 rounded-md border">
+<div class="border-bg2 overflow-hidden rounded-md border">
 	<table
 		class="bg-bg h-full w-full rounded-md [&_td,&_th]:px-3 [&_td,&_th]:py-1"
 	>
@@ -25,45 +26,54 @@ const { n } = Astro.props;
 				<th class="text-start font-normal">Album</th>
 				<th class="w-32 pr-1! text-end">
 					<div class="relative inline-block">
-						<div
-							class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2"
-						>
-							<Icon class="text-fg2 size-4" src={MagnifyingGlass} micro />
-						</div>
 						<input
+							disabled
 							type="text"
 							placeholder="Search..."
-							class="bg-bg1 border-bg3 text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
+							class="bg-bg1 border-bg3 peer text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 disabled:border-bg2 disabled:bg-bg1/50 disabled:placeholder:text-fg2/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
 						/>
+						<div
+							class="[&_svg]:text-fg2 peer-disabled:[&_svg]:text-fg2/50 pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 [&_svg]:size-4"
+						>
+							<Icon src={MagnifyingGlass} micro />
+						</div>
 					</div>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			{
-				[...Array(n)].map((_, i) => (
-					<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 cursor-pointer border-t">
-						<td class="w-fit px-3 py-1">{i}</td>
-						<td class="px-3 py-1">
-							<div class="flex items-center gap-1">
-								<div class="bg-bg1 flex size-10 shrink-0 items-center justify-center rounded-sm">
-									<Icon class="text-bg5 size-8" src={MusicalNote} />
+				n > 0 &&
+					[...Array(n)].map((_, i) => (
+						<tr class="border-bg2 odd:bg-bg1/25 hover:bg-bg1/50 cursor-pointer border-t">
+							<td class="w-fit px-3 py-1">{i}</td>
+							<td class="px-3 py-1">
+								<div class="flex items-center gap-1">
+									<div class="bg-bg1 flex size-10 shrink-0 items-center justify-center rounded-sm">
+										<Icon class="text-bg5 size-8" src={MusicalNote} />
+									</div>
+									<Skeleton class="h-11 w-full rounded-md" />
 								</div>
-								<Skeleton class="h-11 w-full rounded-md" />
-							</div>
-						</td>
-						<td>
-							<Skeleton class="h-5 w-full rounded-md" />
-						</td>
+							</td>
+							<td>
+								<Skeleton class="h-5 w-full rounded-md" />
+							</td>
 
-						<td class="text-end">
-							<Button size="icon" variant="ghost">
-								<Icon src={EllipsisHorizontal} />
-							</Button>
-						</td>
-					</tr>
-				))
+							<td class="text-end">
+								<Button size="icon" variant="ghost">
+									<Icon src={EllipsisHorizontal} />
+								</Button>
+							</td>
+						</tr>
+					))
 			}
 		</tbody>
 	</table>
+	{
+		n < 1 && (
+			<div class="bg-bg border-bg2 flex justify-center border-t py-2">
+				<Loader class="text-fg2" />
+			</div>
+		)
+	}
 </div>
