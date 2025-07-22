@@ -73,7 +73,7 @@
 
 <div class="border-bg2 overflow-hidden rounded-md border">
 	<table
-		class="bg-bg h-full w-full rounded-md [&_td,&_th]:px-3 [&_td,&_th]:py-1"
+		class="bg-bg hidden h-full w-full rounded-md md:table [&_td,&_th]:px-3 [&_td,&_th]:py-1"
 	>
 		<thead>
 			{#each $table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -140,6 +140,24 @@
 			</tbody>
 		{/if}
 	</table>
+	<div class="bg-bg flex flex-col md:hidden">
+		{#each tracks as track, i (track.id)}
+			<div
+				class="border-bg2 odd:bg-bg1/25 flex items-center border-t p-2 first:border-none"
+			>
+				<button
+					class="flex-1 text-start"
+					onclick={() => {
+						$index = i;
+						$playlist = tracks;
+					}}
+				>
+					<Title {track} />
+				</button>
+				<Actions {playlists} {track} />
+			</div>
+		{/each}
+	</div>
 	{#if tracks.length < 1}
 		<div class="bg-bg border-bg2 border-t py-2 text-center">
 			<p>You don't have any tracks yet.</p>

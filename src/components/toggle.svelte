@@ -17,7 +17,7 @@
 
 <Toggle.Root
 	class={cn(
-		"enabled:hover:bg-bg1/60 data-[state=on]:bg-bg1/50 flex size-8 cursor-pointer items-center justify-center rounded-sm",
+		"enabled:hover:bg-bg1/60 data-[state=on]:bg-bg1/50 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm",
 		className
 	)}
 	bind:pressed

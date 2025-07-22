@@ -12,6 +12,6 @@ const check = await db
 	.where(eq(track.owner, user.id));
 ---
 
-<span class="text-fg2 ml-2 text-sm"
+<span class="text-fg2 ml-2 min-w-0 truncate text-sm"
 	>{byteSize(Number(check[0].storage || 0), { precision: 1 })}/100 MB used</span
 >

@@ -6,7 +6,7 @@
 	const track = $derived($queue[$index]);
 </script>
 
-<div class="flex items-center gap-2">
+<div class="hidden items-center gap-2 md:flex">
 	{#key track?.id}
 		<Avatar.Root class="shrink-0">
 			{#if track?.cover}

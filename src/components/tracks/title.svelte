@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex items-center gap-1">
-	<Avatar.Root>
+	<Avatar.Root class="shrink-0">
 		{#if track.cover}
 			<Avatar.Image
 				alt="{track.album || track.title} {track.album && 'album'} cover"
