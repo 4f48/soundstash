@@ -1,0 +1,18 @@
+---
+import * as Card from "@/components/card";
+import Layout from "@/layouts/auth.astro";
+import Uploader from "@/components/upload/root.svelte";
+---
+
+<Layout backDestination="/storage">
+	<Card.Root class="w-sm">
+		<Card.Header>
+			<Card.Title>Upload tracks</Card.Title>
+			<Card.Description
+				>Preserve your high-quality music by uploading it to your personal cloud
+				storage.</Card.Description
+			>
+			<Uploader client:idle />
+		</Card.Header>
+	</Card.Root>
+</Layout>

@@ -9,12 +9,14 @@
 <div class="flex items-center gap-2">
 	{#key track?.id}
 		<Avatar.Root class="shrink-0">
-			<Avatar.Image
-				alt="{track?.title} album cover"
-				class="size-12 rounded-sm"
-				draggable={false}
-				src="/api/track/cover/{track?.id}"
-			/>
+			{#if track?.cover}
+				<Avatar.Image
+					alt="{track?.title} album cover"
+					class="size-12 rounded-sm"
+					draggable={false}
+					src="/api/track/cover/{track?.id}"
+				/>
+			{/if}
 			<Avatar.Fallback>
 				<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
 					<Icon class="text-bg5 size-8" src={MusicalNote} />

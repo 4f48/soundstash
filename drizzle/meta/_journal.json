@@ -8,6 +8,20 @@
 			"when": 1751408741882,
 			"tag": "0000_sour_lilandra",
 			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "6",
+			"when": 1753140596677,
+			"tag": "0001_amazing_bedlam",
+			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "6",
+			"when": 1753194179616,
+			"tag": "0002_curved_malcolm_colcord",
+			"breakpoints": true
 		}
 	]
 }

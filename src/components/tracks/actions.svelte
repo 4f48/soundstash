@@ -36,7 +36,9 @@
 			class="bg-bg1 text-fg border-bg2 flex flex-col rounded-sm border p-1"
 		>
 			<Item onclick={() => addToQueue()}><ListPlus />Add to queue</Item>
-			<Item onclick={() => (open = true)}><Plus />Add to playlist</Item>
+			<Item disabled={playlists.length < 1} onclick={() => (open = true)}
+				><Plus />Add to playlist</Item
+			>
 		</DropdownMenu.Content>
 	</DropdownMenu.Portal>
 </DropdownMenu.Root>

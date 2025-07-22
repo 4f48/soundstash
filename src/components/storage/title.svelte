@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { track as trackTable } from "@/lib/schema";
-	import { index, queue } from "@/lib/stores";
-	import { cn } from "@/lib/utils";
 	import { Avatar } from "bits-ui";
 	import { Icon, MusicalNote } from "svelte-hero-icons";
 
@@ -9,8 +7,6 @@
 		track: typeof trackTable.$inferSelect;
 	}
 	const { track }: Props = $props();
-
-	const current = $derived($queue.at($index));
 </script>
 
 <div class="flex items-center gap-1">
@@ -30,10 +26,7 @@
 		</Avatar.Fallback>
 	</Avatar.Root>
 	<div class="flex min-w-0 flex-col">
-		<span
-			class={cn("truncate", current === track ? "font-medium" : "font-normal")}
-			>{track.title}</span
-		>
+		<span class="truncate">{track.title}</span>
 		<span class="text-fg2 truncate text-sm">{track.artist}</span>
 	</div>
 </div>

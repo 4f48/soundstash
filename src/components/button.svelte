@@ -15,13 +15,13 @@
 					icon: "size-8",
 				},
 				variant: {
-					default: "bg-primary text-bg enabled:hover:bg-primary/95",
+					default:
+						"bg-primary text-bg hover:bg-primary/95 disabled:hover:bg-primary",
 					secondary:
 						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1",
-					outline: "border-primary text-fg enabled:hover:bg-bg bg-bg0 border",
+					outline: "border-bg3 text-fg enabled:hover:bg-bg bg-bg0 border",
 					ghost: "text-fg hover:bg-bg1/50 disabled:hover:bg-transparent",
-					destructive:
-						"bg-destructive text-foreground enabled:hover:bg-destructive/80",
+					destructive: "bg-destructive text-bg enabled:hover:bg-destructive/80",
 				},
 			},
 			defaultVariants: {

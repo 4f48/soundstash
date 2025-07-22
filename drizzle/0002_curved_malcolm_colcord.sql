@@ -1,0 +1,1 @@
+ALTER TABLE `track` ADD `cover` integer DEFAULT false NOT NULL;
