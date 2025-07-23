@@ -25,7 +25,7 @@
 		authClient.sendVerificationEmail(
 			{
 				email,
-				callbackURL: "/account",
+				callbackURL: "/settings",
 			},
 			{
 				onSuccess: () => {

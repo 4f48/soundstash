@@ -6,7 +6,7 @@
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm text-sm font-medium text-nowrap transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default disabled:opacity-75 [&_svg]:size-4",
+		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm text-sm font-medium text-nowrap transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default [&_svg]:size-4",
 		{
 			variants: {
 				size: {
@@ -16,7 +16,7 @@
 				},
 				variant: {
 					default:
-						"bg-primary text-bg hover:bg-primary/95 disabled:hover:bg-primary",
+						"bg-primary text-bg hover:bg-primary/95 disabled:hover:bg-primary disabled:opacity-75",
 					secondary:
 						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1",
 					outline: "border-bg3 text-fg enabled:hover:bg-bg bg-bg0 border",
@@ -51,6 +51,6 @@
 	draggable={false}
 	disabled={loading}
 	{...props}
-	>{#if loading}<Loader class="text-bg" />
+	>{#if loading}<Loader />
 	{:else}{@render children()}{/if}</Button.Root
 >

@@ -1,0 +1,141 @@
+---
+import Layout from "@/layouts/player.astro";
+import * as Card from "@/components/card";
+import Button from "@/components/button.svelte";
+import { db } from "@/lib/database";
+import { eq, sum } from "drizzle-orm";
+import { track } from "@/lib/schema";
+import {
+	Icon,
+	Plus,
+	Server,
+	WrenchScrewdriver,
+	User,
+	CreditCard,
+	ShieldCheck,
+} from "svelte-hero-icons";
+import { SignOut, PasswordReset, StorageMeter } from "@/components/settings";
+
+const user = Astro.locals.user;
+if (!user) return new Response(null, { status: 404 });
+
+const check = await db
+	.select({ storage: sum(track.size) })
+	.from(track)
+	.where(eq(track.owner, user.id));
+const storage = check[0].storage ? Number(check[0].storage) : 0;
+---
+
+<Layout>
+	<h2 class="mb-2 text-2xl font-bold tracking-tight">Settings</h2>
+	<div class="space-y-2">
+		<Card.Root>
+			<Card.Header>
+				<div class="flex items-center gap-3">
+					<div class="bg-bg1 border-bg3 rounded-full border p-3">
+						<Icon class="text-bg5 size-6" src={User} />
+					</div>
+					<div>
+						<Card.Title>Account Information</Card.Title>
+						<Card.Description
+							>Your account details and preferences.</Card.Description
+						>
+					</div>
+				</div>
+			</Card.Header>
+
+			<div class="space-y-4">
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div class="space-y-2">
+						<label class="text-fg2 text-sm font-medium">Name</label>
+						<p class="text-lg">{user.name}</p>
+					</div>
+					<div class="space-y-2">
+						<label class="text-fg2 text-sm font-medium">Email</label>
+						<p class="text-lg">{user.email}</p>
+					</div>
+				</div>
+
+				<PasswordReset client:visible email={user.email} />
+			</div>
+		</Card.Root>
+		<Card.Root>
+			<Card.Header>
+				<div class="flex items-center gap-3">
+					<div class="bg-bg1 border-bg3 rounded-full border p-3">
+						<Icon class="text-bg5 size-6" src={Server} />
+					</div>
+					<div>
+						<Card.Title>Storage</Card.Title>
+						<Card.Description
+							>Manage your cloud storage and usage.</Card.Description
+						>
+					</div>
+				</div>
+			</Card.Header>
+			<div class="flex flex-col gap-4">
+				<StorageMeter owned={1e8} used={storage} />
+				<div class="flex flex-wrap gap-1">
+					<Button disabled>
+						<Icon src={Server} solid />
+						Add storage
+					</Button>
+					<Button variant="secondary" href="/storage">
+						<Icon src={WrenchScrewdriver} solid />
+						Manage
+					</Button>
+				</div>
+			</div>
+		</Card.Root>
+		<Card.Root>
+			<Card.Header>
+				<div class="flex items-center gap-3">
+					<div class="bg-bg1 border-bg3 rounded-full border p-3">
+						<Icon class="text-bg5 size-6" src={CreditCard} />
+					</div>
+					<div>
+						<Card.Title>Billing & Payments</Card.Title>
+						<Card.Description
+							>Manage payment methods and billing.</Card.Description
+						>
+					</div>
+				</div>
+			</Card.Header>
+			<div class="space-y-4">
+				<p class="text-fg2 text-sm">No payment methods configured.</p>
+
+				<Button disabled>
+					<Icon src={Plus} />
+					Add payments
+				</Button>
+			</div>
+		</Card.Root>
+		<Card.Root>
+			<Card.Header>
+				<div class="flex items-center gap-3">
+					<div class="bg-bg1 border-bg3 rounded-full border p-3">
+						<Icon class="text-bg5 size-6" src={ShieldCheck} />
+					</div>
+					<div>
+						<Card.Title>Security</Card.Title>
+						<Card.Description
+							>Manage your account security and sessions.</Card.Description
+						>
+					</div>
+				</div>
+			</Card.Header>
+			<div class="space-y-4">
+				<div class="space-y-2">
+					<h4 class="font-medium">Active Sessions</h4>
+					<p class="text-fg2 text-sm">
+						Sign out of all browsers and devices currently logged into your
+						SoundStash account. This will require you to sign in again on all
+						devices.
+					</p>
+				</div>
+
+				<SignOut client:visible />
+			</div>
+		</Card.Root>
+	</div>
+</Layout>

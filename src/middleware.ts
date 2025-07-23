@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth/provider";
 import { defineMiddleware } from "astro/middleware";
 
 const PROTECTED_ROUTES = [
-	"/account",
+	"/settings",
 	"/api/cover",
 	"/api/delete",
 	"/api/delete",
@@ -39,7 +39,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 			authenticated.user.emailVerified &&
 			ctx.url.pathname === "/auth/verify"
 		) {
-			return ctx.redirect("/account");
+			return ctx.redirect("/settings");
 		}
 		*/
 		if (

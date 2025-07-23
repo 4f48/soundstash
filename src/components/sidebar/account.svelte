@@ -1,6 +1,8 @@
 <script lang="ts">
+	import AlertDialog from "../alert-dialog.svelte";
+	import Button from "../button.svelte";
 	import Item from "@/components/dropdownitem.svelte";
-	import { authClient } from "@/lib/auth/client";
+	import { newAuthClient as authClient } from "@/lib/auth/client";
 	import { navigate } from "astro:transitions/client";
 	import { DropdownMenu } from "bits-ui";
 	import {
@@ -16,6 +18,15 @@
 		email: string;
 	}
 	const { email }: Props = $props();
+
+	let open = $state(false);
+	let loading = $state(false);
+	function signOut(): void {
+		loading = true;
+		authClient.signOut(undefined, {
+			onSuccess: () => navigate("/"),
+		});
+	}
 </script>
 
 <DropdownMenu.Root>
@@ -36,13 +47,24 @@
 			class="bg-bg1 text-fg border-bg2 flex w-58 flex-col rounded-sm border p-1"
 		>
 			<Item href="/storage"><Icon src={Server} mini />Manage storage</Item>
-			<Item href="/account"><Icon src={Cog} mini />Settings</Item>
-			<Item
-				onclick={() =>
-					authClient.signOut(undefined, {
-						onSuccess: () => navigate("/"),
-					})}><Icon src={ArrowLeftStartOnRectangle} mini />Sign out</Item
+			<Item href="/settings"><Icon src={Cog} mini />Settings</Item>
+			<Item onclick={() => (open = true)}
+				><Icon src={ArrowLeftStartOnRectangle} mini />Sign out</Item
 			>
 		</DropdownMenu.Content>
 	</DropdownMenu.Portal>
 </DropdownMenu.Root>
+
+<AlertDialog bind:open>
+	{#snippet title()}Sign out{/snippet}
+	{#snippet description()}Are you sure you want to sign out?{/snippet}
+	{#snippet action({ props })}
+		<Button
+			disabled={loading}
+			{loading}
+			onclick={signOut}
+			variant="destructive"
+			{...props}>Sign out</Button
+		>
+	{/snippet}
+</AlertDialog>

@@ -1,0 +1,17 @@
+---
+interface Props {
+	class?: string;
+	title: string;
+}
+const { class: className, title } = Astro.props;
+---
+
+<section class={className}>
+	<h3
+		id={title.toLowerCase()}
+		class="border-fg2 mb-2 border-b text-lg font-semibold tracking-tight"
+	>
+		{title}
+	</h3>
+	<slot />
+</section>

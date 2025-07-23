@@ -85,7 +85,7 @@ export default function Account({
 									authClient.sendVerificationEmail(
 										{
 											email: user.email,
-											callbackURL: "/account",
+											callbackURL: "/settings",
 										},
 										{
 											onSuccess: () => {
