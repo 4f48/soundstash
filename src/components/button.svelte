@@ -6,7 +6,7 @@
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm text-sm font-medium text-nowrap transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default [&_svg]:size-4",
+		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm text-sm font-medium text-nowrap transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default disabled:cursor-not-allowed [&_svg]:size-4",
 		{
 			variants: {
 				size: {
@@ -18,9 +18,11 @@
 					default:
 						"bg-primary text-bg hover:bg-primary/95 disabled:hover:bg-primary disabled:opacity-75",
 					secondary:
-						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1",
-					outline: "border-bg3 text-fg enabled:hover:bg-bg bg-bg0 border",
-					ghost: "text-fg hover:bg-bg1/50 disabled:hover:bg-transparent",
+						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1 disabled:opacity-75",
+					outline:
+						"border-bg3 disabled:border-bg3/75 disabled:text-fg/75 disabled:bg-bg1/25 text-fg enabled:hover:bg-bg border bg-transparent",
+					ghost:
+						"text-fg hover:bg-bg1/50 disabled:opacity-75 disabled:hover:bg-transparent",
 					destructive: "bg-destructive text-bg enabled:hover:bg-destructive/80",
 				},
 			},

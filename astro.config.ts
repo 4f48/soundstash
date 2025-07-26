@@ -1,5 +1,4 @@
 import cloudflare from "@astrojs/cloudflare";
-import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
@@ -86,7 +85,7 @@ export default defineConfig({
 			},
 		],
 	},
-	integrations: [react(), sitemap(), svelte()],
+	integrations: [sitemap(), svelte()],
 	output: "server",
 	prefetch: {
 		defaultStrategy: "hover",
@@ -95,12 +94,5 @@ export default defineConfig({
 	site: "https://soundstash.pirger.eu",
 	vite: {
 		plugins: [tailwindcss()],
-		resolve: {
-			alias: import.meta.env.PROD
-				? {
-						"react-dom/server": "react-dom/server.edge",
-					}
-				: undefined,
-		},
 	},
 });

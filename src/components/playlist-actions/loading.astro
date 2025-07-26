@@ -1,0 +1,14 @@
+---
+import Button from "@/components/button.svelte";
+import { Icon, Play, Pencil, Trash } from "svelte-hero-icons";
+---
+
+<div class="my-2 flex gap-1">
+	<Button disabled><Icon src={Play} solid />Play</Button>
+	<Button disabled size="icon" variant="secondary"
+		><Icon src={Pencil} solid /></Button
+	>
+	<Button disabled size="icon" variant="secondary"
+		><Icon src={Trash} solid /></Button
+	>
+</div>

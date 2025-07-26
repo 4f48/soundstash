@@ -43,7 +43,6 @@ const storage = check[0].storage ? Number(check[0].storage) : 0;
 					</div>
 				</div>
 			</Card.Header>
-
 			<div class="space-y-4">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="space-y-2">
@@ -125,7 +124,7 @@ const storage = check[0].storage ? Number(check[0].storage) : 0;
 				</div>
 			</Card.Header>
 			<div class="space-y-4">
-				<div class="space-y-2">
+				<div>
 					<h4 class="font-medium">Active Sessions</h4>
 					<p class="text-fg2 text-sm">
 						Sign out of all browsers and devices currently logged into your
@@ -133,7 +132,6 @@ const storage = check[0].storage ? Number(check[0].storage) : 0;
 						devices.
 					</p>
 				</div>
-
 				<SignOut client:visible />
 			</div>
 		</Card.Root>

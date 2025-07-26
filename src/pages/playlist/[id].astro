@@ -4,6 +4,7 @@ import Layout from "@/layouts/player.astro";
 import { db } from "@/lib/database";
 import { and, eq } from "drizzle-orm";
 import { playlist } from "@/lib/schema";
+import * as Actions from "@/components/playlist-actions";
 
 const { id } = Astro.params;
 if (!id) return new Response("no id provided", { status: 400 });
@@ -26,7 +27,10 @@ const result = await db.query.playlist.findFirst({
 ---
 
 <Layout>
-	<h2 class="mb-2 text-2xl font-bold tracking-tight">{result?.name}</h2>
+	<h2 class="text-2xl font-bold tracking-tight">{result?.name}</h2>
+	<Actions.Root id={id} server:defer>
+		<Actions.Loading slot="fallback" />
+	</Actions.Root>
 	<Tracks.Root playlistId={id} server:defer>
 		<Tracks.Loading n={n} slot="fallback" />
 	</Tracks.Root>

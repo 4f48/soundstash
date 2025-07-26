@@ -1,0 +1,40 @@
+---
+import { db } from "@/lib/database";
+import Actions from "./actions.svelte";
+import { and, eq } from "drizzle-orm";
+import { playlist as playlistTable } from "@/lib/schema";
+
+interface Props {
+	id: string;
+}
+const { id } = Astro.props;
+
+const user = Astro.locals.user;
+if (!user) return new Response(null, { status: 401 });
+const playlist = await db.query.playlist.findFirst({
+	columns: {
+		id: true,
+	},
+	where: and(eq(playlistTable.id, id), eq(playlistTable.owner, user.id)),
+	with: {
+		playlistToTracks: {
+			columns: {
+				playlistId: false,
+				trackId: false,
+			},
+			with: {
+				track: {
+					columns: {
+						owner: false,
+						size: false,
+					},
+				},
+			},
+		},
+	},
+});
+if (!playlist) return new Response("playlist does not exist", { status: 404 });
+const tracks = playlist.playlistToTracks.map(({ track }) => track);
+---
+
+<Actions client:idle playlist={playlist} tracks={tracks} />
