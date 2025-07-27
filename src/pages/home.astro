@@ -4,7 +4,7 @@ import Layout from "@/layouts/player.astro";
 import * as Playlists from "@/components/playlists";
 import { Separator } from "bits-ui";
 
-let n = { playlists: 4, tracks: 8 };
+let n = { playlists: 3, tracks: 8 };
 if (Astro.cookies.has("playlists")) {
 	const playlists = Astro.cookies.get("playlists");
 	const value = playlists?.number();

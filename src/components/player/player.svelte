@@ -77,7 +77,7 @@
 	function handleKeyPlayPause(
 		e: KeyboardEvent & { currentTarget: EventTarget & Window }
 	): void {
-		if (e.code === "Space") {
+		if (e.code === "Space" && !(e.target instanceof HTMLInputElement)) {
 			e.preventDefault();
 
 			$playing = !$playing;

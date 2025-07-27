@@ -23,7 +23,8 @@
 						"border-bg3 disabled:border-bg3/75 disabled:text-fg/75 disabled:bg-bg1/25 text-fg enabled:hover:bg-bg border bg-transparent",
 					ghost:
 						"text-fg hover:bg-bg1/50 disabled:opacity-75 disabled:hover:bg-transparent",
-					destructive: "bg-destructive text-bg enabled:hover:bg-destructive/80",
+					destructive:
+						"bg-destructive text-bg hover:bg-destructive/80 disabled:hover:bg-destructive disabled:opacity-75",
 				},
 			},
 			defaultVariants: {

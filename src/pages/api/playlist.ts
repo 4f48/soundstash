@@ -5,8 +5,11 @@ import {
 	removeFromPlaylist,
 } from "@/lib/playlist";
 import { playlist, track as trackTable } from "@/lib/schema";
+import { client } from "@/lib/storage";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import type { APIRoute } from "astro";
-import { eq } from "drizzle-orm";
+import { CLOUDFLARE_R2_BUCKET } from "astro:env/server";
+import { and, eq } from "drizzle-orm";
 
 export const GET: APIRoute = async (ctx) => {
 	try {
@@ -91,6 +94,36 @@ export const PUT: APIRoute = async (ctx) => {
 			case "remove":
 				await removeFromPlaylist(id, track);
 				break;
+		}
+
+		return new Response(null);
+	} catch (e) {
+		if (e instanceof Error) console.error(e.message);
+		return new Response("something went wrong", { status: 500 });
+	}
+};
+
+export const DELETE: APIRoute = async (ctx) => {
+	try {
+		const id = ctx.url.searchParams.get("id");
+		if (!id) return new Response("no id provided", { status: 400 });
+
+		const user = ctx.locals.user;
+		if (!user) return new Response(null, { status: 401 });
+
+		const result = await db
+			.delete(playlist)
+			.where(and(eq(playlist.id, id), eq(playlist.owner, user.id)))
+			.returning({ image: playlist.image });
+		if (result.length === 0)
+			return new Response("playlist does not exist", { status: 404 });
+
+		if (result[0].image) {
+			const command = new DeleteObjectCommand({
+				Bucket: CLOUDFLARE_R2_BUCKET,
+				Key: `playlists/${id}`,
+			});
+			client.send(command);
 		}
 
 		return new Response(null);
