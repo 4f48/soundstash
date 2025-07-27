@@ -18,6 +18,8 @@
 	--color-fg2: var(--fg2);
 	--color-destructive: oklch(0.5458 0.203 28.66);
 	--color-primary: var(--primary);
+	--color-success: oklch(0.6564 0.1354 109.12);
+	--color-success-light: oklch(0.9764 0.1091 110.83);
 }
 
 :root {

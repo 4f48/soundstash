@@ -1,6 +1,6 @@
 ---
 import PostHog from "@/components/posthog.astro";
-import { Toaster } from "svelte-sonner";
+import Toaster from "@/components/toaster.svelte";
 import "@/styles/global.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
@@ -50,13 +50,7 @@ const { class: className, direction = "column" } = Astro.props;
 		)}
 	>
 		<div class="fixed">
-			<Toaster
-				closeButton
-				richColors
-				swipeDirections={["right", "bottom"]}
-				client:load
-				transition:persist
-			/>
+			<Toaster client:load transition:persist />
 		</div>
 		<slot />
 	</body>
