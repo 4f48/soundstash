@@ -34,6 +34,9 @@ export const auth = betterAuth({
 			if (error) console.error(error);
 		},
 	},
+	rateLimit: {
+		enabled: false,
+	},
 	secret: BETTER_AUTH_SECRET,
 	session: {
 		cookieCache: {
