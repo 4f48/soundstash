@@ -20,7 +20,7 @@
 					secondary:
 						"bg-bg1 text-fg hover:bg-bg2 hover:text-fg0 disabled:hover:text-fg disabled:hover:bg-bg1 disabled:opacity-75",
 					outline:
-						"border-bg3 disabled:border-bg3/75 disabled:text-fg/75 disabled:bg-bg1/25 text-fg enabled:hover:bg-bg border bg-transparent",
+						"border-bg3 disabled:border-bg3/75 disabled:text-fg/75 disabled:bg-bg1/25 text-fg hover:bg-bg border bg-transparent disabled:hover:bg-transparent",
 					ghost:
 						"text-fg hover:bg-bg1/50 disabled:opacity-75 disabled:hover:bg-transparent",
 					destructive:

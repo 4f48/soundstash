@@ -11,7 +11,7 @@
 <header class="fixed top-0 left-0 z-50 w-full p-2">
 	<div class="bg-text/20 bg-bg border-bg2 relative rounded-lg border px-3">
 		<div class="flex h-[2.9rem] items-center">
-			<h1 class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</h1>
+			<span class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</span>
 			<div class="flex flex-1 justify-end sm:hidden">
 				<Button
 					class="[&_svg]:size-7"

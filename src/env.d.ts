@@ -10,6 +10,13 @@ declare namespace App {
 		typeof import("@/lib/schema/playlists.schema").playlist.$inferSelect;
 	type Track = typeof import("@/lib/schema/tracks.schema").track.$inferSelect;
 
+	type AccordionItem = {
+		value?: string;
+		title: string;
+		content: string;
+		disabled?: boolean;
+	};
+
 	interface GetTrackUploadUrlResponse {
 		id: string;
 		url: string;

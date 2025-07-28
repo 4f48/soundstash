@@ -8,12 +8,23 @@ import { cn } from "@/lib/utils";
 
 interface Props {
 	class?: string;
+	description?: string;
 	direction?: "row" | "column";
+	title?: string;
 }
-const { class: className, direction = "column" } = Astro.props;
+const {
+	class: className,
+	description,
+	direction = "column",
+	title,
+} = Astro.props;
 ---
 
-<html class="min-h-screen w-screen" lang="en" transition:animate="none">
+<html
+	class="min-h-screen w-screen not-motion-reduce:scroll-smooth"
+	lang="en"
+	transition:animate="none"
+>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -27,11 +38,8 @@ const { class: className, direction = "column" } = Astro.props;
 		<meta name="apple-mobile-web-app-title" content="SoundStash" />
 		<link rel="manifest" href="/site.webmanifest" />
 
-		<title>SoundStash</title>
-		<meta
-			name="description"
-			content="SoundStash: Your personal music streaming platform. Upload & stream high-quality MP3, FLAC & Opus files from anywhere. 100MB free storage. No compression."
-		/>
+		<title>{title ? `SoundStash - ${title}` : "SoundStash"}</title>
+		{description && <meta name="description" content={description} />}
 		<meta
 			name="keywords"
 			content="music streaming, personal music library, high-quality audio, MP3 streaming, FLAC streaming, Opus streaming, cloud music storage, music ownership, lossless audio streaming, personal audio library, music cloud storage, high-fidelity streaming, online music player, 100MB free storage, audio streaming platform"

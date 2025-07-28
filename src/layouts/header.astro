@@ -1,9 +1,15 @@
 ---
 import HeaderComponent from "@/components/header";
 import Layout from "@/layouts/html.astro";
+
+interface Props {
+	description?: string;
+	title?: string;
+}
+const { description, title } = Astro.props;
 ---
 
-<Layout>
+<Layout description={description} title={title}>
 	<HeaderComponent client:idle />
 	<main class="mt-16">
 		<slot />
