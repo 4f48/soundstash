@@ -14,6 +14,9 @@
 			<span class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</span>
 			<div class="flex flex-1 justify-end sm:hidden">
 				<Button
+					aria-controls="main-nav"
+					aria-expanded={open}
+					aria-label="toggle main navigation"
 					class="[&_svg]:size-7"
 					onclick={() => (open = !open)}
 					size="icon"

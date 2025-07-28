@@ -8,7 +8,7 @@ const user = Astro.locals.user;
 if (!user) return new Response(null, { status: 401 });
 ---
 
-<Layout backButton={false}>
+<Layout backButton={false} title="Verify email">
 	<Card.Root class="w-sm">
 		<Card.Header>
 			<Card.Title>Verify your email</Card.Title>

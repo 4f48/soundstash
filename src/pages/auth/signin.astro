@@ -2,9 +2,12 @@
 import * as Card from "@/components/card";
 import Form from "@/components/forms/signin.svelte";
 import Layout from "@/layouts/auth.astro";
+
+const description =
+	"Sign in to SoundStash to securely stream your personal, lossless music collection anywhere. Instant access to every FLAC, MP3 and Opus file you’ve uploaded.";
 ---
 
-<Layout>
+<Layout description={description} title="Sign in">
 	<Card.Root class="w-sm">
 		<Card.Header>
 			<Card.Title>Welcome back!</Card.Title>

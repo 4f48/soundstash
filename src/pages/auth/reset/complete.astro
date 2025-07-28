@@ -7,7 +7,7 @@ const token = new URLSearchParams(Astro.url.searchParams).get("token");
 if (!token) return Astro.redirect("/auth/reset/request");
 ---
 
-<Layout backButton={false}>
+<Layout backButton={false} title="Reset password">
 	<Card.Root class="w-sm">
 		<Card.Header>
 			<Card.Title>Create new password</Card.Title>

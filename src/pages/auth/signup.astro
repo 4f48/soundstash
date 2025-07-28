@@ -2,9 +2,12 @@
 import * as Card from "@/components/card";
 import Form from "@/components/forms/signup.svelte";
 import Layout from "@/layouts/auth.astro";
+
+const description =
+	"Sign up to SoundStash and get 100 MB of free FLAC, MP3 and Opus storage. Stream your music in original quality from any device—no credit card required.";
 ---
 
-<Layout>
+<Layout description={description} title="Sign up">
 	<Card.Root class="w-sm">
 		<Card.Header>
 			<Card.Title>Create your account</Card.Title>

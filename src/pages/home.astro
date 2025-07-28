@@ -17,7 +17,7 @@ if (Astro.cookies.has("tracks")) {
 }
 ---
 
-<Layout>
+<Layout title="Your Library">
 	<Playlists.Root n={n.playlists}>
 		<Playlists.Items server:defer>
 			<Playlists.Loading n={n.playlists} slot="fallback" />

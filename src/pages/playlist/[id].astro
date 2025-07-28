@@ -26,7 +26,7 @@ const result = await db.query.playlist.findFirst({
 });
 ---
 
-<Layout>
+<Layout title={result?.name}>
 	<h2 class="text-2xl font-bold tracking-tight">{result?.name}</h2>
 	<Actions.Root id={id} server:defer>
 		<Actions.Loading slot="fallback" />

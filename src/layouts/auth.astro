@@ -6,11 +6,18 @@ import { ChevronLeft, Icon } from "svelte-hero-icons";
 interface Props {
 	backButton?: boolean;
 	backDestination?: string;
+	description?: string;
+	title?: string;
 }
-const { backButton = true, backDestination = "/" } = Astro.props;
+const {
+	backButton = true,
+	backDestination = "/",
+	description,
+	title,
+} = Astro.props;
 ---
 
-<Layout>
+<Layout description={description} title={title}>
 	{
 		backButton && (
 			<Button
