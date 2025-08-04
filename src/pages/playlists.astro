@@ -1,0 +1,51 @@
+---
+import Layout from "@/layouts/player.astro";
+import { db } from "@/lib/database";
+import { Image } from "astro:assets";
+import { Icon, MusicalNote } from "svelte-hero-icons";
+import Create from "@/components/playlists/create.svelte";
+import * as Card from "@/components/card";
+
+const playlists = await db.query.playlist.findMany({
+	columns: {
+		owner: false,
+	},
+	with: {
+		playlistToTracks: {
+			columns: {
+				trackId: true,
+			},
+		},
+	},
+});
+---
+
+<Layout>
+	<h2 class="mb-2 text-2xl font-bold tracking-tight">Playlists</h2>
+	<main class="grid grid-cols-4 gap-2">
+		{
+			playlists.map(({ id, name, image }) => (
+				<a href={`/playlist/${id}`}>
+					<Card.Root class="hover:bg-bg1/50 flex-row items-center">
+						{image ? (
+							<Image
+								alt=""
+								class="row-span-2 size-8 shrink-0 rounded-sm"
+								draggable={false}
+								src={`/api/playlist/image?id=${id}`}
+								height={36}
+								width={36}
+							/>
+						) : (
+							<div class="bg-bg1 flex size-8 items-center justify-center rounded-sm">
+								<Icon class="text-bg5 size-5" src={MusicalNote} />
+							</div>
+						)}
+						<span class="truncate">{name}</span>
+					</Card.Root>
+				</a>
+			))
+		}
+		<Create client:visible n={playlists.length} />
+	</main>
+</Layout>

@@ -4,7 +4,7 @@ import * as Card from "@/components/card";
 import { eq } from "drizzle-orm";
 import { playlist } from "@/lib/schema";
 import { Image } from "astro:assets";
-import { Icon, MusicalNote } from "svelte-hero-icons";
+import { Icon, ListBullet, MusicalNote } from "svelte-hero-icons";
 import Create from "./create.svelte";
 
 const user = Astro.locals.user;
@@ -19,7 +19,7 @@ if (!playlists) return new Response(null, { status: 500 });
 ---
 
 {
-	playlists.slice(0, 8).map(({ id, name, image }) => (
+	playlists.slice(0, 7).map(({ id, name, image }) => (
 		<a href={`/playlist/${id}`}>
 			<Card.Root class="hover:bg-bg1/50 flex-row items-center">
 				{image ? (
@@ -42,4 +42,17 @@ if (!playlists) return new Response(null, { status: 500 });
 	))
 }
 
-<Create client:idle n={playlists.length} />
+{
+	playlists.length > 7 ? (
+		<a href="/playlists">
+			<Card.Root class="hover:bg-bg1/50 flex-row items-center">
+				<div class="bg-bg1 flex size-8 items-center justify-center rounded-sm">
+					<Icon class="text-bg5 size-5" src={ListBullet} />
+				</div>
+				<span class="truncate">View all playlists</span>
+			</Card.Root>
+		</a>
+	) : (
+		<Create client:idle n={playlists.length} />
+	)
+}

@@ -8,7 +8,7 @@ const { n } = Astro.props;
 <section>
 	<h1 class="sr-only">Playlists</h1>
 	<div
-		class={`grid grid-cols-2 grid-rows-${n / 2} md:grid-cols-4 md:grid-rows-${n > 3 ? "2" : "1"} gap-2`}
+		class={`grid grid-cols-2 grid-rows-${n < 5 ? 1 : 2} md:grid-cols-4 md:grid-rows-${n > 3 ? "2" : "1"} gap-2`}
 	>
 		<slot />
 	</div>
