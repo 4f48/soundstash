@@ -3,6 +3,13 @@ import { Sidebar } from "@/components/sidebar";
 import Layout from "@/layouts/html.astro";
 import { Container } from "@/components/player";
 import { cn } from "@/lib/utils";
+import {
+	BookOpen,
+	Cog,
+	Icon,
+	ListBullet,
+	ServerStack,
+} from "svelte-hero-icons";
 
 interface Props {
 	class?: string;
@@ -19,4 +26,12 @@ const { class: className, title } = Astro.props;
 		</div>
 	</div>
 	<Container />
+	<nav
+		class="text-fg2 bg-bg border-bg2 grid grid-cols-4 border-t p-2 text-center text-sm *:flex *:flex-col *:items-center md:hidden [&_svg]:size-5"
+	>
+		<a href="/"><Icon src={BookOpen} mini />Library</a>
+		<a href="/playlists"><Icon src={ListBullet} mini />Playlists</a>
+		<a href="/storage"><Icon src={ServerStack} mini />Storage</a>
+		<a href="/settings"><Icon src={Cog} mini />Settings</a>
+	</nav>
 </Layout>

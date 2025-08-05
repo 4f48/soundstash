@@ -22,7 +22,7 @@ const playlists = await db.query.playlist.findMany({
 
 <Layout>
 	<h2 class="mb-2 text-2xl font-bold tracking-tight">Playlists</h2>
-	<main class="grid grid-cols-4 gap-2">
+	<main class="grid grid-cols-2 gap-2 md:grid-cols-4">
 		{
 			playlists.map(({ id, name, image }) => (
 				<a href={`/playlist/${id}`}>
