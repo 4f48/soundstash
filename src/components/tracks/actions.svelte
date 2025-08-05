@@ -3,7 +3,7 @@
 	import Button from "@/components/button.svelte";
 	import Item from "@/components/dropdownitem.svelte";
 	import type { track as trackTable, playlist } from "@/lib/schema";
-	import { queue } from "@/lib/stores";
+	import { queue, index } from "@/lib/stores";
 	import { DropdownMenu } from "bits-ui";
 	import ListPlus from "phosphor-svelte/lib/ListPlus";
 	import Plus from "phosphor-svelte/lib/Plus";
@@ -20,7 +20,11 @@
 	let open = $state(false);
 
 	function addToQueue(): void {
-		$queue = [...$queue, track];
+		$queue = [
+			...$queue.slice(0, $index + 1),
+			track,
+			...$queue.slice($index + 1),
+		];
 	}
 </script>
 
