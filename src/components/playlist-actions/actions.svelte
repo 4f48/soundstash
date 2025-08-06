@@ -1,9 +1,10 @@
 <script lang="ts">
+	import Edit from "./edit.svelte";
 	import AlertDialog from "@/components/alert-dialog.svelte";
 	import Button from "@/components/button.svelte";
 	import { queue, index } from "@/lib/stores";
 	import { navigate } from "astro:transitions/client";
-	import { Icon, Play, Pencil, Trash } from "svelte-hero-icons";
+	import { Icon, Play, Trash } from "svelte-hero-icons";
 	import { toast } from "svelte-sonner";
 
 	interface Props {
@@ -34,9 +35,7 @@
 	<Button disabled={tracks.length < 1} onclick={play}
 		><Icon src={Play} solid />Play</Button
 	>
-	<Button disabled size="icon" variant="secondary"
-		><Icon src={Pencil} solid /></Button
-	>
+	<Edit {playlist} />
 	<AlertDialog>
 		{#snippet trigger({ props })}
 			<Button size="icon" variant="secondary" {...props}

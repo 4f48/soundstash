@@ -3,6 +3,7 @@ import {
 	getPlaylistWithTracks,
 	addToPlaylist,
 	removeFromPlaylist,
+	renamePlaylist,
 } from "@/lib/playlist";
 import { playlist, track as trackTable } from "@/lib/schema";
 import { client } from "@/lib/storage";
@@ -61,10 +62,13 @@ export const POST: APIRoute = async (ctx) => {
 export const PUT: APIRoute = async (ctx) => {
 	try {
 		const id = ctx.url.searchParams.get("id");
-		const action = ctx.url.searchParams.get("action") as "add" | "remove";
+		const action = ctx.url.searchParams.get("action") as
+			| "add"
+			| "remove"
+			| "rename";
 		const track = ctx.url.searchParams.get("track");
-		if (!id || !action || !track)
-			return new Response("no id, action or track provided", { status: 400 });
+		if (!id) return new Response("no id provided", { status: 400 });
+		const name = ctx.url.searchParams.get("name");
 		const user = ctx.locals.user;
 		if (!user) return new Response(null, { status: 401 });
 
@@ -78,22 +82,42 @@ export const PUT: APIRoute = async (ctx) => {
 				status: 403,
 			});
 
-		const checkTrack = await db.query.track.findFirst({
-			where: eq(trackTable.id, track),
-		});
-		if (!checkTrack) return new Response("track not found", { status: 404 });
-		if (checkTrack.owner !== user.id)
-			return new Response("you do not have access to this track", {
-				status: 403,
-			});
-
 		switch (action) {
 			case "add":
-				await addToPlaylist(id, track);
+				{
+					if (!action || !track)
+						return new Response("no action or track provided", { status: 400 });
+					const checkTrack = await db.query.track.findFirst({
+						where: eq(trackTable.id, track),
+					});
+					if (!checkTrack)
+						return new Response("track not found", { status: 404 });
+					if (checkTrack.owner !== user.id)
+						return new Response("you do not have access to this track", {
+							status: 403,
+						});
+					await addToPlaylist(id, track);
+				}
 				break;
 			case "remove":
-				await removeFromPlaylist(id, track);
+				{
+					if (!action || !track)
+						return new Response("no action or track provided", { status: 400 });
+					const checkTrack = await db.query.track.findFirst({
+						where: eq(trackTable.id, track),
+					});
+					if (!checkTrack)
+						return new Response("track not found", { status: 404 });
+					if (checkTrack.owner !== user.id)
+						return new Response("you do not have access to this track", {
+							status: 403,
+						});
+					await removeFromPlaylist(id, track);
+				}
 				break;
+			case "rename":
+				if (!name) return new Response("no new name provided", { status: 400 });
+				await renamePlaylist(id, name);
 		}
 
 		return new Response(null);

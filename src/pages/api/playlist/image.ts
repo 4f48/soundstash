@@ -52,7 +52,7 @@ export const GET: APIRoute = async (ctx) => {
 	return new Response(await result.Body.transformToByteArray(), {
 		headers: {
 			"Content-Type": result.ContentType || "application/octet-stream",
-			"Cache-Control": "private, max-age=604800, immutable",
+			"Cache-Control": "private, max-age=604800",
 			...(etag && { ETag: etag }),
 			...(lastModified && { "Last-Modified": lastModified }),
 		},
@@ -141,11 +141,12 @@ export const PUT: APIRoute = async (ctx) => {
 			IfMatch: eTag,
 		});
 		await client.send(command);
+
+		return new Response(eTag);
 	} catch (e) {
 		if (e instanceof Error) console.error(e);
 		return new Response(null, { status: 500 });
 	}
-	return new Response(null);
 };
 
 export const DELETE: APIRoute = async (ctx) => {

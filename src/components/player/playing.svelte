@@ -17,10 +17,10 @@
 					src="/api/track/cover/{track?.id}"
 				/>
 			{/if}
-			<Avatar.Fallback>
-				<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">
-					<Icon class="text-bg5 size-8" src={MusicalNote} />
-				</div>
+			<Avatar.Fallback
+				class="bg-bg1 flex size-12 items-center justify-center rounded-sm"
+			>
+				<Icon class="text-bg5 size-8" src={MusicalNote} />
 			</Avatar.Fallback>
 		</Avatar.Root>
 	{/key}

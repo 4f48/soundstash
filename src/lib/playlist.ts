@@ -41,3 +41,12 @@ export async function removeFromPlaylist(
 			)
 		);
 }
+
+export async function renamePlaylist(id: string, name: string): Promise<void> {
+	await db
+		.update(playlist)
+		.set({
+			name,
+		})
+		.where(eq(playlist.id, id));
+}
