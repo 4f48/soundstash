@@ -46,7 +46,7 @@
 			{#snippet child({ open, props })}
 				{#if open}
 					<div
-						class="border-bg2 bg-bg fixed top-[50%] left-[50%] z-50 flex w-sm max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] flex-col gap-2 rounded-md border p-3"
+						class="border-bg2 bg-bg w-sm fixed left-[50%] top-[50%] z-50 flex max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] flex-col gap-2 rounded-md border p-3"
 						{...props}
 						transition:scale={{
 							duration: 100,
@@ -55,14 +55,14 @@
 					>
 						<div class="mb-2 grid gap-0.5">
 							<AlertDialog.Title
-								class="text-lg leading-none font-semibold tracking-tight"
+								class="text-lg font-semibold leading-none tracking-tight"
 								>{@render title()}</AlertDialog.Title
 							>
 							<AlertDialog.Description class="text-fg1 text-sm"
 								>{@render description()}</AlertDialog.Description
 							>
 						</div>
-						<div class="flex gap-1 *:flex-1">
+						<div class="grid grid-cols-2 gap-1">
 							<AlertDialog.Action>
 								{#snippet child({ props })}
 									{@render action({ props })}

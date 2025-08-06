@@ -1,8 +1,8 @@
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
+import unocss from "unocss/astro";
 
 export default defineConfig({
 	adapter: cloudflare({
@@ -85,14 +85,17 @@ export default defineConfig({
 			},
 		],
 	},
-	integrations: [sitemap(), svelte()],
+	integrations: [
+		sitemap(),
+		svelte(),
+		unocss({
+			injectReset: true,
+		}),
+	],
 	output: "server",
 	prefetch: {
 		defaultStrategy: "hover",
 		prefetchAll: true,
 	},
 	site: "https://soundstash.pirger.eu",
-	vite: {
-		plugins: [tailwindcss()],
-	},
 });
