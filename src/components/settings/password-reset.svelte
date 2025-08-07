@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from "@/components/button.svelte";
-	import { newAuthClient as authClient } from "@/lib/auth/client";
+	import { authClient } from "@/lib/auth/client";
 	import { Icon, Pencil } from "svelte-hero-icons";
 	import { toast } from "svelte-sonner";
 
@@ -34,7 +34,7 @@
 </script>
 
 <Button
-	class="mt-3 w-42"
+	class="w-42 mt-3"
 	disabled={loading}
 	{loading}
 	onclick={requestReset}

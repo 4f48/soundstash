@@ -1,7 +1,7 @@
 <script lang="ts">
 	import AlertDialog from "@/components/alert-dialog.svelte";
 	import Button from "@/components/button.svelte";
-	import { newAuthClient as authClient } from "@/lib/auth/client";
+	import { authClient } from "@/lib/auth/client";
 	import { navigate } from "astro:transitions/client";
 
 	let loading = $state(false);

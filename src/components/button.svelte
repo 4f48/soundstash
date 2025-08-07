@@ -6,11 +6,11 @@
 	import type { Snippet } from "svelte";
 
 	const buttonVariants = cva(
-		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm text-sm font-medium text-nowrap transition-colors duration-150 focus-visible:ring-[2.5px] focus-visible:outline-none disabled:cursor-default disabled:cursor-not-allowed [&_svg]:size-4",
+		"focus-visible:ring-bg4/50 inline-flex shrink-0 cursor-pointer items-center justify-center text-nowrap rounded-sm text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-[2.5px] disabled:cursor-default disabled:cursor-not-allowed [&_svg]:size-4",
 		{
 			variants: {
 				size: {
-					sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5 [&_svg]:size-4",
+					sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5 has-[div[class*='i-']]:px-2.5 [&_div[class*='i-']]:size-4 [&_svg]:size-4",
 					lg: "h-10 gap-2 px-6 has-[div[class*='i-']]:px-4 [&_div[class*='i-']]:text-lg",
 					icon: "size-8",
 				},

@@ -2,7 +2,7 @@
 	import AlertDialog from "../alert-dialog.svelte";
 	import Button from "../button.svelte";
 	import Item from "@/components/dropdownitem.svelte";
-	import { newAuthClient as authClient } from "@/lib/auth/client";
+	import { authClient } from "@/lib/auth/client";
 	import { navigate } from "astro:transitions/client";
 	import { DropdownMenu } from "bits-ui";
 	import {
@@ -44,7 +44,7 @@
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Portal>
 		<DropdownMenu.Content
-			class="bg-bg1 text-fg border-bg2 flex w-58 flex-col rounded-sm border p-1"
+			class="bg-bg1 text-fg border-bg2 w-58 flex flex-col rounded-sm border p-1"
 		>
 			<Item href="/storage"><Icon src={Server} mini />Manage storage</Item>
 			<Item href="/settings"><Icon src={Cog} mini />Settings</Item>

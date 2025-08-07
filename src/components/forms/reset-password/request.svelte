@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Formfield from "../formfield.svelte";
 	import Button from "@/components/button.svelte";
-	import { newAuthClient as authClient } from "@/lib/auth/client";
+	import { authClient } from "@/lib/auth/client";
 	import { reporter } from "@felte/reporter-svelte";
 	import { validator } from "@felte/validator-zod";
 	import { createForm } from "felte";

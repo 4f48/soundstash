@@ -2,6 +2,7 @@
 import * as Card from "@/components/card";
 import Form from "@/components/forms/signin.svelte";
 import Layout from "@/layouts/auth.astro";
+import { GitHub, Google } from "@/components/auth";
 
 const description =
 	"Sign in to SoundStash to securely stream your personal, lossless music collection anywhere. Instant access to every FLAC, MP3 and Opus file you’ve uploaded.";
@@ -12,10 +13,23 @@ const description =
 		<Card.Header>
 			<Card.Title>Welcome back!</Card.Title>
 			<Card.Description
-				>Enter your email to sign in to your account.</Card.Description
+				>Enter your email to sign in to your account</Card.Description
 			>
 		</Card.Header>
 		<Form client:idle />
+		<div class="relative text-center">
+			<div
+				class="after:bg-fg2 after:absolute after:left-0 after:right-0 after:top-1/2 after:z-0 after:h-px after:-translate-y-1/2 after:content-['']"
+			>
+			</div>
+			<span class="bg-bg text-fg2 relative z-10 px-4 text-sm"
+				>or sign in with</span
+			>
+		</div>
+		<section class="grid grid-cols-2 gap-1">
+			<Google client:visible />
+			<GitHub client:visible />
+		</section>
 		<span class="text-fg1 text-center text-sm [&_a]:underline">
 			<a href="/auth/reset/request">Forgot your password?</a>
 			&bull;

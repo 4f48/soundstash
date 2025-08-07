@@ -60,6 +60,26 @@ export default defineConfig({
 				access: "secret",
 				optional: false,
 			}),
+			GITHUB_CLIENT_ID: envField.string({
+				context: "server",
+				access: "secret",
+				optional: false,
+			}),
+			GITHUB_CLIENT_SECRET: envField.string({
+				context: "server",
+				access: "secret",
+				optional: false,
+			}),
+			GOOGLE_CLIENT_ID: envField.string({
+				context: "server",
+				access: "secret",
+				optional: false,
+			}),
+			GOOGLE_CLIENT_SECRET: envField.string({
+				context: "server",
+				access: "secret",
+				optional: false,
+			}),
 			RESEND_KEY: envField.string({
 				context: "server",
 				access: "secret",

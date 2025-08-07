@@ -1,6 +1,11 @@
 import { db } from "@/lib/database";
 import { resend } from "@/lib/email";
-import { BETTER_AUTH_SECRET } from "astro:env/server";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "astro:env/server";
+import {
+	BETTER_AUTH_SECRET,
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+} from "astro:env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
@@ -42,6 +47,17 @@ export const auth = betterAuth({
 		cookieCache: {
 			enabled: true,
 			maxAge: 300,
+		},
+	},
+	socialProviders: {
+		github: {
+			clientId: GITHUB_CLIENT_ID,
+			clientSecret: GITHUB_CLIENT_SECRET,
+		},
+		google: {
+			clientId: GOOGLE_CLIENT_ID,
+			clientSecret: GOOGLE_CLIENT_SECRET,
+			prompt: "select_account",
 		},
 	},
 });
