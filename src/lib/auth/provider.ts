@@ -63,7 +63,7 @@ export const auth = betterAuth({
 							},
 						}),
 					...(GOOGLE_CLIENT_ID &&
-						GITHUB_CLIENT_SECRET && {
+						GOOGLE_CLIENT_SECRET && {
 							google: {
 								clientId: GOOGLE_CLIENT_ID,
 								clientSecret: GOOGLE_CLIENT_SECRET,

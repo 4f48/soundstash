@@ -147,7 +147,7 @@ export const DELETE: APIRoute = async (ctx) => {
 				Bucket: CLOUDFLARE_R2_BUCKET,
 				Key: `playlists/${id}`,
 			});
-			client.send(command);
+			await client.send(command);
 		}
 
 		return new Response(null);
