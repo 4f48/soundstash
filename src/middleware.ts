@@ -1,60 +1,58 @@
 import { auth } from "@/lib/auth/provider";
 import { defineMiddleware } from "astro/middleware";
 
-const PROTECTED_ROUTES = [
-	"/settings",
-	"/api/cover",
-	"/api/delete",
-	"/api/delete",
-	"/api/download",
-	"/api/playlist/add",
-	"/api/playlist/image",
-	"/api/playlist/list",
-	"/api/playlist/new",
-	"/api/playlist/remove",
-	"/api/playlist/track",
-	"/api/playlist/tracks",
-	"/api/tracks",
-	"/api/upload/authorize",
-	"/api/upload/finalize",
+const PROTECTED_PAGES = [
 	"/home",
-	"/library",
+	"/playlists",
+	"/settings",
+	"/storage",
+	"/upload",
 ];
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
 	const authenticated = await auth.api.getSession({
 		headers: ctx.request.headers,
 	});
+
+	const pathname = ctx.url.pathname;
+
 	if (authenticated) {
 		ctx.locals.user = authenticated.user;
 		ctx.locals.session = authenticated.session;
-		if (
-			!authenticated.user.emailVerified &&
-			PROTECTED_ROUTES.includes(ctx.url.pathname)
-		) {
-			return ctx.redirect("/auth/verify");
+
+		switch (true) {
+			case !authenticated.user.emailVerified &&
+				pathname !== "/auth/verify" &&
+				!pathname.startsWith("/api/auth/") &&
+				!pathname.startsWith("/api/proxy/"):
+				if (pathname.startsWith("/api/")) {
+					return new Response("verify account email before accessing api", {
+						status: 401,
+					});
+				} else {
+					return ctx.redirect("/auth/verify");
+				}
+			case pathname.startsWith("/auth/"):
+				return ctx.redirect("/", 303);
+			case ctx.url.pathname === "/":
+				return ctx.rewrite("/home");
 		}
-		/*
-		if (
-			authenticated.user.emailVerified &&
-			ctx.url.pathname === "/auth/verify"
-		) {
-			return ctx.redirect("/settings");
-		}
-		*/
-		if (
-			ctx.url.pathname.startsWith("/auth/") &&
-			ctx.url.pathname !== "/auth/verify"
-		)
-			return ctx.redirect("/");
-		if (ctx.url.pathname === "/") return ctx.rewrite("/home");
-	} else {
-		ctx.locals.user = null;
-		ctx.locals.session = null;
-		if (
-			PROTECTED_ROUTES.includes(ctx.url.pathname) ||
-			ctx.url.pathname.startsWith("/playlist/")
-		)
+
+		return next();
+	}
+	ctx.locals.user = null;
+	ctx.locals.session = null;
+
+	switch (true) {
+		case pathname.startsWith("/api/") &&
+			!pathname.startsWith("/api/auth/") &&
+			!pathname.startsWith("/api/proxy/"):
+			return new Response("authenticate before accessing this route", {
+				status: 401,
+			});
+		case pathname.startsWith("/playlist/"):
+			return ctx.redirect("/auth/signin", 303);
+		case PROTECTED_PAGES.includes(pathname):
 			return ctx.redirect("/auth/signin", 303);
 	}
 
