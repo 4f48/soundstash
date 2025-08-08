@@ -23,7 +23,7 @@ export const GET: APIRoute = async (ctx) => {
 		.select({ storage: sum(track.size) })
 		.from(track)
 		.where(eq(track.owner, user.id));
-	if (Number(check[0].storage) + Number(length) >= 1e8)
+	if (Number(check[0].storage) + Number(length) > 1e8)
 		return new Response("not enough storage", { status: 507 });
 
 	const id = crypto.randomUUID();
