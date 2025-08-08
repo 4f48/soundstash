@@ -49,15 +49,27 @@ export const auth = betterAuth({
 			maxAge: 300,
 		},
 	},
-	socialProviders: {
-		github: {
-			clientId: GITHUB_CLIENT_ID,
-			clientSecret: GITHUB_CLIENT_SECRET,
-		},
-		google: {
-			clientId: GOOGLE_CLIENT_ID,
-			clientSecret: GOOGLE_CLIENT_SECRET,
-			prompt: "select_account",
-		},
-	},
+	socialProviders:
+		GITHUB_CLIENT_ID &&
+		GITHUB_CLIENT_SECRET &&
+		GOOGLE_CLIENT_ID &&
+		GOOGLE_CLIENT_SECRET
+			? {
+					...(GITHUB_CLIENT_ID &&
+						GITHUB_CLIENT_SECRET && {
+							github: {
+								clientId: GITHUB_CLIENT_ID,
+								clientSecret: GITHUB_CLIENT_SECRET,
+							},
+						}),
+					...(GOOGLE_CLIENT_ID &&
+						GITHUB_CLIENT_SECRET && {
+							google: {
+								clientId: GOOGLE_CLIENT_ID,
+								clientSecret: GOOGLE_CLIENT_SECRET,
+								prompt: "select_account",
+							},
+						}),
+				}
+			: undefined,
 });

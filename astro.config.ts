@@ -63,22 +63,22 @@ export default defineConfig({
 			GITHUB_CLIENT_ID: envField.string({
 				context: "server",
 				access: "secret",
-				optional: false,
+				optional: true,
 			}),
 			GITHUB_CLIENT_SECRET: envField.string({
 				context: "server",
 				access: "secret",
-				optional: false,
+				optional: true,
 			}),
 			GOOGLE_CLIENT_ID: envField.string({
 				context: "server",
 				access: "secret",
-				optional: false,
+				optional: true,
 			}),
 			GOOGLE_CLIENT_SECRET: envField.string({
 				context: "server",
 				access: "secret",
-				optional: false,
+				optional: true,
 			}),
 			RESEND_KEY: envField.string({
 				context: "server",

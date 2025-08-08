@@ -3,9 +3,28 @@ import * as Card from "@/components/card";
 import Form from "@/components/forms/signin.svelte";
 import Layout from "@/layouts/auth.astro";
 import { GitHub, Google } from "@/components/auth";
+import { GITHUB_CLIENT_ID } from "astro:env/server";
+import { GITHUB_CLIENT_SECRET } from "astro:env/server";
+import { GOOGLE_CLIENT_ID } from "astro:env/server";
+import { GOOGLE_CLIENT_SECRET } from "astro:env/server";
 
 const description =
 	"Sign in to SoundStash to securely stream your personal, lossless music collection anywhere. Instant access to every FLAC, MP3 and Opus file you’ve uploaded.";
+
+const socials =
+	GITHUB_CLIENT_ID &&
+	GITHUB_CLIENT_SECRET &&
+	GOOGLE_CLIENT_ID &&
+	GOOGLE_CLIENT_SECRET
+		? true
+		: false;
+
+const present = (s?: string) => !!(s && s.trim().length > 0);
+
+const hasGithub = present(GITHUB_CLIENT_ID) && present(GITHUB_CLIENT_SECRET);
+const hasGoogle = present(GOOGLE_CLIENT_ID) && present(GOOGLE_CLIENT_SECRET);
+
+const socialsCount = [hasGithub, hasGoogle].filter(Boolean).length;
 ---
 
 <Layout description={description} title="Sign in">
@@ -17,19 +36,22 @@ const description =
 			>
 		</Card.Header>
 		<Form client:idle />
-		<div class="relative text-center">
-			<div
-				class="after:bg-fg2 after:absolute after:left-0 after:right-0 after:top-1/2 after:z-0 after:h-px after:-translate-y-1/2 after:content-['']"
-			>
-			</div>
-			<span class="bg-bg text-fg2 relative z-10 px-4 text-sm"
-				>or sign in with</span
-			>
-		</div>
-		<section class="grid grid-cols-2 gap-1">
-			<Google client:visible />
-			<GitHub client:visible />
-		</section>
+		{
+			socials && (
+				<>
+					<div class="relative text-center">
+						<div class="after:bg-fg2 after:absolute after:left-0 after:right-0 after:top-1/2 after:z-0 after:h-px after:-translate-y-1/2 after:content-['']" />
+						<span class="bg-bg text-fg2 relative z-10 px-4 text-sm">
+							or sign in with
+						</span>
+					</div>
+					<section class={`grid grid-cols-${socialsCount} gap-1`}>
+						<Google client:visible />
+						<GitHub client:visible />
+					</section>
+				</>
+			)
+		}
 		<span class="text-fg1 text-center text-sm [&_a]:underline">
 			<a href="/auth/reset/request">Forgot your password?</a>
 			&bull;
