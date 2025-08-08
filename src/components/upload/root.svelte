@@ -148,7 +148,7 @@
 				{#each files as file (file.name)}
 					<li class="flex min-w-0 items-center gap-1">
 						<span
-							class="bg-primary text-bg0 rounded-sm p-0.5 text-xs font-semibold text-nowrap tabular-nums select-none"
+							class="bg-primary text-bg0 select-none text-nowrap rounded-sm p-0.5 text-xs font-semibold tabular-nums"
 							>{byteSize(file.size, { precision: 1 })}</span
 						>
 						<button

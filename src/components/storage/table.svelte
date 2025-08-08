@@ -69,7 +69,7 @@
 
 <div class="border-bg2 overflow-hidden rounded-md border">
 	<table
-		class="bg-bg hidden h-full w-full rounded-md md:table [&_td,&_th]:px-3 [&_td,&_th]:py-1"
+		class="bg-bg [&_td,&_th]:px-3 [&_td,&_th]:py-1 hidden h-full w-full rounded-md md:table"
 	>
 		<thead>
 			{#each $table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -87,14 +87,14 @@
 							{/if}
 						</th>
 					{/each}
-					<th class="w-32 pr-1!">
+					<th class="pr-1! w-32">
 						<div class="relative inline-block">
 							<input
 								bind:value={$globalFilter}
 								disabled={tracks.length < 1}
 								type="text"
 								placeholder="Search..."
-								class="bg-bg1 border-bg3 peer text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 disabled:border-bg2 disabled:bg-bg1/50 disabled:placeholder:text-fg2/50 w-32 rounded-sm border py-1 pr-2 pl-7 text-xs font-normal focus-visible:ring-1 focus-visible:outline-none"
+								class="bg-bg1 border-bg3 text-fg placeholder:text-fg2 focus-visible:ring-bg4/50 disabled:border-bg2 disabled:bg-bg1/50 disabled:placeholder:text-fg2/50 peer w-32 rounded-sm border py-1 pl-7 pr-2 text-xs font-normal focus-visible:outline-none focus-visible:ring-1"
 							/>
 							<div
 								class="[&_svg]:text-fg2 peer-disabled:[&_svg]:text-fg2/50 pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 [&_svg]:size-4"

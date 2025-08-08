@@ -12,7 +12,7 @@
 <Dialog>
 	{#snippet trigger({ props })}
 		<button
-			class="hover:bg-bg1/50 flex h-15 w-full cursor-pointer items-center gap-2 rounded-md px-1.5"
+			class="hover:bg-bg1/50 h-15 flex w-full cursor-pointer items-center gap-2 rounded-md px-1.5"
 			{...props}
 		>
 			<div class="bg-bg1 flex size-12 items-center justify-center rounded-sm">

@@ -13,7 +13,7 @@
 <Slider.Root
 	type="single"
 	bind:value={$position}
-	class="group relative flex w-full shrink-0 grow-0 touch-none items-center select-none"
+	class="group relative flex w-full shrink-0 grow-0 touch-none select-none items-center"
 	disabled={!track}
 	{max}
 	min={0}

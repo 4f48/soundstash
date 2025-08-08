@@ -34,7 +34,7 @@ Astro.cookies.set("playlists", String(playlists.length), {
 	playlists.length > 0 ? (
 		playlists.map((playlist) => (
 			<a
-				class="hover:bg-bg1/50 flex h-15 w-full items-center gap-2 rounded-md px-1.5"
+				class="hover:bg-bg1/50 h-15 flex w-full items-center gap-2 rounded-md px-1.5"
 				draggable={false}
 				href={`/playlist/${playlist.id}`}
 			>

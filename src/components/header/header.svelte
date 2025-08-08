@@ -8,7 +8,7 @@
 	let open = $state(false);
 </script>
 
-<header class="fixed top-0 left-0 z-50 w-full p-2">
+<header class="fixed left-0 top-0 z-50 w-full p-2">
 	<div class="bg-text/20 bg-bg border-bg2 relative rounded-lg border px-3">
 		<div class="flex h-[2.9rem] items-center">
 			<span class="text-xl font-bold tracking-tight sm:mx-3">SoundStash</span>
@@ -47,7 +47,7 @@
 		</div>
 
 		{#if open}
-			<div class="w-full pt-2 pb-3" transition:slide={{ duration: 200 }}>
+			<div class="w-full pb-3 pt-2" transition:slide={{ duration: 200 }}>
 				<NavigationMenu.Root>
 					<NavigationMenu.List class="flex flex-col gap-1">
 						<Link href="#features">Features</Link>

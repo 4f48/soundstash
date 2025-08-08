@@ -44,7 +44,7 @@
 			{#snippet child({ open, props })}
 				{#if open}
 					<div
-						class="border-bg2 bg-bg fixed top-[50%] left-[50%] z-50 flex w-sm max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] flex-col gap-2 rounded-md border p-3"
+						class="border-bg2 bg-bg w-sm fixed left-[50%] top-[50%] z-50 flex max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] flex-col gap-2 rounded-md border p-3"
 						{...props}
 						transition:scale={{
 							duration: 100,
@@ -53,7 +53,7 @@
 					>
 						<div class="mb-1 grid gap-0.5">
 							<Dialog.Title
-								class="text-lg leading-none font-semibold tracking-tight"
+								class="text-lg font-semibold leading-none tracking-tight"
 								>{@render title()}</Dialog.Title
 							>
 							<Dialog.Description class="text-fg1 text-sm"

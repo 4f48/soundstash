@@ -15,7 +15,7 @@
 <NavigationMenu.Item>
 	<NavigationMenu.Link
 		class={cn(
-			"focus-visible:ring-offset-primary/20 bg-bg1 focus-visible:ring-muted text-foreground hover:bg-bg1/50 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-sm px-3 text-sm font-medium text-nowrap duration-150 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-75 sm:w-fit sm:bg-transparent",
+			"focus-visible:ring-offset-primary/20 bg-bg1 focus-visible:ring-muted text-foreground hover:bg-bg1/50 inline-flex h-8 w-full items-center justify-center gap-1.5 text-nowrap rounded-sm px-3 text-sm font-medium duration-150 focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 disabled:opacity-75 sm:w-fit sm:bg-transparent",
 			className
 		)}
 		{href}>{@render children()}</NavigationMenu.Link

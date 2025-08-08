@@ -9,6 +9,6 @@
 	const { children, class: className }: Props = $props();
 </script>
 
-<h1 class={cn("text-lg leading-none font-semibold tracking-tight", className)}>
+<h1 class={cn("text-lg font-semibold leading-none tracking-tight", className)}>
 	{@render children()}
 </h1>
