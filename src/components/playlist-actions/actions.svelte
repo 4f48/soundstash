@@ -2,7 +2,7 @@
 	import Edit from "./edit.svelte";
 	import AlertDialog from "@/components/alert-dialog.svelte";
 	import Button from "@/components/button.svelte";
-	import { queue, index } from "@/lib/stores";
+	import { index, playlist as playlistStore } from "@/lib/stores";
 	import { navigate } from "astro:transitions/client";
 	import { Icon, Play, Trash } from "svelte-hero-icons";
 	import { toast } from "svelte-sonner";
@@ -14,8 +14,8 @@
 	const { playlist, tracks }: Props = $props();
 
 	function play(): void {
+		$playlistStore = tracks;
 		$index = 0;
-		$queue = tracks;
 	}
 
 	let deleteLoading = $state(false);
