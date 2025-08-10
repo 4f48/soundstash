@@ -118,6 +118,10 @@ export const PUT: APIRoute = async (ctx) => {
 			case "rename":
 				if (!name) return new Response("no new name provided", { status: 400 });
 				await renamePlaylist(id, name);
+				break;
+			default:
+				return new Response(`invalid action: ${action}`, { status: 400 });
+				break;
 		}
 
 		return new Response(null);
