@@ -174,7 +174,7 @@
 	{/if}
 </div>
 <input
-	accept="audio/*"
+	accept="audio/mpeg, audio/ogg, audio/flac"
 	class="hidden"
 	id="adder"
 	multiple
