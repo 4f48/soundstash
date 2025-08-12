@@ -6,7 +6,6 @@
 	import {
 		EllipsisHorizontal,
 		Icon,
-		Pencil,
 		Trash,
 		FolderArrowDown,
 	} from "svelte-hero-icons";

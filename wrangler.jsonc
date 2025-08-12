@@ -8,6 +8,13 @@
 		"binding": "ASSETS",
 		"directory": "./dist",
 	},
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "24d89db2fc5a4aeb8a60825dc00f9e6d",
+			"preview_id": "62613326d32641968071df77ae70c2ed",
+		},
+	],
 	"observability": {
 		"enabled": true,
 	},
