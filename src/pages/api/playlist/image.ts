@@ -113,7 +113,6 @@ export const PUT: APIRoute = async (ctx) => {
 		const contentType = ctx.request.headers.get("Content-Type");
 		if (!contentLength || !contentType)
 			return new Response(null, { status: 400 });
-
 		const id = ctx.url.searchParams.get("id");
 		if (!id) return new Response(null, { status: 400 });
 		const checkResult = await db.query.playlist.findFirst({
