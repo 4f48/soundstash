@@ -58,7 +58,6 @@
 		<DropdownMenu.Content
 			class="bg-bg1 text-fg border-bg2 flex flex-col rounded-sm border p-1"
 		>
-			<Item disabled><Icon src={Pencil} solid />Edit</Item>
 			<Item onclick={download}
 				><Icon src={FolderArrowDown} solid />Download</Item
 			>
