@@ -9,6 +9,17 @@ SoundStash is a music streaming platform that gives you complete ownership and c
 - high quality streaming, no compression
 - upload any MP3, FLAC, and Opus
 - stream from anywhere in the world
+- export music anytime
 - 100 MB storage
 
-Copyright (C) 2025 Olivér Pirger - All rights reserved
+Learn more at [soundstash.pirger.eu](https://soundstash.pirger.eu).
+
+## Licensing
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+Copyright © 2025 Olivér Pirger
