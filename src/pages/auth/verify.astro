@@ -16,12 +16,9 @@ if (!user) return new Response(null, { status: 401 });
 				>We need to confirm that you own <b>{user.email}</b> before using SoundStash.</Card.Description
 			>
 		</Card.Header>
-		<Button href="/">Done</Button>
-		<div class="flex gap-1">
+		<div class="grid grid-cols-2 gap-1">
+			<Button href="/">Done</Button>
 			<ResendButton client:idle email={user.email} />
-			<Button class="flex-1" href="/auth/change-email" variant="secondary"
-				>Change email</Button
-			>
 		</div>
 	</Card.Root>
 </Layout>

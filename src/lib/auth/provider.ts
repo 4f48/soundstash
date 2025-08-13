@@ -9,6 +9,58 @@ import {
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
+function toHex(u8: Uint8Array): string {
+	return Array.from(u8)
+		.map((b) => b.toString(16).padStart(2, "0"))
+		.join("");
+}
+
+function fromHex(hex: string): Uint8Array {
+	if (!/^[0-9a-fA-F]*$/.test(hex) || hex.length % 2 !== 0) {
+		throw new Error("Invalid hex");
+	}
+	const bytes = new Uint8Array(hex.length / 2);
+	for (let i = 0; i < bytes.length; i++) {
+		bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+	}
+	return bytes;
+}
+
+function timingSafeEqual(a: Uint8Array, b: Uint8Array): boolean {
+	if (a.length !== b.length) return false;
+	let out = 0;
+	for (let i = 0; i < a.length; i++) out |= a[i] ^ b[i];
+	return out === 0;
+}
+
+async function importPasswordKey(password: string) {
+	const enc = new TextEncoder();
+	return crypto.subtle.importKey(
+		"raw",
+		enc.encode(password),
+		{ name: "PBKDF2" },
+		false,
+		["deriveBits", "deriveKey"]
+	);
+}
+
+async function derivePbkdf2Bits(
+	keyMaterial: CryptoKey,
+	salt: Uint8Array,
+	iterations: number
+) {
+	return crypto.subtle.deriveBits(
+		{
+			name: "PBKDF2",
+			hash: "SHA-256",
+			salt: salt as BufferSource,
+			iterations,
+		},
+		keyMaterial,
+		256
+	);
+}
+
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "sqlite",
@@ -16,6 +68,32 @@ export const auth = betterAuth({
 	emailAndPassword: {
 		enabled: true,
 		autoSignIn: false,
+		password: {
+			hash: async (password) => {
+				const salt = crypto.getRandomValues(new Uint8Array(16));
+				const keyMaterial = await importPasswordKey(password);
+				const bits = await derivePbkdf2Bits(keyMaterial, salt, 100_000);
+				const hash = new Uint8Array(bits);
+				return `pbkdf2_sha256$${100_000}$${toHex(salt)}$${toHex(hash)}`;
+			},
+			verify: async ({ hash, password }) => {
+				const parts = hash.split("$");
+				if (parts.length !== 4 || parts[0] !== "pbkdf2_sha256") {
+					return false;
+				}
+				const iterations = parseInt(parts[1], 10);
+				if (!Number.isFinite(iterations) || iterations <= 0)
+					throw new Error("Invalid iterations");
+				const salt = fromHex(parts[2]);
+				const expected = fromHex(parts[3]);
+
+				const keyMaterial = await importPasswordKey(password);
+				const bits = await derivePbkdf2Bits(keyMaterial, salt, iterations);
+				const actual = new Uint8Array(bits);
+
+				return timingSafeEqual(actual, expected);
+			},
+		},
 		sendResetPassword: async ({ user, url }) => {
 			const { error } = await resend.emails.send({
 				from: "SoundStash <noreply.soundstash@pirger.eu>",

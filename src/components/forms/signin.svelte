@@ -26,7 +26,7 @@
 				},
 				{
 					onSuccess: () => {
-						navigate("/");
+						window.location.assign("/");
 					},
 					onError: ({ error }) => {
 						toast.error(`Failed to sign in: ${error.message}`);

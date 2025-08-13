@@ -32,7 +32,8 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 				} else {
 					return ctx.redirect("/auth/verify");
 				}
-			case pathname.startsWith("/auth/"):
+			case pathname.startsWith("/auth/") &&
+				!(pathname === "/auth/verify" && !authenticated.user.emailVerified):
 				return ctx.redirect("/", 303);
 			case ctx.url.pathname === "/":
 				return ctx.rewrite("/home");
