@@ -2,10 +2,10 @@ packages:
   - .
 
 onlyBuiltDependencies:
-  - "@biomejs/biome"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@tailwindcss/oxide"
+  - '@biomejs/biome'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@tailwindcss/oxide'
   - better-sqlite3
   - esbuild
   - prisma
@@ -13,5 +13,10 @@ onlyBuiltDependencies:
   - workerd
 
 overrides:
-  path-to-regexp@>=4.0.0 <6.3.0: ">=6.3.0"
-  esbuild@<=0.24.2: ">=0.25.0"
+  esbuild@<=0.24.2: '>=0.25.0'
+  fast-xml-parser@<5.3.8: '>=5.3.8'
+  lodash@>=4.0.0 <=4.17.22: '>=4.17.23'
+  path-to-regexp@>=4.0.0 <6.3.0: '>=6.3.0'
+  undici@<6.23.0: '>=6.23.0'
+  undici@>=7.0.0 <7.18.2: '>=7.18.2'
+  wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
