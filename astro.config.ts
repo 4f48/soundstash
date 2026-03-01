@@ -1,7 +1,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 import unocss from "unocss/astro";
 
 export default defineConfig({
@@ -9,9 +9,7 @@ export default defineConfig({
 		imageService: "cloudflare",
 		platformProxy: {
 			enabled: true,
-			experimental: {
-				remoteBindings: true,
-			},
+			remoteBindings: true,
 		},
 	}),
 	env: {
@@ -93,15 +91,17 @@ export default defineConfig({
 			{
 				cssVariable: "--font-inter",
 				name: "Inter",
-				provider: "local",
-				variants: [
-					{
-						featureSettings: "'liga' 1, 'calt' 1",
-						src: ["./src/assets/fonts/InterVariable.woff2"],
-						style: "normal",
-						weight: "100 900",
-					},
-				],
+				provider: fontProviders.local(),
+				options: {
+					variants: [
+						{
+							featureSettings: "'liga' 1, 'calt' 1",
+							src: ["./src/assets/fonts/InterVariable.woff2"],
+							style: "normal",
+							weight: "100 900",
+						},
+					],
+				},
 			},
 		],
 	},

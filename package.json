@@ -28,15 +28,15 @@
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.12",
-		"@astrojs/sitemap": "^3.6.0",
-		"@astrojs/svelte": "^7.2.3",
+		"@astrojs/sitemap": "^3.7.0",
+		"@astrojs/svelte": "^7.2.5",
 		"@aws-sdk/client-s3": "^3.948.0",
 		"@aws-sdk/s3-request-presigner": "^3.948.0",
 		"@felte/reporter-svelte": "^1.2.0",
 		"@felte/validator-zod": "^1.0.18",
 		"@tanstack/match-sorter-utils": "^8.19.4",
 		"@tanstack/svelte-table": "npm:tanstack-table-8-svelte-5@^0.1.2",
-		"astro": "^5.16.5",
+		"astro": "^5.18.0",
 		"better-auth": "^1.4.7",
 		"bits-ui": "^2.14.4",
 		"byte-size": "^9.0.1",
@@ -85,5 +85,5 @@
 		"unocss": "^66.5.10",
 		"wrangler": "^4.54.0"
 	},
-	"packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+	"packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
 }
